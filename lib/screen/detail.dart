@@ -80,7 +80,7 @@ class _DetailBelowContent extends StatelessWidget {
               size: Size(0, 7),
             ),
             Text(
-              '2018 * 3h 1min',
+              '1942 * 1h 42min',
               style: TextStyle(color: Colors.grey),
             ),
             SizedBox.fromSize(
@@ -118,7 +118,7 @@ class _DetailBelowContent extends StatelessWidget {
                   ),
                 )
               ],
-            )
+            ),
           ],
         ),
       );
