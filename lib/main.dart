@@ -2,11 +2,13 @@ import 'package:Anifrag/bloc/bloc_carousel.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path_image.dart';
 import 'package:Anifrag/widget/hero_image.dart';
+import 'package:Anifrag/widget/list_image_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'config/mock_data.dart';
 import 'screen/detail.dart';
 import 'screen/the_carousel.dart';
 
@@ -46,68 +48,85 @@ class $Home extends StatefulWidget {
 }
 
 class $$Home extends State<$Home> {
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  static final double paddingInHome = 20;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SafeArea(
-          bottom: false,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 40),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Most search",
-                      style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverList(
+          delegate: SliverChildListDelegate([
+            SafeArea(
+              bottom: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: paddingInHome),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          "Most search",
+                          style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5, bottom: 20),
+                          child: Text(
+                            "Trending movies today",
+                            style: TextStyle(fontSize: 17, color: Colors.white),
+                          ),
+                        )
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 5, bottom: 20),
-                      child: Text(
-                        "Trending movies today",
-                        style: TextStyle(fontSize: 17, color: Colors.white),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-        Flexible(
-          flex: 5,
-          child: TheCarousel(),
-        ),
-        Flexible(
-          flex: 3,
-          child: Center(
-            child: InkWell(
-              onTap: () {
-                // Navigator.of(context).pushAndRemoveUntil(
-                //     CupertinoPageRoute(builder: (context) => Detail()),
-                //     (Route<dynamic> route) => false);
-              },
-              child: HeroImage(
-                tag: "DURTY BIT",
-                path: PathImage.casablanca,
-                height: 150,
-                fit: BoxFit.fitHeight,
+                  )
+                ],
               ),
             ),
-          ),
-        ),
+            TheCarousel(),
+            _CategoryTitle(
+              title: 'Popuar',
+            ),
+            ListImageHome(
+              padding: EdgeInsets.only(left: paddingInHome),
+              listImagePath: MockData.listImage,
+            ),
+            _CategoryTitle(
+              title: 'Actions',
+            ),
+            ListImageHome(
+              padding: EdgeInsets.only(left: paddingInHome),
+              listImagePath: MockData.listImage,
+            ),
+            _CategoryTitle(
+              title: 'Drama',
+            ),
+            ListImageHome(
+              padding: EdgeInsets.only(left: paddingInHome),
+              listImagePath: MockData.listImage,
+            )
+          ]),
+        )
       ],
     );
   }
+}
+
+class _CategoryTitle extends StatelessWidget {
+  final String title;
+
+  const _CategoryTitle({@required this.title});
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding:
+            EdgeInsets.only(left: $$Home.paddingInHome, top: 15, bottom: 15),
+        child: Text(
+          this.title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      );
 }

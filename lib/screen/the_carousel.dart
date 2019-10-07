@@ -1,3 +1,4 @@
+import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path_image.dart';
 import 'package:Anifrag/widget/hero_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,44 +12,33 @@ class TheCarousel extends StatefulWidget {
 class _TheCarousel extends State<TheCarousel> {
   PageController _pageController = PageController(viewportFraction: 0.8);
 
-  final List<String> listImage = <String>[
-    PathImage.casablanca,
-    PathImage.dunkirk,
-    PathImage.eight_grade,
-    PathImage.get_out,
-    PathImage.inside_out,
-    PathImage.mad_max,
-    PathImage.moonlight,
-    PathImage.shape_of_water,
-    PathImage.the_last_jedi,
-    PathImage.thor_ragnarok,
-    PathImage.wonder_woman,
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      physics: ClampingScrollPhysics(),
-      controller: _pageController,
-      itemCount: listImage.length,
-      itemBuilder: (context, index) {
-        return AnimatedBuilder(
-          animation: _pageController,
-          builder: (context, widget) {
-            if (_pageController.position.haveDimensions) {
-              // First time pageController still not init yet, need some hack
+    return ConstrainedBox(
+      constraints: BoxConstraints.expand(height: 400),
+      child: PageView.builder(
+        physics: ClampingScrollPhysics(),
+        controller: _pageController,
+        itemCount: MockData.listImage.length,
+        itemBuilder: (context, index) {
+          return AnimatedBuilder(
+            animation: _pageController,
+            builder: (context, widget) {
+              if (_pageController.position.haveDimensions) {
+                // First time pageController still not init yet, need some hack
+                return _Item(
+                  imagePath: MockData.listImage[index],
+                  scale: ((_pageController.page - index).abs() * (0.9 - 1)) + 1,
+                );
+              }
               return _Item(
-                imagePath: listImage[index],
-                scale: ((_pageController.page - index).abs() * (0.9 - 1)) + 1,
+                imagePath: MockData.listImage[index],
+                scale: (index * (0.9 - 1)) + 1,
               );
-            }
-            return _Item(
-              imagePath: listImage[index],
-              scale: (index * (0.9 - 1)) + 1,
-            );
-          },
-        );
-      },
+            },
+          );
+        },
+      ),
     );
   }
 }
