@@ -1,5 +1,5 @@
 import 'package:Anifrag/config/mock_data.dart';
-import 'package:Anifrag/config/path_image.dart';
+import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/widget/hero_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,28 +57,6 @@ class _Item extends StatelessWidget {
         fit: BoxFit.fitWidth,
         tag: 'tag',
       ),
-      // child: ConstrainedBox(
-      //   constraints: BoxConstraints.expand(),
-      //   child: Stack(
-      //     fit: StackFit.passthrough,
-      //     children: <Widget>[
-      //       HeroImage(
-      //         fit: BoxFit.fitWidth,
-      //         path: imagePath,
-      //         tag: 'tag',
-      //       ),
-      //       Container(
-      //         decoration: BoxDecoration(
-      //             borderRadius: BorderRadius.all(Radius.circular(7.0)),
-      //             gradient: LinearGradient(
-      //                 stops: [0.01, 1],
-      //                 begin: Alignment.bottomCenter,
-      //                 end: Alignment.topCenter,
-      //                 colors: [Colors.black87, Colors.transparent])),
-      //       )
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
