@@ -1,5 +1,7 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/widget/detail_tab.dart';
+
 import 'package:Anifrag/widget/comment.dart';
 import 'package:Anifrag/widget/hero_image.dart';
 import 'package:Anifrag/widget/text_percent.dart';
@@ -11,6 +13,7 @@ class Detail extends StatelessWidget {
   static final double _paddingTopImage = 20;
   final double _mergeGap = 30;
   final double _heightImageFrame = 320 + _paddingTopImage;
+  static final double paddingContent = 17;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -25,7 +28,7 @@ class Detail extends StatelessWidget {
               child: SafeArea(
                 top: false,
                 child: Container(
-                  child: _DetailBelowContent(),
+                  child: _Content(),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -64,7 +67,80 @@ class Detail extends StatelessWidget {
       );
 }
 
-class _DetailBelowContent extends StatelessWidget {
+class _Content extends StatelessWidget {
+  // @override
+  // Widget build(BuildContext context) => Padding(
+  //       padding: EdgeInsets.only(top: 52),
+  //       child: CustomScrollView(
+  //         slivers: <Widget>[
+  //           SliverList(
+  //             delegate: SliverChildListDelegate([
+  //               Column(
+  //                 children: <Widget>[
+  //                   Text(
+  //                     'Casablanca',
+  //                     style:
+  //                         TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+  //                   ),
+  //                   SizedBox.fromSize(
+  //                     size: Size(0, 7),
+  //                   ),
+  //                   Text(
+  //                     '1942 * 1h 42min',
+  //                     style: TextStyle(color: Colors.grey),
+  //                   )
+  //                 ],
+  //               ),
+  //               SizedBox.fromSize(
+  //                 size: Size(0, 30),
+  //               ),
+  //               Row(
+  //                 children: <Widget>[
+  //                   Flexible(
+  //                     child: Comment(
+  //                       top: TextStar(
+  //                         fontSize: 25,
+  //                         value: 8.3,
+  //                       ),
+  //                       comment: '77 857',
+  //                     ),
+  //                   ),
+  //                   Flexible(
+  //                     child: Comment(
+  //                       top: TextPercent(
+  //                         iconPath: PathIcon.smallChart,
+  //                         fontSize: 25,
+  //                         value: 78,
+  //                       ),
+  //                       comment: 'In your taste',
+  //                     ),
+  //                   ),
+  //                   Flexible(
+  //                     child: Comment(
+  //                       top: TextPercent(
+  //                         iconPath: PathIcon.fresh,
+  //                         fontSize: 25,
+  //                         value: 98,
+  //                       ),
+  //                       comment: 'Fresh',
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //               SizedBox.fromSize(
+  //                 size: Size(0, 30),
+  //               ),
+  //               Padding(
+  //                 padding:
+  //                     EdgeInsets.symmetric(horizontal: Detail.paddingContent),
+  //                 child: DetailTab(),
+  //               )
+  //             ]),
+  //           )
+  //         ],
+  //       ),
+  //     );
+
   @override
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.only(
@@ -119,6 +195,13 @@ class _DetailBelowContent extends StatelessWidget {
                 )
               ],
             ),
+            SizedBox.fromSize(
+              size: Size(0, 30),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: Detail.paddingContent),
+              child: DetailTab(),
+            )
           ],
         ),
       );

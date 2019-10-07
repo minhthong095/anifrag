@@ -1,9 +1,13 @@
 import 'package:Anifrag/config/app_color.dart';
-import 'package:Anifrag/screen/test_tabs.dart';
+import 'package:Anifrag/widget/detail_tab.dart';
+import 'package:Anifrag/widget/story_overview.dart';
+import 'package:Anifrag/widget/test_stack_scrollview.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'screen/detail.dart';
+import 'screen/home.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
@@ -21,8 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home:
-          Scaffold(backgroundColor: AppColor.backgroundColor, body: TestTab()),
+      home: Scaffold(backgroundColor: AppColor.backgroundColor, body: Home()),
     );
   }
 }
