@@ -1,4 +1,4 @@
-import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/config/path_image.dart';
 import 'package:Anifrag/widget/hero_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
