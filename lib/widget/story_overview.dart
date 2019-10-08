@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 
 class StoryOverview extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: Detail.paddingContent),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _Title(
-              text: 'Storyline',
-            ),
-            Text(
-                'A cynical American expatriate struggles to decide whether or not he should help his former lover and her fugitive husband escape French Morocco.'),
-            _Cast()
-          ],
-        ),
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox.fromSize(
+            size: Size(0, 10),
+          ),
+          _Title(
+            text: 'Storyline',
+          ),
+          Text(
+              'A cynical American expatriate struggles to decide whether or not he should help his former lover and her fugitive husband escape French Morocco.'),
+          _Cast()
+        ],
       );
 }
 
@@ -43,7 +43,7 @@ class _Title extends StatelessWidget {
         padding: EdgeInsets.only(top: 10, bottom: 10),
         child: Text(
           text,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
       );
 }
