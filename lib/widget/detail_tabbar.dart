@@ -1,4 +1,5 @@
 import 'package:Anifrag/config/app_color.dart';
+import 'package:Anifrag/widget/more_like_this.dart';
 import 'package:Anifrag/widget/story_overview.dart';
 import 'package:Anifrag/widget/tab_bar_remove_center.dart' as custom;
 import 'package:flutter/material.dart';
@@ -34,8 +35,7 @@ class _DetailTabbar extends State<DetailTabbar>
   }
 
   @override
-  Widget build(BuildContext context) => ListView(
-        shrinkWrap: true,
+  Widget build(BuildContext context) => Column(
         children: <Widget>[
           Theme(
             data: ThemeData(splashFactory: NoSplashFactory()),
@@ -50,107 +50,29 @@ class _DetailTabbar extends State<DetailTabbar>
               tabs: tabs,
             ),
           ),
-          // TabBarView(
-          //   controller: _tabController,
-          //   children: <Widget>[StoryOverview(), StoryOverview()],
-          // )
-          // Container(
-          //   // constraints: BoxConstraints.expand(height: 500),
-          //   color: Colors.red,
-          //   child: TabBarView(
-          //     controller: _tabController,
-          //     children: <Widget>[StoryOverview(), StoryOverview()],
-          //   ),
-          // )
-          // Expanded(
-          //   child: Container(
-          //     constraints: BoxConstraints.expand(height: 500),
-          //     color: Colors.red,
-          //     // child: TabBarView(
-          //     //   controller: _tabController,
-          //     //   children: <Widget>[StoryOverview(), StoryOverview()],
-          //     // ),
-          //   ),
-          // ),
-          // StoryOverview()
-          // Expanded(
-          //   child: TabBarView(
-          //     controller: _tabController,
-          //     children: <Widget>[StoryOverview(), StoryOverview()],
-          //   ),
-          // )
+          SizedBox.fromSize(
+            size: Size(0, 20),
+          ),
+          AnimatedBuilder(
+            animation: _tabController,
+            builder: (context, widget) {
+              return Stack(
+                children: <Widget>[
+                  Visibility(
+                    visible: _tabController.index == 0 ? true : false,
+                    child: MoreLikeThis(),
+                  ),
+                  Visibility(
+                    // If choose Opacity widget, the gridview in MoreLikeThis will hard to scroll.
+                    visible: _tabController.index == 1 ? true : false,
+                    child: StoryOverview(),
+                  )
+                ],
+              );
+            },
+          )
         ],
       );
-
-  // @override
-  // Widget build(BuildContext context) => Column(
-  //       children: <Widget>[
-  //         Stack(
-  //           children: <Widget>[
-  //             Positioned(
-  //               bottom: 0,
-  //               left: 0,
-  //               right: 0,
-  //               child: Container(
-  //                 width: double.infinity,
-  //                 height: 2,
-  //                 color: Colors.red,
-  //               ),
-  //             ),
-  //             Theme(
-  //               data: ThemeData(splashFactory: NoSplashFactory()),
-  //               child: custom.TabBarRemoveAlignment(
-  //                 labelPadding: EdgeInsets.zero,
-  //                 indicatorColor: AppColor.yellow,
-  //                 indicatorPadding: EdgeInsets.only(right: 100),
-  //                 labelStyle: TextStyle(fontWeight: FontWeight.w600),
-  //                 labelColor: AppColor.yellow,
-  //                 unselectedLabelColor: Colors.grey,
-  //                 controller: _tabController,
-  //                 tabs: tabs,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //         Expanded(
-  //           child: TabBarView(
-  //             controller: _tabController,
-  //             children: <Widget>[StoryOverview(), StoryOverview()],
-  //           ),
-  //         ),
-  //         // StoryOverview()
-  //         // Expanded(
-  //         //   child: TabBarView(
-  //         //     controller: _tabController,
-  //         //     children: <Widget>[StoryOverview(), StoryOverview()],
-  //         //   ),
-  //         // )
-  //       ],
-  //     );
-
-  // @override
-  // Widget build(BuildContext context) => DefaultTabController(
-  //       length: tabs.length,
-  //       child: Scaffold(
-  //         appBar: AppBar(
-  //           bottom: TabBar(
-  //             tabs: tabs,
-  //           ),
-  //         ),
-  //         body: TabBarView(
-  //           children: tabs.map((Tab tab) {
-  //             final String label = tab.text.toLowerCase();
-  //             return Center(
-  //               child: Text(
-  //                 'This is the $label tab',
-  //                 style: const TextStyle(fontSize: 36),
-  //               ),
-  //             );
-  //           }).toList(),
-  //         ),
-  //       ),
-  //     );
-
 }
 
 class NoSplashFactory extends InteractiveInkFeatureFactory {

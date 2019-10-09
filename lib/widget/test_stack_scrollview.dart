@@ -15,53 +15,73 @@ class TestStackScrollView extends StatelessWidget {
   static final double paddingContent = 17;
 
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                SizedBox.fromSize(
-                  size: Size(
-                      double.infinity,
-                      _heightImage +
-                          _paddingTopImage +
-                          MediaQuery.of(context).padding.top -
-                          _mergeGap),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.yellow,
-                    ),
-                  ),
+  Widget build(BuildContext context) => ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          SizedBox.fromSize(
+              size: Size(
+                  double.infinity,
+                  _heightImage +
+                      _paddingTopImage +
+                      MediaQuery.of(context).padding.top -
+                      _mergeGap),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.yellow,
                 ),
-                _Content()
-              ],
-            ),
-            SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: EdgeInsets.only(top: _paddingTopImage),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    HeroImage(
-                      tag: "DURTY BIT",
-                      path: PathImage.casablanca,
-                      height: _heightImage,
-                      fit: BoxFit.fill,
-                    )
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
+              )),
+          _Content()
+        ],
       );
+
+  // @override
+  // Widget build(BuildContext context) => SingleChildScrollView(
+  //       child: Stack(
+  //         children: <Widget>[
+  //           Column(
+  //             children: <Widget>[
+  //               SizedBox.fromSize(
+  //                 size: Size(
+  //                     double.infinity,
+  //                     _heightImage +
+  //                         _paddingTopImage +
+  //                         MediaQuery.of(context).padding.top -
+  //                         _mergeGap),
+  //                 child: Container(
+  //                   decoration: BoxDecoration(
+  //                     color: Colors.yellow,
+  //                   ),
+  //                 ),
+  //               ),
+  //               _Content()
+  //             ],
+  //           ),
+  //           SafeArea(
+  //             bottom: false,
+  //             child: Padding(
+  //               padding: EdgeInsets.only(top: _paddingTopImage),
+  //               child: Row(
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 children: <Widget>[
+  //                   HeroImage(
+  //                     tag: "DURTY BIT",
+  //                     path: PathImage.casablanca,
+  //                     height: _heightImage,
+  //                     fit: BoxFit.fill,
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //           )
+  //         ],
+  //       ),
+  //     );
 }
 
 class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(),
+        decoration: BoxDecoration(color: Colors.white),
         child: Padding(
           padding: EdgeInsets.only(
             top: 52,

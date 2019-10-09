@@ -124,13 +124,13 @@ class _Content extends StatelessWidget {
                 size: Size(0, 30),
               ),
               SafeArea(
-                  top: true,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: Detail.paddingContent),
-                    child: DetailTabbar(),
-                  ),
-                )
+                top: false,
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: Detail.paddingContent),
+                  child: DetailTabbar(),
+                ),
+              )
             ],
           ),
         ),

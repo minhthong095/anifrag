@@ -1,4 +1,3 @@
-import 'package:Anifrag/screen/detail.dart';
 import 'package:flutter/material.dart';
 
 class StoryOverview extends StatelessWidget {
@@ -6,10 +5,8 @@ class StoryOverview extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox.fromSize(
-            size: Size(0, 10),
-          ),
           _Title(
+            padding: EdgeInsets.only(bottom: 10),
             text: 'Storyline',
           ),
           Text(
@@ -35,12 +32,15 @@ class _Cast extends StatelessWidget {
 
 class _Title extends StatelessWidget {
   final String text;
+  final EdgeInsets padding;
 
-  const _Title({@required this.text});
+  const _Title(
+      {@required this.text,
+      this.padding = const EdgeInsets.symmetric(vertical: 10)});
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: EdgeInsets.only(top: 10, bottom: 10),
+        padding: this.padding,
         child: Text(
           text,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
