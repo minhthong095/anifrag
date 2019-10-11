@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class StoryOverview extends StatelessWidget {
@@ -11,7 +13,8 @@ class StoryOverview extends StatelessWidget {
           ),
           Text(
               'A cynical American expatriate struggles to decide whether or not he should help his former lover and her fugitive husband escape French Morocco.'),
-          _Cast()
+          _Cast(),
+          if (Platform.isAndroid) SizedBox.fromSize(size: Size(0, 30)),
         ],
       );
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Anifrag/bloc/bloc_carousel.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/widget/the_carousel.dart';
@@ -6,21 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   @override
-  Widget build(BuildContext context) => Provider<BlocCarousel>(
-        builder: (context) => BlocCarousel(),
-        dispose: (context, value) => value.dispose(),
-        child: $Home(),
-      );
+  $Home createState() => $Home();
 }
 
-class $Home extends StatefulWidget {
-  @override
-  $$Home createState() => $$Home();
-}
-
-class $$Home extends State<$Home> {
+class $Home extends State<Home> {
   static final double paddingInHome = 20;
 
   @override
@@ -35,7 +28,9 @@ class $$Home extends State<$Home> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: paddingInHome),
+                  padding: Platform.isIOS
+                      ? EdgeInsets.only(left: paddingInHome)
+                      : EdgeInsets.only(left: paddingInHome, top: 30),
                   child: Column(
                     children: <Widget>[
                       Text(
@@ -94,7 +89,7 @@ class _CategoryTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding:
-            EdgeInsets.only(left: $$Home.paddingInHome, top: 15, bottom: 15),
+            EdgeInsets.only(left: $Home.paddingInHome, top: 15, bottom: 15),
         child: Text(
           this.title,
           style: TextStyle(

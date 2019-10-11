@@ -1,4 +1,5 @@
 import 'package:Anifrag/config/app_color.dart';
+import 'package:Anifrag/screen/test_transition.dart';
 import 'package:Anifrag/widget/category_demo.dart';
 import 'package:Anifrag/widget/detail_tabbar.dart';
 import 'package:Anifrag/widget/story_overview.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: Scaffold(backgroundColor: AppColor.backgroundColor, body: Detail()),
+      home: Scaffold(backgroundColor: AppColor.backgroundColor, body: Home()),
     );
   }
 }

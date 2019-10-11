@@ -37,18 +37,31 @@ class _DetailTabbar extends State<DetailTabbar>
   @override
   Widget build(BuildContext context) => Column(
         children: <Widget>[
-          Theme(
-            data: ThemeData(splashFactory: NoSplashFactory()),
-            child: custom.TabBarRemoveAlignment(
-              labelPadding: EdgeInsets.zero,
-              indicatorColor: AppColor.yellow,
-              indicatorPadding: EdgeInsets.only(right: 100),
-              labelStyle: TextStyle(fontWeight: FontWeight.w600),
-              labelColor: AppColor.yellow,
-              unselectedLabelColor: Colors.grey,
-              controller: _tabController,
-              tabs: tabs,
-            ),
+          Stack(
+            children: <Widget>[
+              Positioned(
+                bottom: 0,
+                height: 2,
+                left: 0,
+                right: 0,
+                child: Container(
+                  color: Colors.grey[200],
+                ),
+              ),
+              Theme(
+                data: ThemeData(splashFactory: NoSplashFactory()),
+                child: custom.TabBarRemoveAlignment(
+                  labelPadding: EdgeInsets.zero,
+                  indicatorColor: AppColor.yellow,
+                  indicatorPadding: EdgeInsets.only(right: 100),
+                  labelStyle: TextStyle(fontWeight: FontWeight.w600),
+                  labelColor: AppColor.yellow,
+                  unselectedLabelColor: Colors.grey,
+                  controller: _tabController,
+                  tabs: tabs,
+                ),
+              )
+            ],
           ),
           SizedBox.fromSize(
             size: Size(0, 20),

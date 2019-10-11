@@ -3,59 +3,85 @@ import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/widget/detail_tabbar.dart';
 
 import 'package:Anifrag/widget/comment.dart';
-import 'package:Anifrag/widget/detail_tabbar.dart';
 import 'package:Anifrag/widget/hero_image.dart';
 import 'package:Anifrag/widget/text_percent.dart';
 import 'package:Anifrag/widget/text_star.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Detail extends StatelessWidget {
+class Detail extends StatefulWidget {
+  final Animation transitionAnimation;
+  final String imagePath;
+
+  const Detail({@required this.transitionAnimation, @required this.imagePath});
+
+  @override
+  $Detail createState() => $Detail();
+}
+
+class $Detail extends State<Detail> with TickerProviderStateMixin {
   static final double _paddingTopImage = 20;
   final double _mergeGap = 30;
   final double _heightImage = 320 + _paddingTopImage;
   static final double paddingContent = 17;
+  Animation<Offset> botToTop;
 
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                SizedBox.fromSize(
-                  size: Size(
-                      double.infinity,
-                      _heightImage +
-                          _paddingTopImage +
-                          MediaQuery.of(context).padding.top -
-                          _mergeGap),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.yellow,
+  void initState() {
+    botToTop = widget.transitionAnimation.drive(
+        Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
+            .chain(CurveTween(curve: Curves.easeOutCubic)));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  SizedBox.fromSize(
+                    size: Size(
+                        double.infinity,
+                        _heightImage +
+                            _paddingTopImage +
+                            MediaQuery.of(context).padding.top -
+                            _mergeGap),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.yellow,
+                      ),
                     ),
                   ),
-                ),
-                _Content()
-              ],
-            ),
-            SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: EdgeInsets.only(top: _paddingTopImage),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    HeroImage(
-                      tag: "DURTY BIT",
-                      path: PathImage.casablanca,
-                      height: _heightImage,
-                      fit: BoxFit.fill,
-                    )
-                  ],
-                ),
+                  SlideTransition(position: botToTop, child: _Content()),
+                ],
               ),
-            )
-          ],
+              SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: EdgeInsets.only(top: _paddingTopImage),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: HeroImage(
+                          tag: "AtoB" + widget.imagePath,
+                          path: widget.imagePath,
+                          height: _heightImage,
+                          fit: BoxFit.fill,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       );
 }
@@ -87,38 +113,41 @@ class _Content extends StatelessWidget {
               SizedBox.fromSize(
                 size: Size(0, 30),
               ),
-              Row(
-                children: <Widget>[
-                  Flexible(
-                    child: Comment(
-                      top: TextStar(
-                        fontSize: 25,
-                        value: 9,
+              Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Row(
+                  children: <Widget>[
+                    Flexible(
+                      child: Comment(
+                        top: TextStar(
+                          fontSize: 25,
+                          value: 8.2,
+                        ),
+                        comment: '77 857',
                       ),
-                      comment: '77 857',
                     ),
-                  ),
-                  Flexible(
-                    child: Comment(
-                      top: TextPercent(
-                        iconPath: PathIcon.smallChart,
-                        fontSize: 25,
-                        value: 9,
+                    Flexible(
+                      child: Comment(
+                        top: TextPercent(
+                          iconPath: PathIcon.smallChart,
+                          fontSize: 25,
+                          value: 9,
+                        ),
+                        comment: 'In your taste',
                       ),
-                      comment: 'In your taste',
                     ),
-                  ),
-                  Flexible(
-                    child: Comment(
-                      top: TextPercent(
-                        iconPath: PathIcon.fresh,
-                        fontSize: 25,
-                        value: 98,
+                    Flexible(
+                      child: Comment(
+                        top: TextPercent(
+                          iconPath: PathIcon.fresh,
+                          fontSize: 25,
+                          value: 98,
+                        ),
+                        comment: 'Fresh',
                       ),
-                      comment: 'Fresh',
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
               SizedBox.fromSize(
                 size: Size(0, 30),
@@ -127,7 +156,7 @@ class _Content extends StatelessWidget {
                 top: false,
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: Detail.paddingContent),
+                      EdgeInsets.symmetric(horizontal: $Detail.paddingContent),
                   child: DetailTabbar(),
                 ),
               )

@@ -1,5 +1,6 @@
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/transition/detail_transition.dart';
 import 'package:Anifrag/widget/hero_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,10 +53,15 @@ class _Item extends StatelessWidget {
   Widget build(BuildContext context) {
     return Transform.scale(
       scale: scale,
-      child: HeroImage(
-        path: imagePath,
-        fit: BoxFit.fitWidth,
-        tag: 'tag',
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(DetailTransition(imagePath: imagePath));
+        },
+        child: HeroImage(
+          path: imagePath,
+          fit: BoxFit.fitWidth,
+          tag: "AtoB" + imagePath,
+        ),
       ),
     );
   }

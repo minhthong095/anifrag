@@ -7,7 +7,14 @@ class Comment extends StatelessWidget {
   const Comment({@required this.top, @required this.comment});
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) =>
+      // Container(
+      //     decoration: BoxDecoration(
+      //       color: Colors.red,
+      //       border: Border.all(width: 2),
+      //     ),
+      //     child:
+      Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -25,4 +32,5 @@ class Comment extends StatelessWidget {
           )
         ],
       );
+  // );
 }

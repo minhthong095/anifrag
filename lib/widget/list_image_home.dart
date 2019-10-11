@@ -18,8 +18,9 @@ class ListImageHome extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) => Padding(
             padding: EdgeInsets.only(right: 10),
             child: HeroImage(
+              normalMode: 1,
               path: listImagePath[index],
-              tag: "",
+              tag: listImagePath[index],
             ),
           ),
         ),
