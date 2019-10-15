@@ -1,12 +1,10 @@
 import 'dart:io';
 
-import 'package:Anifrag/bloc/bloc_carousel.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/widget/the_carousel.dart';
 import 'package:Anifrag/widget/list_image_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override

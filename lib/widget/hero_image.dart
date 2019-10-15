@@ -6,11 +6,11 @@ class HeroImage extends StatelessWidget {
   final BoxFit fit;
   final String tag;
   final FilterQuality filterQuality;
-  final int normalMode;
+  final bool normalMode;
   const HeroImage(
       {@required this.tag,
       @required this.path,
-      this.normalMode = 0,
+      this.normalMode = false,
       this.height,
       this.fit,
       this.filterQuality = FilterQuality.none});
@@ -31,7 +31,7 @@ class HeroImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (normalMode == 0) {
+    if (normalMode) {
       return Hero(
         tag: tag,
         child: ClipRRect(
