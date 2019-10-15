@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class DetailTransition extends PageRouteBuilder {
   DetailTransition({@required imagePath})
       : super(
-          transitionDuration: Duration(milliseconds: 0),
+          transitionDuration: Duration(milliseconds: 500),
           pageBuilder: (context, animation, secondAnimation) => Detail(
             imagePath: imagePath,
           ),
