@@ -4,10 +4,16 @@ import 'package:flutter/material.dart';
 class DetailTransition extends PageRouteBuilder {
   DetailTransition({@required imagePath})
       : super(
-          transitionDuration: Duration(milliseconds: 500),
+          transitionDuration: Duration(milliseconds: 0),
           pageBuilder: (context, animation, secondAnimation) => Detail(
-            transitionAnimation: animation,
             imagePath: imagePath,
           ),
         );
+
+  // For no animation, both in and out.
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    return child;
+  }
 }

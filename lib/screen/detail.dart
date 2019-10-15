@@ -10,10 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Detail extends StatefulWidget {
-  final Animation transitionAnimation;
   final String imagePath;
 
-  const Detail({@required this.transitionAnimation, @required this.imagePath});
+  const Detail({@required this.imagePath});
 
   @override
   $Detail createState() => $Detail();
@@ -25,12 +24,16 @@ class $Detail extends State<Detail> with TickerProviderStateMixin {
   final double _heightImage = 320 + _paddingTopImage;
   static final double paddingContent = 17;
   Animation<Offset> botToTop;
+  AnimationController _controller;
 
   @override
   void initState() {
-    botToTop = widget.transitionAnimation.drive(
-        Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
-            .chain(CurveTween(curve: Curves.easeOutCubic)));
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    botToTop = Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
+        .chain(CurveTween(curve: Curves.easeOutCubic))
+        .animate(_controller);
+    _controller.forward();
     super.initState();
   }
 
