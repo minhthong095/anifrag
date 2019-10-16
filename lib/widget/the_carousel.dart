@@ -16,8 +16,9 @@ class _TheCarousel extends State<TheCarousel> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.expand(height: 400),
+      constraints: BoxConstraints.expand(height: 370),
       child: PageView.builder(
+        onPageChanged: (index) {},
         physics: ClampingScrollPhysics(),
         controller: _pageController,
         itemCount: MockData.listImage.length,
@@ -25,17 +26,19 @@ class _TheCarousel extends State<TheCarousel> {
           return AnimatedBuilder(
             animation: _pageController,
             builder: (context, widget) {
-              if (_pageController.position.haveDimensions) {
-                // First time pageController still not init yet, need some hack
+              try {
                 return _Item(
                   imagePath: MockData.listImage[index],
                   scale: ((_pageController.page - index).abs() * (0.9 - 1)) + 1,
                 );
+              } catch (e) {
+                // First time pageController still not init yet, need some hack
+                // _pageController.page equal 0
+                return _Item(
+                  imagePath: MockData.listImage[index],
+                  scale: (index * (0.9 - 1)) + 1,
+                );
               }
-              return _Item(
-                imagePath: MockData.listImage[index],
-                scale: (index * (0.9 - 1)) + 1,
-              );
             },
           );
         },

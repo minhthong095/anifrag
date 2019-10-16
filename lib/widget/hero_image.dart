@@ -10,7 +10,7 @@ class HeroImage extends StatelessWidget {
   const HeroImage(
       {@required this.tag,
       @required this.path,
-      this.normalMode = false,
+      this.normalMode = true,
       this.height,
       this.fit,
       this.filterQuality = FilterQuality.none});
