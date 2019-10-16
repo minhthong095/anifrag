@@ -73,6 +73,7 @@ class $Detail extends State<Detail> with TickerProviderStateMixin {
                           Navigator.of(context).pop();
                         },
                         child: HeroImage(
+                          isShadow: true,
                           tag: "AtoB" + widget.imagePath,
                           path: widget.imagePath,
                           height: _heightImage,
