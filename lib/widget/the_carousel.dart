@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/transition/detail_transition.dart';
@@ -58,7 +60,8 @@ class _Item extends StatelessWidget {
       scale: scale,
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(DetailTransition(imagePath: imagePath));
+          Navigator.of(context)
+              .push(DetailTransition(tagPrefix: 'AtoB', imagePath: imagePath));
         },
         child: HeroImage(
           path: imagePath,

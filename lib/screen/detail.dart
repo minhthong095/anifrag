@@ -11,8 +11,9 @@ import 'package:flutter/widgets.dart';
 
 class Detail extends StatefulWidget {
   final String imagePath;
+  final String tagPrefix;
 
-  const Detail({@required this.imagePath});
+  const Detail({@required this.imagePath, @required this.tagPrefix});
 
   @override
   $Detail createState() => $Detail();
@@ -74,7 +75,7 @@ class $Detail extends State<Detail> with TickerProviderStateMixin {
                         },
                         child: HeroImage(
                           isShadow: true,
-                          tag: "AtoB" + widget.imagePath,
+                          tag: widget.tagPrefix + widget.imagePath,
                           path: widget.imagePath,
                           height: _heightImage,
                           fit: BoxFit.fill,

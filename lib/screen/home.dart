@@ -53,9 +53,10 @@ class $Home extends State<Home> {
           ),
           TheCarousel(),
           _CategoryTitle(
-            title: 'Popuar',
+            title: 'Popular',
           ),
           ListImageHome(
+            heroTagPrefix: 'Popular',
             padding: EdgeInsets.only(left: paddingInHome),
             listImagePath: MockData.listImage,
           ),
@@ -63,6 +64,7 @@ class $Home extends State<Home> {
             title: 'Actions',
           ),
           ListImageHome(
+            heroTagPrefix: 'Actions',
             padding: EdgeInsets.only(left: paddingInHome),
             listImagePath: MockData.listImage,
           ),
@@ -70,6 +72,7 @@ class $Home extends State<Home> {
             title: 'Drama',
           ),
           ListImageHome(
+            heroTagPrefix: 'Drama',
             padding: EdgeInsets.only(left: paddingInHome),
             listImagePath: MockData.listImage,
           )
@@ -86,8 +89,7 @@ class _CategoryTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding:
-            EdgeInsets.only(left: $Home.paddingInHome, top: 15, bottom: 15),
+        padding: EdgeInsets.only(left: $Home.paddingInHome, top: 17, bottom: 7),
         child: Text(
           this.title,
           style: TextStyle(
