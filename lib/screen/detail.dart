@@ -19,21 +19,25 @@ class Detail extends StatefulWidget {
   $Detail createState() => $Detail();
 }
 
-class $Detail extends State<Detail> with TickerProviderStateMixin {
+class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
   static final double _paddingTopImage = 20;
   final double _mergeGap = 30;
   final double _heightImage = 320 + _paddingTopImage;
+  double _defaultDiameterCircle = 0;
   static final double paddingContent = 17;
-  Animation<Offset> botToTop;
+  Animation<Offset> _botToTop;
+  Animation<double> _animationCircle;
   AnimationController _controller;
 
   @override
   void initState() {
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    botToTop = Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
+    _botToTop = Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
         .chain(CurveTween(curve: Curves.easeOutCubic))
         .animate(_controller);
+    _animationCircle = Tween<double>(begin: 0, end: 2.5).animate(_controller);
+
     _controller.forward();
     super.initState();
   }
@@ -53,13 +57,25 @@ class $Detail extends State<Detail> with TickerProviderStateMixin {
                             _paddingTopImage +
                             MediaQuery.of(context).padding.top -
                             _mergeGap),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.yellow,
-                      ),
+                    child: AnimatedBuilder(
+                      animation: _animationCircle,
+                      builder: (context, animation) {
+                        return Transform.scale(
+                          scale: _animationCircle.value,
+                          child: Opacity(
+                            opacity: 1,
+                            child: Container(
+                              constraints: BoxConstraints.tightFor(
+                                  height: _defaultDiameterCircle),
+                              decoration: BoxDecoration(
+                                  color: Colors.white, shape: BoxShape.circle),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  SlideTransition(position: botToTop, child: _Content()),
+                  SlideTransition(position: _botToTop, child: _Content()),
                 ],
               ),
               SafeArea(
@@ -89,6 +105,17 @@ class $Detail extends State<Detail> with TickerProviderStateMixin {
           ),
         ),
       );
+
+  void _getSizeOfCircle() {
+    final widthScreen = MediaQuery.of(context).size.width;
+    if (widthScreen < 300) {
+      _defaultDiameterCircle = widthScreen;
+    } else {
+      _defaultDiameterCircle = 300;
+    }
+
+    _animationCircle = Tween<double>(begin: 0, end: 2.5).animate(_controller);
+  }
 }
 
 class _Content extends StatelessWidget {
