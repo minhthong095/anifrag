@@ -1,6 +1,5 @@
 import 'package:Anifrag/config/app_color.dart';
-import 'package:Anifrag/screen/test_scale_transition.dart';
-import 'package:Anifrag/screen/test_scroll_stack.dart';
+import 'package:Anifrag/screen/test_arrow.dart';
 import 'package:Anifrag/widget/category_demo.dart';
 import 'package:Anifrag/widget/detail_tabbar.dart';
 import 'package:Anifrag/widget/story_overview.dart';
