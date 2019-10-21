@@ -43,6 +43,12 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
   }
 
   @override
+  void didChangeDependencies() {
+    _getSizeOfCircle();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
@@ -68,7 +74,8 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
                               constraints: BoxConstraints.tightFor(
                                   height: _defaultDiameterCircle),
                               decoration: BoxDecoration(
-                                  color: Colors.white, shape: BoxShape.circle),
+                                  color: AppColor.backgroundColor,
+                                  shape: BoxShape.circle),
                             ),
                           ),
                         );
@@ -113,8 +120,6 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
     } else {
       _defaultDiameterCircle = 300;
     }
-
-    _animationCircle = Tween<double>(begin: 0, end: 2.5).animate(_controller);
   }
 }
 
@@ -122,7 +127,7 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColor.backgroundColor,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15), topRight: Radius.circular(15))),
         child: Padding(
@@ -133,7 +138,10 @@ class _Content extends StatelessWidget {
             children: <Widget>[
               Text(
                 'Casablanca',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
               SizedBox.fromSize(
                 size: Size(0, 7),

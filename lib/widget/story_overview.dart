@@ -12,7 +12,9 @@ class StoryOverview extends StatelessWidget {
             text: 'Storyline',
           ),
           Text(
-              'A cynical American expatriate struggles to decide whether or not he should help his former lover and her fugitive husband escape French Morocco.'),
+            'A cynical American expatriate struggles to decide whether or not he should help his former lover and her fugitive husband escape French Morocco.',
+            style: TextStyle(color: Colors.white),
+          ),
           _Cast(),
           if (Platform.isAndroid) SizedBox.fromSize(size: Size(0, 30)),
         ],
@@ -28,7 +30,9 @@ class _Cast extends StatelessWidget {
             text: 'Cast',
           ),
           Text(
-              'Robert De Niro, Jack Nicholson, Marlon Brando, Denzel Washington, Tom Hanks, Leonardo DiCaptio'),
+            'Robert De Niro, Jack Nicholson, Marlon Brando, Denzel Washington, Tom Hanks, Leonardo DiCaptio',
+            style: TextStyle(color: Colors.white),
+          ),
         ],
       );
 }
@@ -46,7 +50,8 @@ class _Title extends StatelessWidget {
         padding: this.padding,
         child: Text(
           text,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
         ),
       );
 }

@@ -31,10 +31,8 @@ class HeroImage extends StatelessWidget {
 
   Widget _borderImage() => Container(
         decoration: isShadow
-            ? BoxDecoration(boxShadow: [
-                BoxShadow(
-                    offset: Offset(0, 20), blurRadius: 10, color: Colors.grey)
-              ])
+            ? BoxDecoration(
+                boxShadow: [BoxShadow(blurRadius: 30, color: Colors.grey)])
             : null,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(7.0),

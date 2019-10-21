@@ -45,7 +45,7 @@ class _DetailTabbar extends State<DetailTabbar>
                 left: 0,
                 right: 0,
                 child: Container(
-                  color: Colors.grey[200],
+                  color: Colors.grey,
                 ),
               ),
               Theme(
@@ -56,7 +56,7 @@ class _DetailTabbar extends State<DetailTabbar>
                   indicatorPadding: EdgeInsets.only(right: 100),
                   labelStyle: TextStyle(fontWeight: FontWeight.w600),
                   labelColor: AppColor.yellow,
-                  unselectedLabelColor: Colors.grey,
+                  unselectedLabelColor: Colors.white,
                   controller: _tabController,
                   tabs: tabs,
                 ),
