@@ -1,11 +1,11 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:flutter/material.dart';
 
-class TestArrow extends StatelessWidget {
+class ButtonCircle extends StatelessWidget {
   final VoidCallback onTap;
   final String iconPath;
 
-  const TestArrow({@required this.onTap, @required this.iconPath});
+  const ButtonCircle({@required this.onTap, @required this.iconPath});
 
   @override
   Widget build(BuildContext context) => InkWell(
