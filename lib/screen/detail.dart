@@ -1,5 +1,7 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/screen/test_button.dart';
+import 'package:Anifrag/widget/button_circle.dart';
 import 'package:Anifrag/widget/detail_tabbar.dart';
 
 import 'package:Anifrag/widget/comment.dart';
@@ -89,22 +91,71 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
                 bottom: false,
                 child: Padding(
                   padding: EdgeInsets.only(top: _paddingTopImage),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: HeroImage(
-                          isShadow: true,
-                          tag: widget.tagPrefix + widget.imagePath,
-                          path: widget.imagePath,
-                          height: _heightImage,
-                          fit: BoxFit.fill,
+                  // child: Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: <Widget>[
+                  //     Flexible(
+                  //       flex: 1,
+                  //       child: Container(
+                  //         color: Colors.red,
+                  //       ),
+                  //     ),
+                  //     InkWell(
+                  //       onTap: () {
+                  //         Navigator.of(context).pop();
+                  //       },
+                  //       child: HeroImage(
+                  //         isShadow: true,
+                  //         tag: widget.tagPrefix + widget.imagePath,
+                  //         path: widget.imagePath,
+                  //         height: _heightImage,
+                  //         fit: BoxFit.fill,
+                  //       ),
+                  //     ),
+                  //     Flexible(
+                  //       flex: 1,
+                  //       child: Container(
+                  //         color: Colors.green,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  child: Container(
+                    constraints: BoxConstraints.expand(height: _heightImage),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: ButtonCircle(
+                              onTap: () {},
+                              iconPath: PathIcon.back,
+                            ),
+                          ),
                         ),
-                      )
-                    ],
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: HeroImage(
+                            isShadow: true,
+                            tag: widget.tagPrefix + widget.imagePath,
+                            path: widget.imagePath,
+                            height: _heightImage,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: ButtonCircle(
+                              onTap: () {},
+                              iconPath: PathIcon.share,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               )
