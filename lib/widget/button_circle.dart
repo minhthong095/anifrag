@@ -60,12 +60,29 @@ class _ButtonCircleState extends State<ButtonCircle>
   }
 
   void _animate() {
-    if (_animationController.isAnimating) return;
-    _buttonHeldDown
-        ? _animationController.animateTo(1.0,
-            duration: Duration(milliseconds: 10))
-        : _animationController.animateTo(0.0,
-            duration: Duration(milliseconds: 100));
+    if (_animationController.isAnimating) {
+      return;
+    }
+    TickerFuture ticker;
+    final bool wasHeldDown = _buttonHeldDown;
+    if (_buttonHeldDown) {
+      ticker = _animationController.animateTo(1.0,
+          duration: Duration(milliseconds: 10));
+    } else {
+      ticker = _animationController.animateTo(0.0,
+          duration: Duration(milliseconds: 100));
+    }
+
+    // Fix for clicking to fast.
+    // wasHeldDown hold the value until ticker finished animation.
+    // If it finished but button already hit UP and DOWN animation still have not finished
+    // then closure will help _animate() UP animation
+    // Prevent isAnimating was stopped on the top.
+    ticker.then<void>((void value) {
+      if (mounted && wasHeldDown != _buttonHeldDown) {
+        _animate();
+      }
+    });
   }
 
   @override
@@ -77,8 +94,7 @@ class _ButtonCircleState extends State<ButtonCircle>
           onTapUp: _handleTapUp,
           onTapCancel: _handleTapCancel,
           onTap: widget.onTap,
-          child: Center(
-              child: Container(
+          child: Container(
             child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Image.asset(
@@ -89,7 +105,7 @@ class _ButtonCircleState extends State<ButtonCircle>
                 shape: BoxShape.circle,
                 color: Color(Colors.white.value).withOpacity(0.2)),
             constraints: BoxConstraints.tight(Size(50, 50)),
-          )),
+          ),
         ),
       );
 }

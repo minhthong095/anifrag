@@ -1,6 +1,5 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/screen/test_button.dart';
 import 'package:Anifrag/widget/button_circle.dart';
 import 'package:Anifrag/widget/detail_tabbar.dart';
 
@@ -76,7 +75,7 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
                               constraints: BoxConstraints.tightFor(
                                   height: _defaultDiameterCircle),
                               decoration: BoxDecoration(
-                                  color: AppColor.backgroundColor,
+                                  color: AppColor.yellow,
                                   shape: BoxShape.circle),
                             ),
                           ),
