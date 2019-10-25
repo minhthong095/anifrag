@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class ButtonCircle extends StatefulWidget {
   final VoidCallback onTap;
   final String iconPath;
+  final double padding;
 
-  const ButtonCircle({@required this.onTap, @required this.iconPath});
+  const ButtonCircle(
+      {@required this.onTap, @required this.iconPath, this.padding = 10});
 
   @override
   _ButtonCircleState createState() => _ButtonCircleState();
@@ -96,7 +98,7 @@ class _ButtonCircleState extends State<ButtonCircle>
           onTap: widget.onTap,
           child: Container(
             child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(widget.padding),
                 child: Image.asset(
                   widget.iconPath,
                   filterQuality: FilterQuality.none,
@@ -104,7 +106,7 @@ class _ButtonCircleState extends State<ButtonCircle>
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color(Colors.white.value).withOpacity(0.2)),
-            constraints: BoxConstraints.tight(Size(50, 50)),
+            constraints: BoxConstraints.tight(Size(43, 43)),
           ),
         ),
       );

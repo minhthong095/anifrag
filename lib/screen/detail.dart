@@ -26,18 +26,26 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
   final double _heightImage = 320 + _paddingTopImage;
   double _defaultDiameterCircle = 0;
   static final double paddingContent = 17;
-  Animation<Offset> _botToTop;
+  Animation<Offset> _animationBotToTop;
   Animation<double> _animationCircle;
+  Animation<double> _animationPaddingCircle;
+  Animation<double> _animationOpacityCircle;
+
   AnimationController _controller;
 
   @override
   void initState() {
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _botToTop = Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
+    _animationBotToTop = Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
         .chain(CurveTween(curve: Curves.easeOutCubic))
         .animate(_controller);
     _animationCircle = Tween<double>(begin: 0, end: 2.5).animate(_controller);
+    _animationPaddingCircle =
+        Tween<double>(begin: 0, end: 15).animate(_controller);
+    _animationOpacityCircle = Tween<double>(begin: 0, end: 1)
+        .chain(CurveTween(curve: Curves.easeInQuint))
+        .animate(_controller);
 
     _controller.forward();
     super.initState();
@@ -69,73 +77,54 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
                       builder: (context, animation) {
                         return Transform.scale(
                           scale: _animationCircle.value,
-                          child: Opacity(
-                            opacity: 1,
-                            child: Container(
-                              constraints: BoxConstraints.tightFor(
-                                  height: _defaultDiameterCircle),
-                              decoration: BoxDecoration(
-                                  color: AppColor.yellow,
-                                  shape: BoxShape.circle),
-                            ),
+                          child: Container(
+                            constraints: BoxConstraints.tightFor(
+                                height: _defaultDiameterCircle),
+                            decoration: BoxDecoration(
+                                color: AppColor.yellow, shape: BoxShape.circle),
                           ),
                         );
                       },
                     ),
                   ),
-                  SlideTransition(position: _botToTop, child: _Content()),
+                  SlideTransition(
+                      position: _animationBotToTop, child: _Content()),
                 ],
               ),
               SafeArea(
                 bottom: false,
                 child: Padding(
                   padding: EdgeInsets.only(top: _paddingTopImage),
-                  // child: Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: <Widget>[
-                  //     Flexible(
-                  //       flex: 1,
-                  //       child: Container(
-                  //         color: Colors.red,
-                  //       ),
-                  //     ),
-                  //     InkWell(
-                  //       onTap: () {
-                  //         Navigator.of(context).pop();
-                  //       },
-                  //       child: HeroImage(
-                  //         isShadow: true,
-                  //         tag: widget.tagPrefix + widget.imagePath,
-                  //         path: widget.imagePath,
-                  //         height: _heightImage,
-                  //         fit: BoxFit.fill,
-                  //       ),
-                  //     ),
-                  //     Flexible(
-                  //       flex: 1,
-                  //       child: Container(
-                  //         color: Colors.green,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   child: Container(
                     constraints: BoxConstraints.expand(height: _heightImage),
                     child: Row(
                       children: <Widget>[
                         Expanded(
                           child: Align(
-                            alignment: Alignment.topCenter,
-                            child: ButtonCircle(
-                              onTap: () {},
-                              iconPath: PathIcon.back,
+                            alignment: Alignment.topLeft,
+                            child: AnimatedBuilder(
+                              animation: _controller,
+                              child: ButtonCircle(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                iconPath: PathIcon.back,
+                              ),
+                              builder: (BuildContext context, Widget child) =>
+                                  Padding(
+                                padding: EdgeInsets.only(
+                                    left: _animationPaddingCircle.value,
+                                    top: 20),
+                                child: Opacity(
+                                  opacity: _controller.value, // 0 to 1
+                                  child: child,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
+                          onTap: () {},
                           child: HeroImage(
                             isShadow: true,
                             tag: widget.tagPrefix + widget.imagePath,
@@ -146,10 +135,25 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
                         ),
                         Expanded(
                           child: Align(
-                            alignment: Alignment.topCenter,
-                            child: ButtonCircle(
-                              onTap: () {},
-                              iconPath: PathIcon.share,
+                            alignment: Alignment.topRight,
+                            child: AnimatedBuilder(
+                              animation: _controller,
+                              child: ButtonCircle(
+                                onTap: () {},
+                                padding: 11,
+                                iconPath: PathIcon.share,
+                              ),
+                              builder: (BuildContext context, Widget child) =>
+                                  Padding(
+                                padding: EdgeInsets.only(
+                                    right: _animationPaddingCircle.value,
+                                    top: 20),
+                                child: Opacity(
+                                  opacity:
+                                      _animationOpacityCircle.value, // 0 to 1
+                                  child: child,
+                                ),
+                              ),
                             ),
                           ),
                         )
