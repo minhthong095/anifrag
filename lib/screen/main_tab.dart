@@ -1,6 +1,7 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/screen/home.dart';
+import 'package:Anifrag/screen/search.dart';
 import 'package:Anifrag/widget/no_animation_tabbar_view.dart';
 import 'package:Anifrag/widget/no_splash_factory.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,14 +27,7 @@ class _MainTabBarState extends State<MainTabBar> with TickerProviderStateMixin {
   Widget build(BuildContext context) => Scaffold(
         body: NoAnimationTabBarView(
           tabController: _tabController,
-          children: <Widget>[
-            Home(),
-            Container(
-              child: Center(
-                child: Text('TEST'),
-              ),
-            )
-          ],
+          children: <Widget>[Search(), Home()],
         ),
         bottomNavigationBar: TabBarSvg(
           tabController: _tabController,
