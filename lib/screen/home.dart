@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/widget/the_carousel.dart';
 import 'package:Anifrag/widget/list_image_home.dart';
@@ -16,67 +17,70 @@ class $Home extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SafeArea(
-            bottom: false,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: Platform.isIOS
-                      ? EdgeInsets.only(left: paddingInHome)
-                      : EdgeInsets.only(left: paddingInHome, top: 30),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        "Most search",
-                        style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5, bottom: 20),
-                        child: Text(
-                          "Trending movies today",
-                          style: TextStyle(fontSize: 17, color: Colors.white),
+    return Scaffold(
+      backgroundColor: AppColor.backgroundColor,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SafeArea(
+              bottom: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: Platform.isIOS
+                        ? EdgeInsets.only(left: paddingInHome)
+                        : EdgeInsets.only(left: paddingInHome, top: 30),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          "Most search",
+                          style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                        Padding(
+                          padding: EdgeInsets.only(top: 5, bottom: 20),
+                          child: Text(
+                            "Trending movies today",
+                            style: TextStyle(fontSize: 17, color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          TheCarousel(),
-          _CategoryTitle(
-            title: 'Popular',
-          ),
-          ListImageHome(
-            heroTagPrefix: 'Popular',
-            padding: EdgeInsets.only(left: paddingInHome),
-            listImagePath: MockData.listImage,
-          ),
-          _CategoryTitle(
-            title: 'Actions',
-          ),
-          ListImageHome(
-            heroTagPrefix: 'Actions',
-            padding: EdgeInsets.only(left: paddingInHome),
-            listImagePath: MockData.listImage,
-          ),
-          _CategoryTitle(
-            title: 'Drama',
-          ),
-          ListImageHome(
-            heroTagPrefix: 'Drama',
-            padding: EdgeInsets.only(left: paddingInHome),
-            listImagePath: MockData.listImage,
-          )
-        ],
+            TheCarousel(),
+            _CategoryTitle(
+              title: 'Popular',
+            ),
+            ListImageHome(
+              heroTagPrefix: 'Popular',
+              padding: EdgeInsets.only(left: paddingInHome),
+              listImagePath: MockData.listImage,
+            ),
+            _CategoryTitle(
+              title: 'Actions',
+            ),
+            ListImageHome(
+              heroTagPrefix: 'Actions',
+              padding: EdgeInsets.only(left: paddingInHome),
+              listImagePath: MockData.listImage,
+            ),
+            _CategoryTitle(
+              title: 'Drama',
+            ),
+            ListImageHome(
+              heroTagPrefix: 'Drama',
+              padding: EdgeInsets.only(left: paddingInHome),
+              listImagePath: MockData.listImage,
+            )
+          ],
+        ),
       ),
     );
   }

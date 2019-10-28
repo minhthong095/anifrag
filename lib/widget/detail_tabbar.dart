@@ -4,6 +4,8 @@ import 'package:Anifrag/widget/story_overview.dart';
 import 'package:Anifrag/widget/tab_bar_remove_center.dart' as custom;
 import 'package:flutter/material.dart';
 
+import 'no_splash_factory.dart';
+
 class DetailTabbar extends StatefulWidget {
   @override
   _DetailTabbar createState() => _DetailTabbar();
@@ -86,42 +88,4 @@ class _DetailTabbar extends State<DetailTabbar>
           )
         ],
       );
-}
-
-class NoSplashFactory extends InteractiveInkFeatureFactory {
-  const NoSplashFactory();
-
-  @override
-  InteractiveInkFeature create(
-      {MaterialInkController controller,
-      RenderBox referenceBox,
-      Offset position,
-      Color color,
-      TextDirection textDirection,
-      bool containedInkWell = false,
-      rectCallback,
-      BorderRadius borderRadius,
-      ShapeBorder customBorder,
-      double radius,
-      onRemoved}) {
-    return new NoSplash(
-      controller: controller,
-      referenceBox: referenceBox,
-    );
-  }
-}
-
-class NoSplash extends InteractiveInkFeature {
-  NoSplash({
-    @required MaterialInkController controller,
-    @required RenderBox referenceBox,
-  })  : assert(controller != null),
-        assert(referenceBox != null),
-        super(
-          controller: controller,
-          referenceBox: referenceBox,
-        );
-
-  @override
-  void paintFeature(Canvas canvas, Matrix4 transform) {}
 }

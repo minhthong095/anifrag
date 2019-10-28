@@ -23,3 +23,10 @@ class PathIcon {
   static const String back = _baseUrl + 'back.png';
   static const String share = _baseUrl + 'share.png';
 }
+
+class PathSvg {
+  static const String _baseUrl = 'asset/svg/';
+
+  static const String home = _baseUrl + 'home.svg';
+  static const String find = _baseUrl + 'find.svg';
+}
