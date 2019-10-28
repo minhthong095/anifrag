@@ -1,32 +1,60 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/screen/home.dart';
+import 'package:Anifrag/widget/no_animation_tabbar_view.dart';
 import 'package:Anifrag/widget/no_splash_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class TestTabSceen extends StatelessWidget {
+class MainTabBar extends StatefulWidget {
+  @override
+  _MainTabBarState createState() => _MainTabBarState();
+}
+
+class _MainTabBarState extends State<MainTabBar> with TickerProviderStateMixin {
+  TabController _tabController;
+  final List<String> _tabsSvg = <String>[PathSvg.home, PathSvg.find];
+
+  @override
+  void initState() {
+    _tabController = TabController(vsync: this, length: _tabsSvg.length);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Home(),
-        bottomNavigationBar: TestTab(
+        body: NoAnimationTabBarView(
+          tabController: _tabController,
+          children: <Widget>[
+            Home(),
+            Container(
+              child: Center(
+                child: Text('TEST'),
+              ),
+            )
+          ],
+        ),
+        bottomNavigationBar: TabBarSvg(
+          tabController: _tabController,
           onTap: (newIndex) {},
           children: <String>[PathSvg.home, PathSvg.find],
         ),
       );
 }
 
-class TestTab extends StatefulWidget {
+class TabBarSvg extends StatefulWidget {
   final List<String> children;
   final Color color;
   final Color unselectedColor;
   final Color backgroundColor;
   final Function onTap;
+  final TabController tabController;
 
-  const TestTab(
+  const TabBarSvg(
       {@required this.children,
       this.color = AppColor.yellow,
+      @required this.tabController,
       @required this.onTap,
       this.unselectedColor = Colors.white70,
       this.backgroundColor = AppColor.backgroundColor});
@@ -35,15 +63,8 @@ class TestTab extends StatefulWidget {
   State<StatefulWidget> createState() => _TestTab();
 }
 
-class _TestTab extends State<TestTab> with TickerProviderStateMixin {
-  TabController tabController;
+class _TestTab extends State<TabBarSvg> with TickerProviderStateMixin {
   int _index = 0;
-
-  @override
-  void initState() {
-    tabController = TabController(vsync: this, length: widget.children.length);
-    super.initState();
-  }
 
   final double _size = 25;
 
@@ -68,7 +89,7 @@ class _TestTab extends State<TestTab> with TickerProviderStateMixin {
                 },
                 indicatorColor: Colors.transparent,
                 labelColor: Colors.yellow,
-                controller: tabController,
+                controller: widget.tabController,
                 tabs: widget.children.map((child) {
                   return Tab(
                     icon: SizedBox.fromSize(

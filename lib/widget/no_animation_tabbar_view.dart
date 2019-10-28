@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 
 class NoAnimationTabBarView extends StatefulWidget {
   final List<Widget> children;
-  // final Function onTap;
   final TabController tabController;
 
-  // const NoAnimationTabBarView({@required this.children, @required this.onTap});
   const NoAnimationTabBarView(
       {@required this.children, @required this.tabController});
 
@@ -17,8 +15,6 @@ class NoAnimationTabBarView extends StatefulWidget {
 }
 
 class _NoAnimationTabbarView extends State<NoAnimationTabBarView> {
-  int index = 0;
-
   final _streamControllerIndex = StreamController<int>();
   Sink<int> _sinkIndex;
   Function _listener;
@@ -49,17 +45,19 @@ class _NoAnimationTabbarView extends State<NoAnimationTabBarView> {
   }
 
   @override
-  Widget build(BuildContext context) => SafeArea(
-        child: StreamBuilder(
-          stream: _streamControllerIndex.stream,
-          builder: (context, AsyncSnapshot<int> snapshot) {
-            return Column(
-              children: widget.children.map((child) {
-                return Text(snapshot.data.toString());
-              }).toList(),
-            );
-          },
-        ),
+  Widget build(BuildContext context) => StreamBuilder(
+        stream: _streamControllerIndex.stream,
+        builder: (context, AsyncSnapshot<int> snapshot) {
+          final index = snapshot.data ?? 0;
+          return Stack(
+            children: widget.children.map((child) {
+              return Visibility(
+                visible: index == widget.children.indexOf(child),
+                child: widget.children[index],
+              );
+            }).toList(),
+          );
+        },
       );
 
   // @override
