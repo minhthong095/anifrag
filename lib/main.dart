@@ -1,5 +1,7 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/screen/main_tab.dart';
+import 'package:Anifrag/screen/test_lottie.dart';
+import 'package:Anifrag/transition/detail_transition.dart';
 import 'package:Anifrag/widget/category_demo.dart';
 import 'package:Anifrag/widget/detail_tabbar.dart';
 import 'package:Anifrag/widget/story_overview.dart';
@@ -26,7 +28,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case Detail.nameRoute:
+            return DetailTransition(
+                child: Detail(
+              arguments: settings.arguments,
+            ));
+        }
+
+        return null;
+        // print("GENERATE ROUTE");
+        // return MaterialPageRoute(builder: (context) => TestScreen());
+      },
       home: MainTabBar(),
     );
   }

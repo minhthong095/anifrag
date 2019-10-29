@@ -11,16 +11,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Detail extends StatefulWidget {
-  final String imagePath;
-  final String tagPrefix;
+  static const String nameRoute = '/detail';
 
-  const Detail({@required this.imagePath, @required this.tagPrefix});
+  final DetailArguments arguments;
+
+  const Detail({@required this.arguments});
 
   @override
-  $Detail createState() => $Detail();
+  _Detail createState() => _Detail();
 }
 
-class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
+class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
   static final double _paddingTopImage = 20;
   final double _mergeGap = 30;
   final double _heightImage = 320 + _paddingTopImage;
@@ -30,7 +31,6 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
   Animation<double> _animationCircle;
   Animation<double> _animationPaddingCircle;
   Animation<double> _animationOpacityCircle;
-
   AnimationController _controller;
 
   @override
@@ -46,7 +46,6 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
     _animationOpacityCircle = Tween<double>(begin: 0, end: 1)
         .chain(CurveTween(curve: Curves.easeInQuint))
         .animate(_controller);
-
     _controller.forward();
     super.initState();
   }
@@ -127,8 +126,9 @@ class $Detail extends State<Detail> with SingleTickerProviderStateMixin {
                           onTap: () {},
                           child: HeroImage(
                             isShadow: true,
-                            tag: widget.tagPrefix + widget.imagePath,
-                            path: widget.imagePath,
+                            tag: widget.arguments.tagPrefix +
+                                widget.arguments.imagePath,
+                            path: widget.arguments.imagePath,
                             height: _heightImage,
                             fit: BoxFit.fill,
                           ),
@@ -250,7 +250,7 @@ class _Content extends StatelessWidget {
                 top: false,
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: $Detail.paddingContent),
+                      EdgeInsets.symmetric(horizontal: _Detail.paddingContent),
                   child: DetailTabbar(),
                 ),
               )
@@ -258,4 +258,11 @@ class _Content extends StatelessWidget {
           ),
         ),
       );
+}
+
+class DetailArguments {
+  final String imagePath;
+  final String tagPrefix;
+
+  const DetailArguments({@required this.imagePath, @required this.tagPrefix});
 }

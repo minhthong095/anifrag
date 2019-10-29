@@ -30,3 +30,9 @@ class PathSvg {
   static const String home = _baseUrl + 'home.svg';
   static const String find = _baseUrl + 'find.svg';
 }
+
+class PathLottie {
+  static const String _baseUrl = 'asset/lottie/';
+
+  static const String loading = _baseUrl + 'loading.json';
+}
