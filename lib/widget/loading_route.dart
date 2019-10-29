@@ -17,6 +17,9 @@ class LoadingRoute extends PopupRoute {
   String get barrierLabel => '';
 
   @override
+  bool get maintainState => false;
+
+  @override
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
     return Center(

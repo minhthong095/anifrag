@@ -5,6 +5,7 @@ import 'package:Anifrag/widget/detail_tabbar.dart';
 
 import 'package:Anifrag/widget/comment.dart';
 import 'package:Anifrag/widget/hero_image.dart';
+import 'package:Anifrag/widget/loading_route.dart';
 import 'package:Anifrag/widget/text_percent.dart';
 import 'package:Anifrag/widget/text_star.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class Detail extends StatefulWidget {
 
   final DetailArguments arguments;
 
-  const Detail({@required this.arguments});
+  const Detail({this.arguments});
 
   @override
   _Detail createState() => _Detail();
@@ -123,7 +124,14 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            // Navigator.of(context)
+                            //     .pushNamed(LoadingRoute.nameRoute);
+                            // await new Future.delayed(
+                            //     const Duration(seconds: 3));
+                            // Navigator.of(context).popUntil(
+                            //     ModalRoute.withName(Detail.nameRoute));
+                          },
                           child: HeroImage(
                             isShadow: true,
                             tag: widget.arguments.tagPrefix +

@@ -61,9 +61,10 @@ class _Item extends StatelessWidget {
       scale: scale,
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(Detail.nameRoute,
-              arguments:
-                  DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'));
+          Navigator.of(context).push(DetailTransition(
+              child: Detail(
+            arguments: DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'),
+          )));
         },
         child: HeroImage(
           path: imagePath,

@@ -20,7 +20,7 @@ class _TestScreen extends State<TestScreen> {
                   color: Colors.white,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(LoadingRoute());
+                      // Navigator.of(context).push(LoadingRoute());
                     },
                     child: Center(
                       child: Text('TEST SCREEN'),
@@ -28,12 +28,14 @@ class _TestScreen extends State<TestScreen> {
                   )),
             ),
             CupertinoButton(
-              onPressed: () {
-                Navigator.popUntil(context, (route) {
-                  print('Route ' + route.toString());
-                  Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
-                  return false;
-                });
+              onPressed: () async {
+                // Navigator.popUntil(context, (route) {
+                //   print('Route ' + route.toString());
+                //   return false;
+                // });
+                // Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
+                // await new Future.delayed(const Duration(seconds: 3));
+                // Navigator.of(context).popUntil(ModalRoute.withName('/'));
               },
               child: Text('Button'),
             )

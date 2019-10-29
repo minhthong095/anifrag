@@ -29,10 +29,11 @@ class ListImageHome extends StatelessWidget {
           padding: EdgeInsets.only(right: 10),
           child: InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed(Detail.nameRoute,
-                  arguments: DetailArguments(
-                      tagPrefix: heroTagPrefix,
-                      imagePath: listImagePath[index]));
+              Navigator.of(context).push(DetailTransition(
+                  child: Detail(
+                arguments: DetailArguments(
+                    imagePath: listImagePath[index], tagPrefix: heroTagPrefix),
+              )));
             },
             child: HeroImage(
               path: listImagePath[index],
