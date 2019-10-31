@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +18,8 @@ class _Search extends State<Search> {
         body: SafeArea(
           bottom: false,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.only(
+                left: 10, right: 10, top: Platform.isAndroid ? 15 : 0),
             child: Column(
               children: <Widget>[
                 Flexible(

@@ -1,10 +1,12 @@
 import 'package:Anifrag/screen/detail.dart';
 import 'package:flutter/material.dart';
 
-class DetailTransition extends PageRouteBuilder {
-  DetailTransition({@required Detail child})
+class PageRouteBlank extends PageRouteBuilder {
+  PageRouteBlank(
+      {@required Detail child, @required RouteSettings routeSettings})
       : super(
-            transitionDuration: Duration(milliseconds: 500),
+            settings: routeSettings,
+            transitionDuration: Duration(milliseconds: 0),
             pageBuilder: (context, animation, secondAnimation) => child);
 
   // For no animation, both in and out.

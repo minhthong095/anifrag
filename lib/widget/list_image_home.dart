@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/screen/detail.dart';
-import 'package:Anifrag/transition/detail_transition.dart';
 import 'package:Anifrag/widget/hero_image.dart';
 import 'package:flutter/material.dart';
 
@@ -29,11 +28,11 @@ class ListImageHome extends StatelessWidget {
           padding: EdgeInsets.only(right: 10),
           child: InkWell(
             onTap: () {
-              Navigator.of(context).push(DetailTransition(
-                  child: Detail(
-                arguments: DetailArguments(
-                    imagePath: listImagePath[index], tagPrefix: heroTagPrefix),
-              )));
+              // Navigator.of(context).push(PageRouteBlank(
+              //     child: Detail(
+              //   arguments: DetailArguments(
+              //       imagePath: listImagePath[index], tagPrefix: heroTagPrefix),
+              // )));
             },
             child: HeroImage(
               path: listImagePath[index],

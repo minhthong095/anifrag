@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/screen/detail.dart';
-import 'package:Anifrag/transition/detail_transition.dart';
 import 'package:Anifrag/widget/hero_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,10 +60,15 @@ class _Item extends StatelessWidget {
       scale: scale,
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(DetailTransition(
-              child: Detail(
-            arguments: DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'),
-          )));
+          // Navigator.of(context).push(DetailTransition(
+          //     child: Detail(
+          //   arguments: DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'),
+          // )));
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mod));
+          // Navigator.pop(context)
+          Navigator.of(context).pushNamed(Detail.nameRoute,
+              arguments:
+                  DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'));
         },
         child: HeroImage(
           path: imagePath,

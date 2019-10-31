@@ -124,9 +124,9 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            // Navigator.of(context)
-                            //     .pushNamed(LoadingRoute.nameRoute);
+                          onTap: () async {
+                            Navigator.of(context)
+                                .pushNamed(LoadingRoute.nameRoute);
                             // await new Future.delayed(
                             //     const Duration(seconds: 3));
                             // Navigator.of(context).popUntil(
