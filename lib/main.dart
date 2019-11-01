@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   // All PageRoute in onGenerateRout must be declare RouteSetting.
   // All routes must be declare in onGeneratRoute also.
+  // settings parameter must be implement.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,14 +47,14 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case Detail.nameRoute:
             final detailArgs = settings.arguments as DetailArguments;
-            return PageRouteBlank(
-                routeSettings: RouteSettings(
+            return PageRouteBuilder(
+                settings: RouteSettings(
                     arguments: settings.arguments, name: Detail.nameRoute),
-                child: Detail(
-                  arguments: DetailArguments(
-                      imagePath: detailArgs.imagePath,
-                      tagPrefix: detailArgs.tagPrefix),
-                ));
+                pageBuilder: (context, animation, secondAnimation) => Detail(
+                      arguments: DetailArguments(
+                          imagePath: detailArgs.imagePath,
+                          tagPrefix: detailArgs.tagPrefix),
+                    ));
           case LoadingRoute.nameRoute:
             return LoadingRoute();
         }

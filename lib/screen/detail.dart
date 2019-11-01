@@ -127,10 +127,10 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                           onTap: () async {
                             Navigator.of(context)
                                 .pushNamed(LoadingRoute.nameRoute);
-                            // await new Future.delayed(
-                            //     const Duration(seconds: 3));
-                            // Navigator.of(context).popUntil(
-                            //     ModalRoute.withName(Detail.nameRoute));
+                            await new Future.delayed(
+                                const Duration(seconds: 3));
+                            Navigator.of(context).popUntil(
+                                ModalRoute.withName(Detail.nameRoute));
                           },
                           child: HeroImage(
                             isShadow: true,
