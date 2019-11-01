@@ -29,6 +29,8 @@ class PathSvg {
 
   static const String home = _baseUrl + 'home.svg';
   static const String find = _baseUrl + 'find.svg';
+  static const String mail = _baseUrl + 'mail.svg';
+  static const String lock = _baseUrl + 'lock.svg';
 }
 
 class PathLottie {

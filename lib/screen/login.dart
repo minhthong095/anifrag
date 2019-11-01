@@ -1,7 +1,9 @@
 import 'package:Anifrag/config/app_color.dart';
+import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/widget/no_splash_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -44,6 +46,7 @@ class Login extends StatelessWidget {
                   width: double.infinity,
                 ),
                 _UnderlineText(
+                  fontSize: 13,
                   text: 'FORGET PASSWORD?',
                 ),
                 SizedBox(
@@ -120,11 +123,27 @@ class _Input extends StatelessWidget {
           data: ThemeData(
             splashFactory: NoSplashFactory(),
           ),
-          child: TextFormField(
-            obscureText: encrypted,
-            cursorColor: AppColor.yellow,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(border: InputBorder.none),
+          child: Row(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: SizedBox.fromSize(
+                  size: Size(16, 16),
+                  child: SvgPicture.asset(
+                    encrypted ? PathSvg.lock : PathSvg.mail,
+                    color: AppColor.yellow,
+                  ),
+                ),
+              ),
+              Flexible(
+                child: TextFormField(
+                  obscureText: encrypted,
+                  cursorColor: AppColor.yellow,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              )
+            ],
           ),
         ),
       );
@@ -132,13 +151,16 @@ class _Input extends StatelessWidget {
 
 class _UnderlineText extends StatelessWidget {
   final String text;
+  final double fontSize;
 
-  const _UnderlineText({@required this.text});
+  const _UnderlineText({@required this.text, this.fontSize});
 
   @override
   Widget build(BuildContext context) => Text(
         text,
         style: TextStyle(
-            color: Colors.white, decoration: TextDecoration.underline),
+            fontSize: this.fontSize,
+            color: Colors.white,
+            decoration: TextDecoration.underline),
       );
 }
