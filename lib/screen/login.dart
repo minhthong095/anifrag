@@ -4,8 +4,19 @@ import 'package:Anifrag/widget/no_splash_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rxdart/subjects.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  // -1 no one
+  // 0 username
+  // 1 password
+  BehaviorSubject<int> _behaviorWhoFocus = BehaviorSubject.seeded(-1);
+
   @override
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: AppColor.backgroundColor,
@@ -17,6 +28,7 @@ class Login extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
+                _behaviorWhoFocus.sink.add(-1);
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: Container(
@@ -38,7 +50,15 @@ class Login extends StatelessWidget {
                     _UserPassword(
                       text: 'User Name',
                     ),
-                    _Input(),
+                    StreamBuilder(
+                      stream: _behaviorWhoFocus.stream,
+                      builder: (context, AsyncSnapshot<int> snapshot) => _Input(
+                        glow: snapshot.data == 0,
+                        onFocus: () {
+                          _behaviorWhoFocus.sink.add(0);
+                        },
+                      ),
+                    ),
                     SizedBox(
                       height: 50,
                       width: 1,
@@ -46,8 +66,15 @@ class Login extends StatelessWidget {
                     _UserPassword(
                       text: 'Password',
                     ),
-                    _Input(
-                      encrypted: true,
+                    StreamBuilder<int>(
+                      stream: _behaviorWhoFocus.stream,
+                      builder: (context, AsyncSnapshot<int> snapshot) => _Input(
+                        encrypted: true,
+                        glow: snapshot.data == 1,
+                        onFocus: () {
+                          _behaviorWhoFocus.sink.add(1);
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: 30,
@@ -73,7 +100,7 @@ class Login extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      constraints: BoxConstraints.expand(height: 100),
+                      constraints: BoxConstraints.expand(height: 120),
                       child: Align(
                         alignment: Alignment.bottomLeft,
                         child: RichText(
@@ -101,6 +128,12 @@ class Login extends StatelessWidget {
           ),
         ),
       ));
+
+  @override
+  void dispose() {
+    _behaviorWhoFocus.close();
+    super.dispose();
+  }
 }
 
 class _UserPassword extends StatelessWidget {
@@ -118,10 +151,27 @@ class _UserPassword extends StatelessWidget {
       );
 }
 
-class _Input extends StatelessWidget {
+class _Input extends StatefulWidget {
   final bool encrypted;
+  final bool glow;
+  final Function onFocus;
 
-  const _Input({this.encrypted = false});
+  _Input({this.encrypted = false, this.glow = false, @required this.onFocus});
+
+  @override
+  __InputState createState() => __InputState();
+}
+
+class __InputState extends State<_Input> {
+  final focusNode = FocusNode();
+
+  @override
+  void initState() {
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) widget.onFocus();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) => Container(
@@ -142,14 +192,14 @@ class _Input extends StatelessWidget {
                 child: SizedBox.fromSize(
                   size: Size(16, 16),
                   child: SvgPicture.asset(
-                    encrypted ? PathSvg.lock : PathSvg.mail,
-                    color: AppColor.yellow,
-                  ),
+                      widget.encrypted ? PathSvg.lock : PathSvg.mail,
+                      color: widget.glow ? AppColor.yellow : Colors.white),
                 ),
               ),
               Flexible(
                 child: TextFormField(
-                  obscureText: encrypted,
+                  focusNode: focusNode,
+                  obscureText: widget.encrypted,
                   cursorColor: AppColor.yellow,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(border: InputBorder.none),
