@@ -12,79 +12,83 @@ class Login extends StatelessWidget {
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 100,
-                  width: double.infinity,
-                ),
-                Text(
-                  'Sign In',
-                  style: TextStyle(color: Colors.white, fontSize: 30),
-                ),
-                SizedBox(
-                  height: 40,
-                  width: double.infinity,
-                ),
-                _UserPassword(
-                  text: 'User Name',
-                ),
-                _Input(),
-                SizedBox(
-                  height: 50,
-                  width: double.infinity,
-                ),
-                _UserPassword(
-                  text: 'Password',
-                ),
-                _Input(
-                  encrypted: true,
-                ),
-                SizedBox(
-                  height: 30,
-                  width: double.infinity,
-                ),
-                _UnderlineText(
-                  fontSize: 13,
-                  text: 'FORGET PASSWORD?',
-                ),
-                SizedBox(
-                  height: 40,
-                  width: double.infinity,
-                ),
-                Container(
-                  width: double.infinity,
-                  child: CupertinoButton(
-                    child: Text(
-                      'SIGN IN',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    color: AppColor.yellow,
-                    onPressed: () {},
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 100,
+                    width: double.infinity,
                   ),
-                ),
-                Expanded(
-                    child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: RichText(
-                    text: TextSpan(children: [
-                      WidgetSpan(
-                          child: Text(
-                        "Don't have an account? ",
+                  Text(
+                    'Sign In',
+                    style: TextStyle(color: Colors.white, fontSize: 30),
+                  ),
+                  SizedBox(
+                    height: 40,
+                    width: double.infinity,
+                  ),
+                  _UserPassword(
+                    text: 'User Name',
+                  ),
+                  _Input(),
+                  SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                  ),
+                  _UserPassword(
+                    text: 'Password',
+                  ),
+                  _Input(
+                    encrypted: true,
+                  ),
+                  SizedBox(
+                    height: 30,
+                    width: double.infinity,
+                  ),
+                  _UnderlineText(
+                    fontSize: 13,
+                    text: 'FORGET PASSWORD?',
+                  ),
+                  SizedBox(
+                    height: 40,
+                    width: double.infinity,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: CupertinoButton(
+                      child: Text(
+                        'SIGN IN',
                         style: TextStyle(color: Colors.white),
-                      )),
-                      WidgetSpan(
-                          child: Text(
-                        "Sign up",
-                        style: TextStyle(
-                            color: Colors.white,
-                            decoration: TextDecoration.underline),
-                      ))
-                    ]),
+                      ),
+                      color: AppColor.yellow,
+                      onPressed: () {},
+                    ),
                   ),
-                )),
-              ],
+                  Container(
+                    constraints: BoxConstraints.expand(height: 100),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: RichText(
+                        text: TextSpan(children: [
+                          WidgetSpan(
+                              child: Text(
+                            "Don't have an account? ",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                          WidgetSpan(
+                              child: Text(
+                            "Sign up",
+                            style: TextStyle(
+                                color: Colors.white,
+                                decoration: TextDecoration.underline),
+                          ))
+                        ]),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
