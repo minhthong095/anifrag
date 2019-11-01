@@ -1,7 +1,7 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/screen/login.dart';
 import 'package:Anifrag/screen/main_tab.dart';
-import 'package:Anifrag/screen/test_screen.dart';
 import 'package:Anifrag/transition/page_route_blank.dart';
 import 'package:Anifrag/widget/category_demo.dart';
 import 'package:Anifrag/widget/detail_tabbar.dart';
@@ -33,16 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MainTabBar(),
-      // routes: {
-      //   '/': (context) => MainTabBar(),
-      //   Detail.nameRoute: (context) {
-      //     return Detail(
-      //       arguments: DetailArguments(
-      //           imagePath: PathImage.casablanca, tagPrefix: 'AtoB'),
-      //     );
-      //   }
-      // },
+      home: Login(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case Detail.nameRoute:
