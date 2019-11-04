@@ -132,13 +132,25 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                             Navigator.of(context).popUntil(
                                 ModalRoute.withName(Detail.nameRoute));
                           },
-                          child: HeroImage(
-                            isShadow: true,
-                            tag: widget.arguments.tagPrefix +
-                                widget.arguments.imagePath,
-                            path: widget.arguments.imagePath,
-                            height: _heightImage,
-                            fit: BoxFit.fill,
+                          // child: HeroImage(
+                          //   isShadow: true,
+                          //   tag: widget.arguments.tagPrefix +
+                          //       widget.arguments.imagePath,
+                          //   path: widget.arguments.imagePath,
+                          //   height: _heightImage,
+                          //   fit: BoxFit.fill,
+                          // ),
+                          child: Container(
+                            decoration: BoxDecoration(boxShadow: [
+                              BoxShadow(blurRadius: 30, color: Colors.grey)
+                            ]),
+                            child: HeroImage(
+                              tag: widget.arguments.tagPrefix +
+                                  widget.arguments.imagePath,
+                              path: widget.arguments.imagePath,
+                              height: _heightImage,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
                         Expanded(

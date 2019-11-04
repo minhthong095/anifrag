@@ -27,7 +27,7 @@ class _MainTabBarState extends State<MainTabBar> with TickerProviderStateMixin {
   Widget build(BuildContext context) => Scaffold(
         body: NoAnimationTabBarView(
           tabController: _tabController,
-          children: <Widget>[Search(), Home()],
+          children: <Widget>[Home(), Search()],
         ),
         bottomNavigationBar: TabBarSvg(
           tabController: _tabController,

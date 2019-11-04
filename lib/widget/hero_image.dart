@@ -1,3 +1,4 @@
+import 'package:Anifrag/widget/empty_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +9,10 @@ class HeroImage extends StatelessWidget {
   final String tag;
   final FilterQuality filterQuality;
   final bool normalMode;
-  final bool isShadow;
   const HeroImage(
       {@required this.tag,
       @required this.path,
       this.normalMode = true,
-      this.isShadow = false,
       this.height,
       this.fit,
       this.filterQuality = FilterQuality.none});
@@ -26,22 +25,21 @@ class HeroImage extends StatelessWidget {
         child: _borderImage(),
       );
     } else
-      return _borderImage();
+      // return _borderImage();
+      // return ClipRRect(
+      //   borderRadius: BorderRadius.circular(7.0),
+      //   child: EmptyImage(),
+      // );
+      return EmptyImage();
   }
 
-  Widget _borderImage() => Container(
-        decoration: isShadow
-            ? BoxDecoration(
-                boxShadow: [BoxShadow(blurRadius: 30, color: Colors.grey)])
-            : null,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(7.0),
-          child: Image.asset(
-            path,
-            height: height,
-            fit: fit,
-            filterQuality: filterQuality,
-          ),
+  Widget _borderImage() => ClipRRect(
+        borderRadius: BorderRadius.circular(7.0),
+        child: Image.asset(
+          path,
+          height: height,
+          fit: fit,
+          filterQuality: filterQuality,
         ),
       );
 }

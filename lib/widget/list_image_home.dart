@@ -35,6 +35,7 @@ class ListImageHome extends StatelessWidget {
               // )));
             },
             child: HeroImage(
+              normalMode: false,
               path: listImagePath[index],
               tag: heroTagPrefix + listImagePath[index],
             ),
