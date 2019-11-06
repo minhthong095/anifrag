@@ -7,14 +7,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.38.5"
-  analyzer_plugin:
-    dependency: transitive
-    description:
-      name: analyzer_plugin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1"
+    version: "0.34.3"
   args:
     dependency: transitive
     description:
@@ -42,42 +35,42 @@ packages:
       name: build
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "1.1.0"
   build_config:
     dependency: transitive
     description:
       name: build_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1+1"
+    version: "0.3.2"
   build_daemon:
     dependency: transitive
     description:
       name: build_daemon
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "0.2.3"
   build_resolvers:
     dependency: transitive
     description:
       name: build_resolvers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "0.2.3"
   build_runner:
     dependency: "direct dev"
     description:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.1"
+    version: "1.2.3"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.0"
+    version: "2.0.1"
   built_collection:
     dependency: transitive
     description:
@@ -91,14 +84,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.8.2"
-  built_value_generator:
-    dependency: transitive
-    description:
-      name: built_value_generator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.8.2"
+    version: "6.7.1"
   cached_network_image:
     dependency: "direct main"
     description:
@@ -168,7 +154,14 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.3"
+    version: "1.2.3"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.4"
   fixnum:
     dependency: transitive
     description:
@@ -213,7 +206,7 @@ packages:
       name: front_end
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.27"
+    version: "0.1.9+1"
   glob:
     dependency: transitive
     description:
@@ -256,6 +249,24 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.3"
+  inject:
+    dependency: "direct main"
+    description:
+      path: "package/inject"
+      ref: HEAD
+      resolved-ref: "4ffd3d339d8b776b2bec8d95ae6d3d168856e76c"
+      url: "https://github.com/google/inject.dart.git"
+    source: git
+    version: "1.0.0-alpha"
+  inject_generator:
+    dependency: "direct dev"
+    description:
+      path: "package/inject_generator"
+      ref: HEAD
+      resolved-ref: "4ffd3d339d8b776b2bec8d95ae6d3d168856e76c"
+      url: "https://github.com/google/inject.dart.git"
+    source: git
+    version: "1.0.0-alpha"
   io:
     dependency: transitive
     description:
@@ -276,21 +287,21 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "2.4.0"
   json_serializable:
     dependency: "direct dev"
     description:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.3"
+    version: "3.1.0"
   kernel:
     dependency: transitive
     description:
       name: kernel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.27"
+    version: "0.3.9+1"
   logging:
     dependency: transitive
     description:
@@ -396,6 +407,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  plugin:
+    dependency: transitive
+    description:
+      name: plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0+3"
   pool:
     dependency: transitive
     description:
@@ -463,7 +481,7 @@ packages:
       name: source_gen
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.4+6"
+    version: "0.9.4+1"
   source_span:
     dependency: transitive
     description:
