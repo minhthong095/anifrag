@@ -15,8 +15,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
 
-@provide
+import 'di/module.dart';
+
 class MyApp extends StatelessWidget {
+  final Requesting2 requesting;
+  final Requesting2 requestingWithValue;
+
+  @provide
+  MyApp(this.requesting, this.requestingWithValue);
+
   // This widget is the root of your application.
   // All PageRoute in onGenerateRout must be declare RouteSetting.
   // All routes must be declare in onGeneratRoute also.
@@ -24,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InitialSplash(),
+      home: InitialSplash(requesting, requestingWithValue),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case Detail.nameRoute:

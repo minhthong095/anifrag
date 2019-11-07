@@ -1,5 +1,6 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/screen/initial_splash.dart';
 import 'package:Anifrag/screen/login.dart';
 import 'package:Anifrag/screen/main_tab.dart';
@@ -14,14 +15,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'di/module.dart';
 import 'my_app.dart';
 
-void main() {
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.white, // Color for Android
       statusBarBrightness:
           Brightness.dark // Dark == white status bar -- for IOS.
       ));
 
-  runApp(MyApp());
+  final container = await ComponentInjector.create(Module());
+  runApp(container.app);
 }
