@@ -1,29 +1,21 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/screen/detail.dart';
-import 'package:Anifrag/screen/initial_splash.dart';
-import 'package:Anifrag/screen/login.dart';
-import 'package:Anifrag/screen/main_tab.dart';
-import 'package:Anifrag/screen/test_cached_image.dart';
-import 'package:Anifrag/transition/page_route_blank.dart';
-import 'package:Anifrag/widget/category_demo.dart';
-import 'package:Anifrag/widget/detail_tabbar.dart';
-import 'package:Anifrag/widget/loading_route.dart';
-import 'package:Anifrag/widget/story_overview.dart';
+import 'package:Anifrag/ui/screen/detail.dart';
+import 'package:Anifrag/ui/screen/initial_splash.dart';
+import 'package:Anifrag/ui/screen/login.dart';
+import 'package:Anifrag/ui/screen/main_tab.dart';
+import 'package:Anifrag/ui/screen/test_cached_image.dart';
+import 'package:Anifrag/ui/transition/page_route_blank.dart';
+import 'package:Anifrag/ui/widget/category_demo.dart';
+import 'package:Anifrag/ui/widget/detail_tabbar.dart';
+import 'package:Anifrag/ui/widget/loading_route.dart';
+import 'package:Anifrag/ui/widget/story_overview.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
 
-import 'di/module.dart';
-
 class MyApp extends StatelessWidget {
-  final Requesting2 requesting;
-  final Requesting2 requestingWithValue;
-
-  @provide
-  MyApp(this.requesting, this.requestingWithValue);
-
   // This widget is the root of your application.
   // All PageRoute in onGenerateRout must be declare RouteSetting.
   // All routes must be declare in onGeneratRoute also.
@@ -31,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InitialSplash(requesting, requestingWithValue),
+      home: InitialSplash(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case Detail.nameRoute:

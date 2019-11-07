@@ -1,7 +1,7 @@
 import 'package:Anifrag/config/app_color.dart';
-import 'package:Anifrag/widget/more_like_this.dart';
-import 'package:Anifrag/widget/story_overview.dart';
-import 'package:Anifrag/widget/tab_bar_remove_center.dart' as custom;
+import 'package:Anifrag/ui/widget/more_like_this.dart';
+import 'package:Anifrag/ui/widget/story_overview.dart';
+import 'package:Anifrag/ui/widget/tab_bar_remove_center.dart' as custom;
 import 'package:flutter/material.dart';
 
 import 'no_splash_factory.dart';

@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/screen/detail.dart';
-import 'package:Anifrag/widget/hero_image.dart';
+import 'package:Anifrag/ui/screen/detail.dart';
+import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/material.dart';
 
 class ListImageHome extends StatelessWidget {

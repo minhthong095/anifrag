@@ -1,4 +1,4 @@
-import 'package:Anifrag/screen/detail.dart';
+import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:flutter/material.dart';
 
 class PageRouteBlank extends PageRouteBuilder {

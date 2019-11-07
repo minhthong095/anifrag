@@ -1,13 +1,13 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/widget/button_circle.dart';
-import 'package:Anifrag/widget/detail_tabbar.dart';
+import 'package:Anifrag/ui/widget/button_circle.dart';
+import 'package:Anifrag/ui/widget/detail_tabbar.dart';
 
-import 'package:Anifrag/widget/comment.dart';
-import 'package:Anifrag/widget/hero_image.dart';
-import 'package:Anifrag/widget/loading_route.dart';
-import 'package:Anifrag/widget/text_percent.dart';
-import 'package:Anifrag/widget/text_star.dart';
+import 'package:Anifrag/ui/widget/comment.dart';
+import 'package:Anifrag/ui/widget/hero_image.dart';
+import 'package:Anifrag/ui/widget/loading_route.dart';
+import 'package:Anifrag/ui/widget/text_percent.dart';
+import 'package:Anifrag/ui/widget/text_star.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

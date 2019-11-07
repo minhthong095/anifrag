@@ -1,14 +1,15 @@
+import 'package:Anifrag/network/apis.dart';
+import 'package:inject/inject.dart';
+
 class BlocInitialSplash {
   // inject IAPIs ( with include Requesting in there )
-}
+  final APIs _api;
 
-abstract class BaseAPI {
-  // Call all APIs?
-  // Because this app has few api so it convenient put all in here.
-  // Just implement the APIs
-  // Inject Requesting in here
+  @provide
+  BlocInitialSplash(this._api);
 
-  void getConfiguration();
-
-  void getList();
+  void init() {
+    print("INIT BLOC INITIAL");
+    _api.getConfiguration();
+  }
 }

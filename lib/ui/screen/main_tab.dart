@@ -1,9 +1,9 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/screen/home.dart';
-import 'package:Anifrag/screen/search.dart';
-import 'package:Anifrag/widget/no_animation_tabbar_view.dart';
-import 'package:Anifrag/widget/no_splash_factory.dart';
+import 'package:Anifrag/ui/screen/home.dart';
+import 'package:Anifrag/ui/screen/search.dart';
+import 'package:Anifrag/ui/widget/no_animation_tabbar_view.dart';
+import 'package:Anifrag/ui/widget/no_splash_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
