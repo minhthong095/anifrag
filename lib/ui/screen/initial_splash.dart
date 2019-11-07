@@ -1,3 +1,4 @@
+import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/network/requesting.dart';
@@ -5,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
 
 class InitialSplash extends StatefulWidget {
-  const InitialSplash();
+  final BlocInitialSplash bloc;
+
+  const InitialSplash(this.bloc);
 
   @override
   _InitialSplashState createState() => _InitialSplashState();
@@ -29,10 +32,15 @@ class _InitialSplashState extends State<InitialSplash> {
       backgroundColor: AppColor.backgroundColor,
       body: Container(
         child: Center(
-            child: Image.asset(
-          PathImage.splash,
-          height: 200,
-          width: 200,
+            child: InkWell(
+          onTap: () {
+            widget.bloc.init();
+          },
+          child: Image.asset(
+            PathImage.splash,
+            height: 200,
+            width: 200,
+          ),
         )),
       ),
     );

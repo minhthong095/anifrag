@@ -1,3 +1,4 @@
+import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
@@ -20,14 +21,24 @@ class MyApp extends StatelessWidget {
   // All PageRoute in onGenerateRout must be declare RouteSetting.
   // All routes must be declare in onGeneratRoute also.
   // settings parameter must be implement.
+
+  final BlocInitialSplash _blocInitialSplash;
+
+  @provide
+  MyApp(this._blocInitialSplash);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InitialSplash(),
+      home: InitialSplash(_blocInitialSplash),
       onGenerateRoute: (settings) {
         switch (settings.name) {
+
+          ///
           case Detail.nameRoute:
             final detailArgs = settings.arguments as DetailArguments;
+
+            ///
             return PageRouteBuilder(
                 settings: _addName(settings, Detail.nameRoute),
                 pageBuilder: (context, animation, secondAnimation) => Detail(
@@ -35,6 +46,8 @@ class MyApp extends StatelessWidget {
                           imagePath: detailArgs.imagePath,
                           tagPrefix: detailArgs.tagPrefix),
                     ));
+
+          ///
           case LoadingRoute.nameRoute:
             return LoadingRoute();
         }

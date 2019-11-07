@@ -10,7 +10,6 @@ abstract class AbsRequesting {
 class Requesting extends AbsRequesting {
   final Dio _dio;
 
-  @provide
   Requesting(this._dio);
 
   @override

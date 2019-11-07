@@ -5,7 +5,6 @@ class BlocInitialSplash {
   // inject IAPIs ( with include Requesting in there )
   final APIs _api;
 
-  @provide
   BlocInitialSplash(this._api);
 
   void init() {

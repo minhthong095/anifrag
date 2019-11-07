@@ -1,5 +1,14 @@
-class Url {
-  static const String baseUrl = 'https://api.themoviedb.org/3';
+import 'package:inject/inject.dart';
 
-  static const String configuration = '/configuration';
+abstract class AbsUrl {
+  String baseUrl;
+  String configuration;
+}
+
+class Url extends AbsUrl {
+  @override
+  String baseUrl = "https://api.themoviedb.org/3";
+
+  @override
+  String configuration = "/configuration";
 }

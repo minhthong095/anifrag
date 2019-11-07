@@ -28,5 +28,6 @@ void main() async {
 
   final container =
       await ComponentInjector.create(ModuleNetwork(), ModuleBloc());
+  // final container = await ComponentInjector.create(ModuleNetwork());
   runApp(container.app);
 }

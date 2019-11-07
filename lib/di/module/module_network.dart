@@ -9,16 +9,21 @@ import 'package:inject/inject.dart';
 class ModuleNetwork {
   @provide
   @singleton
-  Dio dio() => Dio()
-    ..options.baseUrl = Url.baseUrl
-    ..options.connectTimeout = 5000
-    ..options.sendTimeout = 5000
-    ..options.headers = {'Authentication': 'Bearer ' + ApiKey.v3};
+  Url url() => Url();
 
   @provide
   @singleton
-  AbsRequesting requesting(Dio dio) => Requesting(dio);
+  Dio dio(Url url) {
+    return Dio()
+      ..options.baseUrl = url.baseUrl
+      ..options.connectTimeout = 5000
+      ..options.sendTimeout = 5000
+      ..options.headers = {'Authentication': 'Bearer ' + ApiKey.v3};
+  }
 
   @provide
-  AbsAPI api(Requesting requesting) => APIs(requesting);
+  Requesting requesting(Dio dio) => Requesting(dio);
+
+  @provide
+  APIs api(Requesting requesting, Url url) => APIs(requesting, url);
 }
