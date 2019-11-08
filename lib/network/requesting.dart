@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:inject/inject.dart';
 
 abstract class AbsRequesting {
-  void sendGET(String url, {Map<String, dynamic> args});
+  Future<Response<T>> sendGET<T>(String url, {Map<String, dynamic> args});
 }
 
 class Requesting extends AbsRequesting {
@@ -13,9 +13,9 @@ class Requesting extends AbsRequesting {
   Requesting(this._dio);
 
   @override
-  void sendGET(String url, {Map<String, dynamic> args}) async {
-    final b = await _dio.get(url, queryParameters: args);
-    final c = 1;
+  Future<Response<T>> sendGET<T>(String url,
+      {Map<String, dynamic> args}) async {
     print("SEND GEND");
+    return await _dio.get(url, queryParameters: args);
   }
 }

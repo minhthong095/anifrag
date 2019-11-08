@@ -17,12 +17,7 @@ class InitialSplash extends StatefulWidget {
 // regular new instance bloc
 
 class _InitialSplashState extends State<InitialSplash> {
-  @override
-  void initState() {
-    // final a = widget.requestingWithValue;
-    // final b = widget.requesting;
-    super.initState();
-  }
+  int i = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +29,10 @@ class _InitialSplashState extends State<InitialSplash> {
         child: Center(
             child: InkWell(
           onTap: () {
-            widget.bloc.init();
+            if (i == 0) {
+              i++;
+              widget.bloc.init();
+            }
           },
           child: Image.asset(
             PathImage.splash,

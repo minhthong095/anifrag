@@ -8,7 +8,6 @@ class BlocInitialSplash {
   BlocInitialSplash(this._api);
 
   void init() {
-    print("INIT BLOC INITIAL");
     _api.getConfiguration();
   }
 }
