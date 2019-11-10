@@ -1,4 +1,3 @@
-import 'package:Anifrag/db/database_path.dart';
 import 'package:Anifrag/network/api_key.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/network/requesting.dart';

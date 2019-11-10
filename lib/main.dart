@@ -3,6 +3,7 @@ import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/di/module/module_bloc.dart';
 import 'package:Anifrag/di/module/module_network.dart';
+import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab.dart';
@@ -26,8 +27,8 @@ void main() async {
           Brightness.dark // Dark == white status bar -- for IOS.
       ));
 
-  final container =
-      await ComponentInjector.create(ModuleNetwork(), ModuleBloc());
+  final container = await ComponentInjector.create(
+      ModuleNetwork(), ModuleBloc(), ModuleStore());
   // final container = await ComponentInjector.create(ModuleNetwork());
   runApp(container.app);
 }

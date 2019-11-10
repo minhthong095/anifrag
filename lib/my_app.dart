@@ -1,6 +1,7 @@
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
@@ -23,9 +24,10 @@ class MyApp extends StatelessWidget {
   // settings parameter must be implement.
 
   final BlocInitialSplash _blocInitialSplash;
+  final LiveStore _liveStore;
 
   @provide
-  MyApp(this._blocInitialSplash);
+  MyApp(this._blocInitialSplash, this._liveStore);
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +37,15 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
 
           ///
+          case Login.nameRoute:
+            return PageRouteBuilder(
+                settings: _addName(settings, Login.nameRoute),
+                pageBuilder: (context, animation, secondAnimation) =>
+                    Login(_liveStore));
+
+          ///
           case Detail.nameRoute:
             final detailArgs = settings.arguments as DetailArguments;
-
-            ///
             return PageRouteBuilder(
                 settings: _addName(settings, Detail.nameRoute),
                 pageBuilder: (context, animation, secondAnimation) => Detail(
