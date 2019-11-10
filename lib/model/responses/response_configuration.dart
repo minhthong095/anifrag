@@ -1,7 +1,7 @@
-part 'model_configuration.g.dart';
+part 'response_configuration.g.dart';
 
 // @JsonSerializable()
-class ModelConfiguration {
+class ResponseConfiguration {
   final ModelConfigurationImages images;
 
   // @JsonKey(name: 'secure_base_url')
@@ -10,10 +10,10 @@ class ModelConfiguration {
   // @JsonKey(name: 'change_keys')
   final List<String> changeKeys;
 
-  ModelConfiguration({this.images, this.changeKeys, this.secureBaseUrl});
+  ResponseConfiguration({this.images, this.changeKeys, this.secureBaseUrl});
 
-  factory ModelConfiguration.fromJson(Map<String, dynamic> json) =>
-      _$ModelConfigurationFromJson(json);
+  factory ResponseConfiguration.fromJson(Map<String, dynamic> json) =>
+      _$ResponseConfigurationFromJson(json);
   Map<String, dynamic> toJson() => _$ModelConfigurationToJson(this);
 }
 
@@ -25,6 +25,6 @@ class ModelConfigurationImages {
   ModelConfigurationImages({this.posterSizes});
 
   factory ModelConfigurationImages.fromJson(Map<String, dynamic> json) =>
-      _$ModelConfigurationImagesFromJson(json);
+      _$ResponseConfigurationImagesFromJson(json);
   Map<String, dynamic> toJson() => _$ModelConfigurationImagesToJson(this);
 }

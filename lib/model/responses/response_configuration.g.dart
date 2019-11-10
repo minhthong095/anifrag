@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'model_configuration.dart';
+part of 'response_configuration.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ModelConfiguration _$ModelConfigurationFromJson(Map<String, dynamic> json) {
-  return ModelConfiguration(
+ResponseConfiguration _$ResponseConfigurationFromJson(
+    Map<String, dynamic> json) {
+  return ResponseConfiguration(
     images: json['images'] == null
         ? null
         : ModelConfigurationImages.fromJson(
@@ -18,14 +19,15 @@ ModelConfiguration _$ModelConfigurationFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ModelConfigurationToJson(ModelConfiguration instance) =>
+Map<String, dynamic> _$ModelConfigurationToJson(
+        ResponseConfiguration instance) =>
     <String, dynamic>{
       'images': instance.images,
       'secure_base_url': instance.secureBaseUrl,
       'change_keys': instance.changeKeys,
     };
 
-ModelConfigurationImages _$ModelConfigurationImagesFromJson(
+ModelConfigurationImages _$ResponseConfigurationImagesFromJson(
     Map<String, dynamic> json) {
   return ModelConfigurationImages(
     posterSizes:
