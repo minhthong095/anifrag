@@ -27,6 +27,8 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
 
   _i7.LiveStore _singletonLiveStore;
 
+  _i6.AppDb _singletonAppDb;
+
   static _i8.Future<_i1.ComponentInjector> create(
       _i3.ModuleNetwork moduleNetwork,
       _i2.ModuleBloc moduleBloc,
@@ -39,8 +41,8 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
 
   _i9.MyApp _createMyApp() =>
       _i9.MyApp(_createBlocInitialSplash(), _createLiveStore());
-  _i10.BlocInitialSplash _createBlocInitialSplash() =>
-      _moduleBloc.blocInitialSplash(_createAPIs(), _createLiveStore());
+  _i10.BlocInitialSplash _createBlocInitialSplash() => _moduleBloc
+      .blocInitialSplash(_createAPIs(), _createLiveStore(), _createAppDb());
   _i11.APIs _createAPIs() =>
       _moduleNetwork.api(_createRequesting(), _createUrl());
   _i12.Requesting _createRequesting() =>
@@ -49,6 +51,7 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   _i4.Url _createUrl() => _singletonUrl ??= _moduleNetwork.url();
   _i7.LiveStore _createLiveStore() =>
       _singletonLiveStore ??= _moduleStore.liveStore();
+  _i6.AppDb _createAppDb() => _singletonAppDb ??= _moduleStore.db();
   @override
   _i9.MyApp get app => _createMyApp();
 }

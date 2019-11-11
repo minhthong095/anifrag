@@ -3,7 +3,6 @@ import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/network/requesting.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'login.dart';
@@ -29,7 +28,7 @@ class _InitialSplashState extends State<InitialSplash> {
             child: InkWell(
           onTap: () {
             widget.bloc.init(() {
-              Navigator.of(context).pushNamed(Login.nameRoute);
+              // Navigator.of(context).pushNamed(Login.nameRoute);
             });
           },
           child: Image.asset(
