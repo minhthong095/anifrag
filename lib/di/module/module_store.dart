@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:Anifrag/store/data/configuration_image/offline_configuration_image.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:inject/inject.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,6 +15,10 @@ class ModuleStore {
   @provide
   @singleton
   AppDb db() => AppDb();
+
+  @provide
+  OfflineConfigurationImage offConfIma(AppDb db) =>
+      OfflineConfigurationImage(db);
 }
 
 class AppDb {
@@ -43,6 +48,7 @@ class AppDb {
         batch.commit();
       });
     });
+    await _db.close();
   }
 
   Future<Database> getDb() async {

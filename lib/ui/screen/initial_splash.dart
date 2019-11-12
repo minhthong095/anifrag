@@ -27,9 +27,7 @@ class _InitialSplashState extends State<InitialSplash> {
         child: Center(
             child: InkWell(
           onTap: () {
-            widget.bloc.init(() {
-              // Navigator.of(context).pushNamed(Login.nameRoute);
-            });
+            widget.bloc.init();
           },
           child: Image.asset(
             PathImage.splash,

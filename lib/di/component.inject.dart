@@ -10,6 +10,8 @@ import '../my_app.dart' as _i9;
 import '../bloc/bloc_initial_spalsh.dart' as _i10;
 import '../network/apis.dart' as _i11;
 import '../network/requesting.dart' as _i12;
+import '../store/data/configuration_image/offline_configuration_image.dart'
+    as _i13;
 
 class ComponentInjector$Injector implements _i1.ComponentInjector {
   ComponentInjector$Injector._(
@@ -41,8 +43,9 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
 
   _i9.MyApp _createMyApp() =>
       _i9.MyApp(_createBlocInitialSplash(), _createLiveStore());
-  _i10.BlocInitialSplash _createBlocInitialSplash() => _moduleBloc
-      .blocInitialSplash(_createAPIs(), _createLiveStore(), _createAppDb());
+  _i10.BlocInitialSplash _createBlocInitialSplash() =>
+      _moduleBloc.blocInitialSplash(_createAPIs(), _createLiveStore(),
+          _createAppDb(), _createOfflineConfigurationImage());
   _i11.APIs _createAPIs() =>
       _moduleNetwork.api(_createRequesting(), _createUrl());
   _i12.Requesting _createRequesting() =>
@@ -52,6 +55,8 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   _i7.LiveStore _createLiveStore() =>
       _singletonLiveStore ??= _moduleStore.liveStore();
   _i6.AppDb _createAppDb() => _singletonAppDb ??= _moduleStore.db();
+  _i13.OfflineConfigurationImage _createOfflineConfigurationImage() =>
+      _moduleStore.offConfIma(_createAppDb());
   @override
   _i9.MyApp get app => _createMyApp();
 }
