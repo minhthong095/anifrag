@@ -25,12 +25,12 @@ class HeroImage extends StatelessWidget {
         child: _borderImage(),
       );
     } else
-      // return _borderImage();
-      // return ClipRRect(
-      //   borderRadius: BorderRadius.circular(7.0),
-      //   child: EmptyImage(),
-      // );
-      return EmptyImage();
+      return _borderImage();
+    // return ClipRRect(
+    //   borderRadius: BorderRadius.circular(7.0),
+    //   child: EmptyImage(),
+    // );
+    // return EmptyImage();
   }
 
   Widget _borderImage() => ClipRRect(

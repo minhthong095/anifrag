@@ -2,21 +2,37 @@ import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/store/database_config.dart';
 import 'package:sqflite/sqlite_api.dart';
 
+import '../../app_db.dart';
+
 class OfflineConfigurationImage {
   final AppDb _appDb;
 
   OfflineConfigurationImage(this._appDb);
 
-  void insertPosterSizes(List<String> posterSizes) {
-    _appDb.getDb().then((db) {
-      db.transaction((txn) async {
-        posterSizes.forEach((poster) async {
-          await txn.rawInsert('INSERT INTO ?(?) VALUES(?)',
-              [TablePosterSize.tableName, TablePosterSize.columnValue, poster]);
-        });
+  void insertPosterSizesAndChangeKeys(
+      List<String> posterSizes, List<String> changeKeys) async {
+    final db = await _appDb.getDb();
+    await db.transaction((txn) async {
+      posterSizes.forEach((poster) async {
+        await txn.rawInsert(
+            'INSERT INTO ' +
+                TablePosterSize.tableName +
+                '(' +
+                TablePosterSize.columnValue +
+                ') VALUES(?)',
+            [poster]);
       });
-      db.close();
+      changeKeys.forEach((key) async {
+        await txn.rawInsert(
+            'INSERT INTO ' +
+                TableChangeKey.tableName +
+                '(' +
+                TableChangeKey.columnValue +
+                ') VALUES(?)',
+            [key]);
+      });
     });
+    await db.close();
   }
 }
 

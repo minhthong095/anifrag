@@ -71,7 +71,7 @@ class _Item extends StatelessWidget {
                   DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'));
         },
         child: HeroImage(
-          normalMode: false,
+          normalMode: true,
           path: imagePath,
           fit: BoxFit.fitWidth,
           tag: "AtoB" + imagePath,

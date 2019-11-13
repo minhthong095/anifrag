@@ -24,15 +24,15 @@ class MyApp extends StatelessWidget {
   // settings parameter must be implement.
 
   final BlocInitialSplash _blocInitialSplash;
-  final LiveStore _liveStore;
 
   @provide
-  MyApp(this._blocInitialSplash, this._liveStore);
+  MyApp(this._blocInitialSplash);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: InitialSplash(_blocInitialSplash),
+      // home: MainTabBar(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
 
@@ -40,8 +40,7 @@ class MyApp extends StatelessWidget {
           case Login.nameRoute:
             return PageRouteBuilder(
                 settings: _addName(settings, Login.nameRoute),
-                pageBuilder: (context, animation, secondAnimation) =>
-                    Login(_liveStore));
+                pageBuilder: (context, animation, secondAnimation) => Login());
 
           ///
           case Detail.nameRoute:

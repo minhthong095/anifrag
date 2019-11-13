@@ -142,7 +142,7 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                           // ),
                           child: Container(
                             decoration: BoxDecoration(boxShadow: [
-                              BoxShadow(blurRadius: 30, color: Colors.grey)
+                              BoxShadow(blurRadius: 30, color: Colors.grey[600])
                             ]),
                             child: HeroImage(
                               tag: widget.arguments.tagPrefix +

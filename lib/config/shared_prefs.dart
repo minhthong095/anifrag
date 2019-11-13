@@ -1,3 +1,3 @@
-class SharedPrefsKey {
+class SharedPrefKey {
   static const baseUrlImage = 'baseUrlImage';
 }

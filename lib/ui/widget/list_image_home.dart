@@ -33,9 +33,13 @@ class ListImageHome extends StatelessWidget {
               //   arguments: DetailArguments(
               //       imagePath: listImagePath[index], tagPrefix: heroTagPrefix),
               // )));
+              Navigator.pushNamed(context, Detail.nameRoute,
+                  arguments: DetailArguments(
+                      imagePath: listImagePath[index],
+                      tagPrefix: heroTagPrefix));
             },
             child: HeroImage(
-              normalMode: false,
+              normalMode: true,
               path: listImagePath[index],
               tag: heroTagPrefix + listImagePath[index],
             ),

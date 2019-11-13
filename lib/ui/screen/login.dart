@@ -1,6 +1,5 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/widget/no_splash_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,7 @@ import 'package:rxdart/subjects.dart';
 class Login extends StatefulWidget {
   static const String nameRoute = '/login';
 
-  final ILiveStore liveStore;
-
-  Login(this.liveStore);
+  Login();
 
   @override
   _LoginState createState() => _LoginState();
@@ -23,12 +20,6 @@ class _LoginState extends State<Login> {
   // 0 username
   // 1 password
   BehaviorSubject<int> _behaviorWhoFocus = BehaviorSubject.seeded(-1);
-
-  @override
-  void initState() {
-    final a = widget.liveStore;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
