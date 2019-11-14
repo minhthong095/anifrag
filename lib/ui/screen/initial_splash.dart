@@ -30,7 +30,7 @@ class _InitialSplashState extends State<InitialSplash> {
             child: InkWell(
           onTap: () {
             if (i == 0) {
-              i++;
+              // i++;
               widget.bloc.init();
             }
           },

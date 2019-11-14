@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:Anifrag/store/app_db.dart';
-import 'package:Anifrag/store/data/configuration_image/live_configuration_image.dart';
-import 'package:Anifrag/store/data/configuration_image/offline_configuration_image.dart';
+import 'package:Anifrag/store/live_store.dart';
+import 'package:Anifrag/store/offline/offline_configuration_image.dart';
 import 'package:inject/inject.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -14,7 +14,7 @@ class ModuleStore {
 
   @provide
   @singleton
-  LiveConfigurationImage liveConfIma() => LiveConfigurationImage();
+  LiveStore liveConfIma() => LiveStore();
 
   @provide
   OfflineConfigurationImage offConfIma(AppDb db) =>

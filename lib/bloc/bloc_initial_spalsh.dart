@@ -1,12 +1,8 @@
 import 'package:Anifrag/config/shared_prefs.dart';
-import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/app_db.dart';
-import 'package:Anifrag/store/data/configuration_image/live_configuration_image.dart';
-import 'package:Anifrag/store/data/configuration_image/offline_configuration_image.dart';
-import 'package:Anifrag/store/database_config.dart';
-import 'package:dio/dio.dart';
-import 'package:inject/inject.dart';
+import 'package:Anifrag/store/live_store.dart';
+import 'package:Anifrag/store/offline/offline_configuration_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -15,37 +11,42 @@ class BlocInitialSplash {
   final APIs _api;
   final AppDb _appDb;
   final OfflineConfigurationImage _offConfigurationImage;
-  final LiveConfigurationImage _liveConfigurationImage;
+  final LiveStore _liveStore;
 
   SharedPreferences _prefs;
 
-  BlocInitialSplash(this._api, this._appDb, this._offConfigurationImage,
-      this._liveConfigurationImage);
+  BlocInitialSplash(
+      this._api, this._appDb, this._offConfigurationImage, this._liveStore);
 
   void init() async {
-    String databasePath = await getDatabasesPath();
-    String path = databasePath + '/anifrag.db';
-    await deleteDatabase(path);
-    print("PATH DATABASE " + path);
+    // String databasePath = await getDatabasesPath();
+    // String path = databasePath + '/anifrag.db';
+    // await deleteDatabase(path);
+    // print("PATH DATABASE " + path);
 
-    _prefs = await SharedPreferences.getInstance();
+    // _prefs = await SharedPreferences.getInstance();
 
-    _initDb();
+    // _initDb();
 
-    _initConfiguration();
+    // _initConfiguration();
+    _initHomePageData();
   }
 
   void _initConfiguration() async {
     final configuration = await _api.getConfiguration();
+
     _offConfigurationImage.insertPosterSizesAndChangeKeys(
         configuration.images.posterSizes, configuration.changeKeys);
 
-    _liveConfigurationImage.secureBaseImgUrl = configuration.secureBaseUrl;
-    _liveConfigurationImage.posterSizes = configuration.images.posterSizes;
-    _liveConfigurationImage.changeKey = configuration.changeKeys;
+    _liveStore.responseConfiguration = configuration;
 
-    _prefs.setString(
-        SharedPrefKey.baseUrlImage, _liveConfigurationImage.secureBaseImgUrl);
+    _prefs.setString(SharedPrefKey.baseUrlImage, configuration.secureBaseUrl);
+  }
+
+  void _initHomePageData() async {
+    final categories = await _api.getCategories();
+    final homePageData = await _api.getHomePageList(16);
+    print("HIHI");
   }
 
   void _initDb() {

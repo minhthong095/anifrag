@@ -1,7 +1,6 @@
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';

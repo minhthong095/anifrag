@@ -6,6 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:inject/inject.dart';
 import 'package:sqflite/sqflite.dart';
 
+const baseUrlApiary = const Qualifier(#baseUrlApiary);
+
 @module
 class ModuleNetwork {
   @provide
@@ -14,9 +16,9 @@ class ModuleNetwork {
 
   @provide
   @singleton
-  Dio dio(Url url) {
+  Dio dio() {
     return Dio()
-      ..options.baseUrl = url.baseUrl
+      ..options.baseUrl = AbsUrl.baseUrl
       ..options.connectTimeout = 5000
       ..options.sendTimeout = 5000
       ..options.headers = {'Authentication': 'Bearer ' + ApiKey.v3};
@@ -26,7 +28,19 @@ class ModuleNetwork {
   Requesting requesting(Dio dio) => Requesting(dio);
 
   @provide
-  APIs api(Requesting requesting, Url url) => APIs(requesting, url);
+  @baseUrlApiary
+  Dio dioApiary() => Dio()
+    ..options.baseUrl = AbsUrl.baseUrlAbiary
+    ..options.connectTimeout = 5000
+    ..options.sendTimeout = 5000;
+
+  @provide
+  RequestingAbiary requestingAbiary(@baseUrlApiary Dio dioApiary) =>
+      RequestingAbiary(dioApiary);
+
+  @provide
+  APIs api(Requesting requesting, Url url, RequestingAbiary requestingAbiary) =>
+      APIs(requesting, url, requestingAbiary);
 }
 
 class A {}
