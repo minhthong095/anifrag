@@ -9,7 +9,7 @@ class OfflineConfigurationImage {
 
   OfflineConfigurationImage(this._appDb);
 
-  void insertPosterSizesAndChangeKeys(
+  Future insertPosterSizesAndChangeKeys(
       List<String> posterSizes, List<String> changeKeys) async {
     final db = await _appDb.getDb();
     await db.transaction((txn) async {
@@ -32,7 +32,7 @@ class OfflineConfigurationImage {
             [key]);
       });
     });
-    await db.close();
+    await _appDb.closeDb();
   }
 }
 

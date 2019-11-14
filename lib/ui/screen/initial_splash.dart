@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
@@ -20,6 +22,18 @@ class InitialSplash extends StatefulWidget {
 
 class _InitialSplashState extends State<InitialSplash> {
   int i = 0;
+  // AnimationController _controller;
+  // Tween roundTween = Tween<double>(begin: 0, end: 100 * pi);
+  Animation _animation;
+
+  @override
+  void initState() {
+    // _controller =
+    //     AnimationController(vsync: this, duration: Duration(seconds: 100));
+    // _animation = roundTween.animate(_controller);
+    // _controller.forward();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +42,29 @@ class _InitialSplashState extends State<InitialSplash> {
       body: Container(
         child: Center(
             child: InkWell(
-          onTap: () {
-            if (i == 0) {
-              // i++;
-              widget.bloc.init();
-            }
-          },
-          child: Image.asset(
-            PathImage.splash,
-            height: 200,
-            width: 200,
-          ),
-        )),
+                onTap: () {
+                  if (i == 0) {
+                    i++;
+                    widget.bloc.init();
+                  }
+                },
+                // child: AnimatedBuilder(
+                //   animation: _controller,
+                //   child: Image.asset(
+                //     PathImage.splash,
+                //     height: 200,
+                //     width: 200,
+                //   ),
+                //   builder: (context, widget) => Transform.rotate(
+                //     angle: _animation.value,
+                //     child: widget,
+                //   ),
+                // ))),
+                child: Image.asset(
+                  PathImage.splash,
+                  height: 200,
+                  width: 200,
+                ))),
       ),
     );
   }

@@ -15,6 +15,18 @@ class AppDb {
         TableChangeKey.tableName +
         ' (id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
         TableChangeKey.columnValue +
+        ' TEXT)',
+    'CREATE TABLE ' +
+        TableHomePageData.tableName +
+        '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        TableHomePageData.columnIdMovie +
+        ' INTEGER, ' +
+        TableHomePageData.columnPathPoster +
+        ' TEXT)',
+    'CREATE TABLE ' +
+        TableCategory.tableName +
+        '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        TableCategory.columnName +
         ' TEXT)'
   ];
 
@@ -41,9 +53,9 @@ class AppDb {
           batch.execute(script);
         });
         batch.commit();
-        db.close();
         print("CLOSE DB WHEN CREATE");
       });
+      // db.close();
       print("IS OPEN WHEN CREATE: " + db.isOpen.toString());
     });
   }
@@ -58,6 +70,13 @@ class AppDb {
       });
     }
     return _db;
+  }
+
+  Future<void> closeDb() async {
+    if (_db != null) {
+      await _db.close();
+      _db = null;
+    }
   }
 
   bool isOpen() {

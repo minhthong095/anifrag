@@ -12,6 +12,8 @@ import '../bloc/bloc_initial_spalsh.dart' as _i11;
 import '../network/apis.dart' as _i12;
 import '../network/requesting.dart' as _i13;
 import '../store/offline/offline_configuration_image.dart' as _i14;
+import '../store/offline/offline_category.dart' as _i15;
+import '../store/offline/offline_home_page_data.dart' as _i16;
 
 class ComponentInjector$Injector implements _i1.ComponentInjector {
   ComponentInjector$Injector._(
@@ -43,8 +45,13 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
 
   _i10.MyApp _createMyApp() => _i10.MyApp(_createBlocInitialSplash());
   _i11.BlocInitialSplash _createBlocInitialSplash() =>
-      _moduleBloc.blocInitialSplash(_createAPIs(), _createAppDb(),
-          _createOfflineConfigurationImage(), _createLiveStore());
+      _moduleBloc.blocInitialSplash(
+          _createAPIs(),
+          _createAppDb(),
+          _createOfflineConfigurationImage(),
+          _createLiveStore(),
+          _createOfflineCategory(),
+          _createOfflineHomePageData());
   _i12.APIs _createAPIs() => _moduleNetwork.api(
       _createRequesting(), _createUrl(), _createRequestingAbiary());
   _i13.Requesting _createRequesting() =>
@@ -59,6 +66,10 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
       _moduleStore.offConfIma(_createAppDb());
   _i8.LiveStore _createLiveStore() =>
       _singletonLiveStore ??= _moduleStore.liveConfIma();
+  _i15.OfflineCategory _createOfflineCategory() =>
+      _moduleStore.offCategory(_createAppDb());
+  _i16.OfflineHomePageData _createOfflineHomePageData() =>
+      _moduleStore.offHomeData(_createAppDb());
   @override
   _i10.MyApp get app => _createMyApp();
 }
