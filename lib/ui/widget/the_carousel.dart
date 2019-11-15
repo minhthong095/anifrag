@@ -73,7 +73,7 @@ class _Item extends StatelessWidget {
   Widget build(BuildContext context) {
     return Transform.scale(
       scale: scale,
-      child: InkWell(
+      child: GestureDetector(
         onTap: () async {
           // Navigator.of(context).push(DetailTransition(
           //     child: Detail(

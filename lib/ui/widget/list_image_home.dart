@@ -32,7 +32,7 @@ class ListImageHome extends StatelessWidget {
           final posterPath = baseUrlImg + listHomePageMovie[index].posterPath;
           return Padding(
             padding: EdgeInsets.only(right: 10),
-            child: InkWell(
+            child: GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, Detail.nameRoute,
                       arguments: DetailArguments(
