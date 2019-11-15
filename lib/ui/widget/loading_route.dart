@@ -7,6 +7,7 @@ import 'package:flutter_lottie/flutter_lottie.dart';
 
 class LoadingRoute extends PopupRoute {
   static const String nameRoute = '/loading';
+  static bool isWillPop = false;
 
   @override
   Color get barrierColor => Colors.white.withOpacity(0);
@@ -28,6 +29,16 @@ class LoadingRoute extends PopupRoute {
 
   @override
   Duration get transitionDuration => Duration(seconds: 0);
+
+  // pop loading route from outside
+  // isWillPop turn back to normal when AnimateLoading disposed
+  static RoutePredicate loadingRoutePredicate() => (Route<dynamic> route) {
+        isWillPop = true;
+        return !route.willHandlePopInternally &&
+            route is ModalRoute &&
+            route.settings.name != nameRoute &&
+            isWillPop;
+      };
 }
 
 class _AnimateLoading extends StatefulWidget {
@@ -42,9 +53,15 @@ class _AnimateLoadingState extends State<_AnimateLoading>
   @override
   void initState() {
     _controller = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 300), upperBound: 0.4);
+        vsync: this, duration: Duration(milliseconds: 300), upperBound: 0.6);
     _controller.forward();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    LoadingRoute.isWillPop = false;
+    super.dispose();
   }
 
   @override

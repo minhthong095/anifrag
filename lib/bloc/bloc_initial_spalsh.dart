@@ -5,6 +5,7 @@ import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/store/offline/offline_category.dart';
 import 'package:Anifrag/store/offline/offline_configuration_image.dart';
 import 'package:Anifrag/store/offline/offline_home_page_data.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -22,32 +23,33 @@ class BlocInitialSplash {
   BlocInitialSplash(this._api, this._appDb, this._offConfigurationImage,
       this._liveStore, this._offCategory, this._offHomePageData);
 
-  void init() async {
-    String databasePath = await getDatabasesPath();
-    String path = databasePath + '/anifrag.db';
-    await deleteDatabase(path);
-    print("PATH DATABASE " + path);
+  Future init(VoidCallback finish) async {
+    // String databasePath = await getDatabasesPath();
+    // String path = databasePath + '/anifrag.db';
+    // await deleteDatabase(path);
+    // print("PATH DATABASE " + path);
 
-    final watch = Stopwatch()..start();
-    _prefs = await SharedPreferences.getInstance();
+    // // final watch = Stopwatch()..start();
+    // _prefs = await SharedPreferences.getInstance();
 
-    await _initDb();
+    // await _appDb.createDb();
 
-    await _initConfiguration();
-    await _initHomePageData();
-    print("Bench " + watch.elapsed.toString());
+    // await _initConfiguration();
+    // await _initHomePageData();
+
+    finish();
+    // print("Bench " + watch.elapsed.toString());
   }
 
   Future _initConfiguration() async {
     final configuration = await _api.getConfiguration();
 
-    await _offConfigurationImage.insertPosterSizesAndChangeKeys(
+    _offConfigurationImage.insertPosterSizesAndChangeKeys(
         configuration.images.posterSizes, configuration.changeKeys);
 
     _liveStore.responseConfiguration = configuration;
 
     _prefs.setString(SharedPrefKey.baseUrlImage, configuration.secureBaseUrl);
-    print("FINISH HOME CONFIGURATION DATA");
   }
 
   Future _initHomePageData() async {
@@ -59,10 +61,5 @@ class BlocInitialSplash {
 
     await _offCategory.insertCategories(categories);
     await _offHomePageData.insertData(homePageData);
-    print("FINISH HOME PAGE DATA");
-  }
-
-  Future _initDb() async {
-    await _appDb.createDb();
   }
 }

@@ -128,30 +128,29 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                             Navigator.of(context)
                                 .pushNamed(LoadingRoute.nameRoute);
                             await new Future.delayed(
-                                const Duration(seconds: 3));
+                                const Duration(seconds: 7));
                             Navigator.of(context).popUntil(
                                 ModalRoute.withName(Detail.nameRoute));
                           },
-                          // child: HeroImage(
-                          //   isShadow: true,
-                          //   tag: widget.arguments.tagPrefix +
-                          //       widget.arguments.imagePath,
-                          //   path: widget.arguments.imagePath,
-                          //   height: _heightImage,
-                          //   fit: BoxFit.fill,
-                          // ),
-                          child: Container(
-                            decoration: BoxDecoration(boxShadow: [
-                              BoxShadow(blurRadius: 30, color: Colors.grey[600])
-                            ]),
-                            child: HeroImage(
-                              tag: widget.arguments.tagPrefix +
-                                  widget.arguments.imagePath,
-                              path: widget.arguments.imagePath,
-                              height: _heightImage,
-                              fit: BoxFit.fill,
-                            ),
+                          child: HeroImage(
+                            tag: widget.arguments.tagPrefix +
+                                widget.arguments.imagePath,
+                            path: widget.arguments.imagePath,
+                            height: _heightImage,
+                            fit: BoxFit.fill,
                           ),
+                          // child: Container(
+                          //   decoration: BoxDecoration(boxShadow: [
+                          //     BoxShadow(blurRadius: 30, color: Colors.grey[600])
+                          //   ]),
+                          //   child: HeroImage(
+                          //     tag: widget.arguments.tagPrefix +
+                          //         widget.arguments.imagePath,
+                          //     path: widget.arguments.imagePath,
+                          //     height: _heightImage,
+                          //     fit: BoxFit.fill,
+                          //   ),
+                          // ),
                         ),
                         Expanded(
                           child: Align(

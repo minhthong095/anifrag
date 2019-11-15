@@ -4,6 +4,7 @@ import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/network/requesting.dart';
+import 'package:Anifrag/ui/screen/main_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -36,17 +37,37 @@ class _InitialSplashState extends State<InitialSplash> {
   }
 
   @override
+  void didChangeDependencies() {
+    // widget.bloc.init(() {
+    //   Navigator.of(context).pushNamedAndRemoveUntil(
+    //       MainTabBar.nameRouete, (Route<dynamic> route) => false);
+    // });
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.backgroundColor,
+      backgroundColor: AppColor.yellow,
       body: Container(
         child: Center(
             child: InkWell(
                 onTap: () {
-                  if (i == 0) {
-                    i++;
-                    widget.bloc.init();
-                  }
+                  // if (i == 0) {
+                  //   i++;
+                  //   // widget.bloc.init(() {
+
+                  //   // });
+                  // }
+                  widget.bloc.init(() {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        MainTabBar.nameRoute, (Route<dynamic> route) => false);
+                    // Navigator.of(context).pushNamed(MainTabBar.nameRouete);
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => Container(
+                    //           color: Colors.green,
+                    //         )));
+                  });
                 },
                 // child: AnimatedBuilder(
                 //   animation: _controller,

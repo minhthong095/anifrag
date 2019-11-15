@@ -5,6 +5,7 @@ import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab.dart';
+import 'package:Anifrag/ui/screen/test_async.dart';
 import 'package:Anifrag/ui/screen/test_cached_image.dart';
 import 'package:Anifrag/ui/transition/page_route_blank.dart';
 import 'package:Anifrag/ui/widget/category_demo.dart';
@@ -30,10 +31,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InitialSplash(_blocInitialSplash),
-      // home: MainTabBar(),
+      // home: TestAsync(),
+      // home: InitialSplash(_blocInitialSplash),
+      home: MainTabBar(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
+
+          ///
+          case MainTabBar.nameRoute:
+            return CupertinoPageRoute(
+                settings: _addName(settings, MainTabBar.nameRoute),
+                builder: (context) => MainTabBar());
 
           ///
           case Login.nameRoute:

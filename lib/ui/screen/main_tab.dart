@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MainTabBar extends StatefulWidget {
+  static const String nameRoute = '/mainTabBar';
+
   @override
   _MainTabBarState createState() => _MainTabBarState();
 }

@@ -3,9 +3,12 @@ import 'dart:math';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
+import 'package:Anifrag/ui/screen/main_tab.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'loading_route.dart';
 
 class TheCarousel extends StatefulWidget {
   @override
@@ -59,19 +62,20 @@ class _Item extends StatelessWidget {
     return Transform.scale(
       scale: scale,
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           // Navigator.of(context).push(DetailTransition(
           //     child: Detail(
           //   arguments: DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'),
           // )));
           // Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mod));
           // Navigator.pop(context)
-          Navigator.of(context).pushNamed(Detail.nameRoute,
-              arguments:
-                  DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'));
+          // Navigator.of(context).pushNamed(Detail.nameRoute,
+          //     arguments:
+          //         DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'));
+          Navigator.of(context).popUntil(LoadingRoute.loadingRoutePredicate());
         },
         child: HeroImage(
-          normalMode: true,
+          filterQuality: FilterQuality.low,
           path: imagePath,
           fit: BoxFit.fitWidth,
           tag: "AtoB" + imagePath,
