@@ -1,3 +1,4 @@
+import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/app_db.dart';
@@ -14,9 +15,12 @@ class ModuleBloc {
           APIs api,
           AppDb appDb,
           OfflineConfigurationImage offConfigurationImage,
-          LiveStore liveConfigurationImage,
+          LiveStore liveStore,
           OfflineCategory offlineCategory,
           OfflineHomePageData offHomePageData) =>
-      BlocInitialSplash(api, appDb, offConfigurationImage,
-          liveConfigurationImage, offlineCategory, offHomePageData);
+      BlocInitialSplash(api, appDb, offConfigurationImage, liveStore,
+          offlineCategory, offHomePageData);
+
+  @provide
+  BlocHome blocHome(LiveStore liveStore) => BlocHome(liveStore);
 }

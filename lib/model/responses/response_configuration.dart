@@ -1,30 +1,32 @@
+import 'package:json_annotation/json_annotation.dart';
+
 part 'response_configuration.g.dart';
 
 // @JsonSerializable()
 class ResponseConfiguration {
-  final ModelConfigurationImages images;
+  final ResponseConfigurationImages images;
 
-  // @JsonKey(name: 'secure_base_url')
-  final String secureBaseUrl;
-
-  // @JsonKey(name: 'change_keys')
+  @JsonKey(name: 'change_keys')
   final List<String> changeKeys;
 
-  ResponseConfiguration({this.images, this.changeKeys, this.secureBaseUrl});
+  ResponseConfiguration({this.images, this.changeKeys});
 
   factory ResponseConfiguration.fromJson(Map<String, dynamic> json) =>
       _$ResponseConfigurationFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelConfigurationToJson(this);
+  Map<String, dynamic> toJson() => _$ResponseConfigurationToJson(this);
 }
 
-// @JsonSerializ able()
-class ModelConfigurationImages {
-  // @JsonKey(name: 'poster_sizes')
+// @JsonSerializable()
+class ResponseConfigurationImages {
+  @JsonKey(name: 'poster_sizes')
   final List<String> posterSizes;
 
-  ModelConfigurationImages({this.posterSizes});
+  @JsonKey(name: 'secure_base_url')
+  final String secureBaseUrl;
 
-  factory ModelConfigurationImages.fromJson(Map<String, dynamic> json) =>
+  ResponseConfigurationImages({this.posterSizes, this.secureBaseUrl});
+
+  factory ResponseConfigurationImages.fromJson(Map<String, dynamic> json) =>
       _$ResponseConfigurationImagesFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelConfigurationImagesToJson(this);
+  Map<String, dynamic> toJson() => _$ResponseConfigurationImagesToJson(this);
 }

@@ -37,6 +37,8 @@ class BlocInitialSplash {
     await _initConfiguration();
     await _initHomePageData();
 
+    await _appDb.closeDb();
+
     finish();
     // print("Bench " + watch.elapsed.toString());
   }
@@ -49,7 +51,8 @@ class BlocInitialSplash {
 
     _liveStore.responseConfiguration = configuration;
 
-    _prefs.setString(SharedPrefKey.baseUrlImage, configuration.secureBaseUrl);
+    _prefs.setString(
+        SharedPrefKey.baseUrlImage, configuration.images.secureBaseUrl);
   }
 
   Future _initHomePageData() async {

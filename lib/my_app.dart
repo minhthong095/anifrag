@@ -1,11 +1,12 @@
+import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab.dart';
-import 'package:Anifrag/ui/screen/test_async.dart';
 import 'package:Anifrag/ui/screen/test_cached_image.dart';
 import 'package:Anifrag/ui/transition/page_route_blank.dart';
 import 'package:Anifrag/ui/widget/category_demo.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
+import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -24,14 +26,15 @@ class MyApp extends StatelessWidget {
   // settings parameter must be implement.
 
   final BlocInitialSplash _blocInitialSplash;
+  final BlocHome _blocHome;
 
   @provide
-  MyApp(this._blocInitialSplash);
+  MyApp(this._blocInitialSplash, this._blocHome);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: TestAsync(),
+      // home: TestCachedImage(),
       home: InitialSplash(_blocInitialSplash),
       // home: MainTabBar(),
       onGenerateRoute: (settings) {
@@ -41,7 +44,10 @@ class MyApp extends StatelessWidget {
           case MainTabBar.nameRoute:
             return CupertinoPageRoute(
                 settings: _addName(settings, MainTabBar.nameRoute),
-                builder: (context) => MainTabBar());
+                builder: (context) => Provider<BlocHome>(
+                      builder: (context) => _blocHome,
+                      child: MainTabBar(),
+                    ));
 
           ///
           case Login.nameRoute:

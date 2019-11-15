@@ -1,3 +1,4 @@
+import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/ui/screen/home.dart';

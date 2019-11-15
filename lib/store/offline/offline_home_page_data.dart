@@ -22,6 +22,6 @@ class OfflineHomePageData {
             [data.id, data.posterPath]);
       });
     });
-    await _appDb.closeDb();
+    // await _appDb.closeDb();
   }
 }

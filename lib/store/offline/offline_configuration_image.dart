@@ -32,7 +32,7 @@ class OfflineConfigurationImage {
             [key]);
       });
     });
-    await _appDb.closeDb();
+    // await _appDb.closeDb();
   }
 }
 

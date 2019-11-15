@@ -28,15 +28,6 @@ class _InitialSplashState extends State<InitialSplash> {
   Animation _animation;
 
   @override
-  void initState() {
-    // _controller =
-    //     AnimationController(vsync: this, duration: Duration(seconds: 100));
-    // _animation = roundTween.animate(_controller);
-    // _controller.forward();
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
     widget.bloc.init(() {
       Navigator.of(context).pushNamedAndRemoveUntil(

@@ -11,32 +11,32 @@ ResponseConfiguration _$ResponseConfigurationFromJson(
   return ResponseConfiguration(
     images: json['images'] == null
         ? null
-        : ModelConfigurationImages.fromJson(
+        : ResponseConfigurationImages.fromJson(
             json['images'] as Map<String, dynamic>),
     changeKeys:
         (json['change_keys'] as List)?.map((e) => e as String)?.toList(),
+  );
+}
+
+Map<String, dynamic> _$ResponseConfigurationToJson(
+        ResponseConfiguration instance) =>
+    <String, dynamic>{
+      'images': instance.images,
+      'change_keys': instance.changeKeys,
+    };
+
+ResponseConfigurationImages _$ResponseConfigurationImagesFromJson(
+    Map<String, dynamic> json) {
+  return ResponseConfigurationImages(
+    posterSizes:
+        (json['poster_sizes'] as List)?.map((e) => e as String)?.toList(),
     secureBaseUrl: json['secure_base_url'] as String,
   );
 }
 
-Map<String, dynamic> _$ModelConfigurationToJson(
-        ResponseConfiguration instance) =>
-    <String, dynamic>{
-      'images': instance.images,
-      'secure_base_url': instance.secureBaseUrl,
-      'change_keys': instance.changeKeys,
-    };
-
-ModelConfigurationImages _$ResponseConfigurationImagesFromJson(
-    Map<String, dynamic> json) {
-  return ModelConfigurationImages(
-    posterSizes:
-        (json['poster_sizes'] as List)?.map((e) => e as String)?.toList(),
-  );
-}
-
-Map<String, dynamic> _$ModelConfigurationImagesToJson(
-        ModelConfigurationImages instance) =>
+Map<String, dynamic> _$ResponseConfigurationImagesToJson(
+        ResponseConfigurationImages instance) =>
     <String, dynamic>{
       'poster_sizes': instance.posterSizes,
+      'secure_base_url': instance.secureBaseUrl,
     };

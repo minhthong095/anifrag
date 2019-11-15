@@ -14,6 +14,7 @@ import '../network/requesting.dart' as _i13;
 import '../store/offline/offline_configuration_image.dart' as _i14;
 import '../store/offline/offline_category.dart' as _i15;
 import '../store/offline/offline_home_page_data.dart' as _i16;
+import '../bloc/bloc_home.dart' as _i17;
 
 class ComponentInjector$Injector implements _i1.ComponentInjector {
   ComponentInjector$Injector._(
@@ -43,7 +44,8 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
     return injector;
   }
 
-  _i10.MyApp _createMyApp() => _i10.MyApp(_createBlocInitialSplash());
+  _i10.MyApp _createMyApp() =>
+      _i10.MyApp(_createBlocInitialSplash(), _createBlocHome());
   _i11.BlocInitialSplash _createBlocInitialSplash() =>
       _moduleBloc.blocInitialSplash(
           _createAPIs(),
@@ -70,6 +72,7 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
       _moduleStore.offCategory(_createAppDb());
   _i16.OfflineHomePageData _createOfflineHomePageData() =>
       _moduleStore.offHomeData(_createAppDb());
+  _i17.BlocHome _createBlocHome() => _moduleBloc.blocHome(_createLiveStore());
   @override
   _i10.MyApp get app => _createMyApp();
 }

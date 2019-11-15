@@ -20,6 +20,6 @@ class OfflineCategory {
             [category]);
       });
     });
-    await _appDb.closeDb();
+    // await _appDb.closeDb();
   }
 }

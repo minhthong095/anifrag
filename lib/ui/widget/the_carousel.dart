@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
@@ -7,6 +8,7 @@ import 'package:Anifrag/ui/screen/main_tab.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'loading_route.dart';
 
@@ -18,6 +20,14 @@ class TheCarousel extends StatefulWidget {
 class _TheCarousel extends State<TheCarousel> {
   PageController _pageController = PageController(viewportFraction: 0.8);
 
+  BlocHome _blocHome;
+
+  @override
+  void didChangeDependencies() {
+    _blocHome = Provider.of<BlocHome>(context);
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -26,21 +36,23 @@ class _TheCarousel extends State<TheCarousel> {
         onPageChanged: (index) {},
         physics: ClampingScrollPhysics(),
         controller: _pageController,
-        itemCount: MockData.listImage.length,
+        itemCount: _blocHome.listCarousel().length,
         itemBuilder: (context, index) {
+          final posterPath = _blocHome.baseUrlImage() +
+              _blocHome.listCarousel().elementAt(index).posterPath;
           return AnimatedBuilder(
             animation: _pageController,
             builder: (context, widget) {
               try {
                 return _Item(
-                  imagePath: MockData.listImage[index],
+                  imagePath: posterPath,
                   scale: ((_pageController.page - index).abs() * (0.9 - 1)) + 1,
                 );
               } catch (e) {
                 // First time pageController still not init yet, need some hack
                 // _pageController.page equal 0
                 return _Item(
-                  imagePath: MockData.listImage[index],
+                  imagePath: posterPath,
                   scale: (index * (0.9 - 1)) + 1,
                 );
               }
@@ -75,6 +87,7 @@ class _Item extends StatelessWidget {
           Navigator.of(context).popUntil(LoadingRoute.loadingRoutePredicate());
         },
         child: HeroImage(
+          emptyMode: false,
           filterQuality: FilterQuality.low,
           path: imagePath,
           fit: BoxFit.fitWidth,
