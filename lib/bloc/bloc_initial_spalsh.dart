@@ -29,7 +29,7 @@ class BlocInitialSplash {
     // await deleteDatabase(path);
     // print("PATH DATABASE " + path);
 
-    // final watch = Stopwatch()..start();
+    final watch = Stopwatch()..start();
     _prefs = await SharedPreferences.getInstance();
 
     await _appDb.createDb();
@@ -40,7 +40,7 @@ class BlocInitialSplash {
     await _appDb.closeDb();
 
     finish();
-    // print("Bench " + watch.elapsed.toString());
+    print("Bench " + watch.elapsed.toString());
   }
 
   Future _initConfiguration() async {

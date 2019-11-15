@@ -19,7 +19,6 @@ class ModuleNetwork {
   Dio dio() {
     return Dio()
       ..options.baseUrl = AbsUrl.baseUrl
-      ..options.connectTimeout = 5000
       ..options.sendTimeout = 5000
       ..options.headers = {'Authentication': 'Bearer ' + ApiKey.v3};
   }
@@ -31,7 +30,6 @@ class ModuleNetwork {
   @baseUrlApiary
   Dio dioApiary() => Dio()
     ..options.baseUrl = AbsUrl.baseUrlAbiary
-    ..options.connectTimeout = 5000
     ..options.sendTimeout = 5000;
 
   @provide

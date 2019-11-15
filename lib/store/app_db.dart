@@ -55,7 +55,7 @@ class AppDb {
         batch.commit();
         print("CLOSE DB WHEN CREATE");
       });
-      db.close();
+      // db.close();
       print("IS OPEN WHEN CREATE: " + db.isOpen.toString());
     });
   }

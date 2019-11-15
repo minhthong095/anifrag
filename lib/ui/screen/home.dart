@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/mock_data.dart';
+import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/ui/widget/the_carousel.dart';
 import 'package:Anifrag/ui/widget/list_image_home.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,16 @@ class Home extends StatefulWidget {
 
 class $Home extends State<Home> {
   static final double paddingInHome = 20;
+
+  BlocHome _blocHome;
+  Map<String, List<ResponseHomePageMovie>> _rest;
+
+  @override
+  void didChangeDependencies() {
+    _blocHome = Provider.of<BlocHome>(context);
+    _rest = _blocHome.listRestMovies();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +46,17 @@ class $Home extends State<Home> {
                         ? EdgeInsets.only(left: paddingInHome)
                         : EdgeInsets.only(left: paddingInHome, top: 30),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "Most search",
+                          _blocHome.mainCategory(),
                           style: TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 5, bottom: 20),
+                          padding: EdgeInsets.only(top: 5),
                           child: Text(
                             "Trending movies today",
                             style: TextStyle(fontSize: 17, color: Colors.white),
@@ -57,30 +69,21 @@ class $Home extends State<Home> {
               ),
             ),
             TheCarousel(),
-            _CategoryTitle(
-              title: 'Popular',
-            ),
-            ListImageHome(
-              heroTagPrefix: 'Popular',
-              padding: EdgeInsets.only(left: paddingInHome),
-              listImagePath: MockData.listImage,
-            ),
-            _CategoryTitle(
-              title: 'Actions',
-            ),
-            ListImageHome(
-              heroTagPrefix: 'Actions',
-              padding: EdgeInsets.only(left: paddingInHome),
-              listImagePath: MockData.listImage,
-            ),
-            _CategoryTitle(
-              title: 'Drama',
-            ),
-            ListImageHome(
-              heroTagPrefix: 'Drama',
-              padding: EdgeInsets.only(left: paddingInHome),
-              listImagePath: MockData.listImage,
-            )
+            for (String categoryTitle in _rest.keys)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _CategoryTitle(
+                    title: categoryTitle,
+                  ),
+                  ListImageHome(
+                    baseUrlImg: _blocHome.baseUrlImage(),
+                    heroTagPrefix: categoryTitle,
+                    padding: EdgeInsets.only(left: paddingInHome),
+                    listHomePageMovie: _rest[categoryTitle],
+                  )
+                ],
+              ),
           ],
         ),
       ),

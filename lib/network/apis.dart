@@ -73,9 +73,7 @@ class APIs extends AbsAPI {
       return _requesting.sendGETv3(_url.trending, args: {'page': i * 10 + 1});
     });
 
-    await Future.wait([
-      _requesting.sendGETv3(_url.trending, args: {'page': 1 * 10 + 1})
-    ])
+    await Future.wait(setToCall2)
       ..forEach((categoryResponse) {
         ((categoryResponse.data as Map)['results'] as List).forEach((movie) {
           result3.add(ResponseHomePageMovie.fromJson(movie));

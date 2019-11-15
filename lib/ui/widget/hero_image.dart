@@ -52,9 +52,7 @@ class HeroImage extends StatelessWidget {
               period: Duration(seconds: 4),
               baseColor: Color(0xff292831),
               highlightColor: Color(0xff393747),
-              child: Container(
-                color: Colors.yellow,
-              )),
+              child: EmptyImage()),
         ),
       );
 }

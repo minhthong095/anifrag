@@ -31,7 +31,7 @@ class _TheCarousel extends State<TheCarousel> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.expand(height: 370),
+      constraints: BoxConstraints.expand(height: 500),
       child: PageView.builder(
         onPageChanged: (index) {},
         physics: ClampingScrollPhysics(),
