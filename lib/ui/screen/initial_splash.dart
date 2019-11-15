@@ -38,17 +38,17 @@ class _InitialSplashState extends State<InitialSplash> {
 
   @override
   void didChangeDependencies() {
-    // widget.bloc.init(() {
-    //   Navigator.of(context).pushNamedAndRemoveUntil(
-    //       MainTabBar.nameRouete, (Route<dynamic> route) => false);
-    // });
+    widget.bloc.init(() {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          MainTabBar.nameRoute, (Route<dynamic> route) => false);
+    });
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.yellow,
+      backgroundColor: AppColor.backgroundColor,
       body: Container(
         child: Center(
             child: InkWell(
@@ -59,15 +59,15 @@ class _InitialSplashState extends State<InitialSplash> {
 
                   //   // });
                   // }
-                  widget.bloc.init(() {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        MainTabBar.nameRoute, (Route<dynamic> route) => false);
-                    // Navigator.of(context).pushNamed(MainTabBar.nameRouete);
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => Container(
-                    //           color: Colors.green,
-                    //         )));
-                  });
+                  // widget.bloc.init(() {
+                  //   Navigator.of(context).pushNamedAndRemoveUntil(
+                  //       MainTabBar.nameRoute, (Route<dynamic> route) => false);
+                  //   // Navigator.of(context).pushNamed(MainTabBar.nameRouete);
+                  //   // Navigator.of(context).push(MaterialPageRoute(
+                  //   //     builder: (context) => Container(
+                  //   //           color: Colors.green,
+                  //   //         )));
+                  // });
                 },
                 // child: AnimatedBuilder(
                 //   animation: _controller,

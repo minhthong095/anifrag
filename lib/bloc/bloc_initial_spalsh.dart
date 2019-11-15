@@ -29,13 +29,13 @@ class BlocInitialSplash {
     // await deleteDatabase(path);
     // print("PATH DATABASE " + path);
 
-    // // final watch = Stopwatch()..start();
-    // _prefs = await SharedPreferences.getInstance();
+    // final watch = Stopwatch()..start();
+    _prefs = await SharedPreferences.getInstance();
 
-    // await _appDb.createDb();
+    await _appDb.createDb();
 
-    // await _initConfiguration();
-    // await _initHomePageData();
+    await _initConfiguration();
+    await _initHomePageData();
 
     finish();
     // print("Bench " + watch.elapsed.toString());

@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // home: TestAsync(),
-      // home: InitialSplash(_blocInitialSplash),
-      home: MainTabBar(),
+      home: InitialSplash(_blocInitialSplash),
+      // home: MainTabBar(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
 
