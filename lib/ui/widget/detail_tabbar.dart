@@ -1,8 +1,10 @@
+import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/ui/widget/more_like_this.dart';
 import 'package:Anifrag/ui/widget/story_overview.dart';
 import 'package:Anifrag/ui/widget/tab_bar_remove_center.dart' as custom;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'no_splash_factory.dart';
 
@@ -75,6 +77,7 @@ class _DetailTabbar extends State<DetailTabbar>
                 children: <Widget>[
                   Visibility(
                     visible: _tabController.index == 0 ? true : false,
+                    maintainState: true,
                     child: MoreLikeThis(),
                   ),
                   Visibility(

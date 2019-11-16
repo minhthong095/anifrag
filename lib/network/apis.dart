@@ -10,9 +10,10 @@ import 'package:inject/inject.dart';
 abstract class AbsAPI {
   Future<ResponseConfiguration> getConfiguration();
   Future<List<String>> getCategories();
-  Future<List<ResponseHomePageMovie>> getHomePageList(int categorySize);
+  Future<List<ResponseThumbnailMovie>> getHomePageList(int categorySize);
   Future<ResponseMovie> getMovieDetail(int idMovie);
   Future<List<ResponseCast>> getCasts(int idMovie);
+  Future<List<ResponseThumbnailMovie>> getMoreLikeThis(int idMovie);
 }
 
 class APIs extends AbsAPI {
@@ -29,6 +30,15 @@ class APIs extends AbsAPI {
   }
 
   @override
+  Future<List<ResponseThumbnailMovie>> getMoreLikeThis(int idMovie) async {
+    final result = await _requesting.sendGETv3(_url.moreLikeThis(idMovie));
+    return ((result.data as Map)['results'] as List)
+        .map<ResponseThumbnailMovie>(
+            (movieThumbnail) => ResponseThumbnailMovie.fromJson(movieThumbnail))
+        .toList();
+  }
+
+  @override
   Future<List<ResponseCast>> getCasts(int idMovie) async {
     final result = await _requesting.sendGETv3(_url.movieCast(idMovie));
     return result.data['cast']
@@ -37,8 +47,8 @@ class APIs extends AbsAPI {
   }
 
   @override
-  Future<List<ResponseHomePageMovie>> getHomePageList(int categorySize) async {
-    final result3 = <ResponseHomePageMovie>[];
+  Future<List<ResponseThumbnailMovie>> getHomePageList(int categorySize) async {
+    final result3 = <ResponseThumbnailMovie>[];
 
     final setToCall2 = Iterable.generate(categorySize, (i) {
       return _requesting.sendGETv3(_url.trending, args: {'page': i * 10 + 1});
@@ -47,7 +57,7 @@ class APIs extends AbsAPI {
     await Future.wait(setToCall2)
       ..forEach((categoryResponse) {
         ((categoryResponse.data as Map)['results'] as List).forEach((movie) {
-          result3.add(ResponseHomePageMovie.fromJson(movie));
+          result3.add(ResponseThumbnailMovie.fromJson(movie));
         });
       });
     return result3;

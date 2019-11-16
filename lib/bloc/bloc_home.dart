@@ -21,14 +21,14 @@ class BlocHome {
   static const int _indexForListCarousel = 0;
   static const int maxNumEachPage = 20;
 
-  List<ResponseHomePageMovie> listCarousel() {
+  List<ResponseThumbnailMovie> listCarousel() {
     // First 20 records is belong to carousel/
     return _liveStore.homePageData
         .sublist(_indexForListCarousel, maxNumEachPage);
   }
 
-  Map<String, List<ResponseHomePageMovie>> listRestMovies() {
-    final result = Map<String, List<ResponseHomePageMovie>>();
+  Map<String, List<ResponseThumbnailMovie>> listRestMovies() {
+    final result = Map<String, List<ResponseThumbnailMovie>>();
     int pivot = _indexForListCarousel + 1;
     int lastEnd = maxNumEachPage;
     while (pivot < _liveStore.categories.length) {

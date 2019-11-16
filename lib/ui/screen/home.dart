@@ -25,7 +25,7 @@ class $Home extends State<Home> {
 
   BlocHome _blocHome;
   OnItemTap _onItemTap;
-  Map<String, List<ResponseHomePageMovie>> _rest;
+  Map<String, List<ResponseThumbnailMovie>> _rest;
 
   @override
   void didChangeDependencies() {

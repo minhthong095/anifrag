@@ -1,3 +1,6 @@
+import 'package:Anifrag/bloc/bloc_detail.dart';
+import 'package:Anifrag/bloc/bloc_home.dart';
+import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/di/module/module_bloc.dart';
 import 'package:Anifrag/di/module/module_network.dart';
 import 'package:Anifrag/di/module/module_store.dart';
@@ -8,7 +11,17 @@ import 'component.inject.dart' as g;
 
 @Injector(const [ModuleNetwork, ModuleBloc, ModuleStore])
 abstract class ComponentInjector {
+  @provide
   MyApp get app;
+
+  // This is dynamic injector thanks to https://github.com/asi-pwr/HackYeah2019
+  BlocHome get blocHome;
+
+  // This is dynamic injector thanks to https://github.com/asi-pwr/HackYeah2019
+  BlocDetail get blocDetail;
+
+  // This is dynamic injector thanks to https://github.com/asi-pwr/HackYeah2019
+  BlocInitialSplash get blocSplash;
 
   static final create = g.ComponentInjector$Injector.create;
 }

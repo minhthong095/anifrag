@@ -69,7 +69,7 @@ class _TheCarousel extends State<TheCarousel> {
 
 class _Item extends StatefulWidget {
   final double scale;
-  final ResponseHomePageMovie movie;
+  final ResponseThumbnailMovie movie;
   const _Item({@required this.scale, @required this.movie});
 
   @override

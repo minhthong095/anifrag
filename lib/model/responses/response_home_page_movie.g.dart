@@ -6,16 +6,16 @@ part of 'response_home_page_movie.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ResponseHomePageMovie _$ResponseHomePageMovieFromJson(
+ResponseThumbnailMovie _$ResponseThumbnailMovieFromJson(
     Map<String, dynamic> json) {
-  return ResponseHomePageMovie(
+  return ResponseThumbnailMovie(
     id: json['id'] as int,
     posterPath: json['poster_path'] as String,
   );
 }
 
-Map<String, dynamic> _$ResponseHomePageMovieToJson(
-        ResponseHomePageMovie instance) =>
+Map<String, dynamic> _$ResponseThumbnailMovieToJson(
+        ResponseThumbnailMovie instance) =>
     <String, dynamic>{
       'id': instance.id,
       'poster_path': instance.posterPath,

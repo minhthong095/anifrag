@@ -10,8 +10,8 @@ class TableChangeKey {
   static const String columnValue = 'value';
 }
 
-class TableHomePageData {
-  static const String tableName = 'HOME_PAGE_DATA';
+class TableThumnailMovie {
+  static const String tableName = 'THUMBNAIL_MOVIE';
 
   static const String columnIdMovie = 'idMovie';
   static const String columnPathPoster = 'pathPoster';

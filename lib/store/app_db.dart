@@ -70,11 +70,11 @@ class AppDb {
         TableChangeKey.columnValue +
         ' TEXT)',
     'CREATE TABLE ' +
-        TableHomePageData.tableName +
+        TableThumnailMovie.tableName +
         '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-        TableHomePageData.columnIdMovie +
+        TableThumnailMovie.columnIdMovie +
         ' INTEGER, ' +
-        TableHomePageData.columnPathPoster +
+        TableThumnailMovie.columnPathPoster +
         ' TEXT)',
     'CREATE TABLE ' +
         TableCategory.tableName +

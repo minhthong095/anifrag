@@ -7,17 +7,17 @@ class OfflineHomePageData {
 
   OfflineHomePageData(this._appDb);
 
-  Future insertData(List<ResponseHomePageMovie> homePageData) async {
+  Future insertData(List<ResponseThumbnailMovie> homePageData) async {
     final db = await _appDb.getDb();
     await db.transaction((txn) async {
       homePageData.forEach((data) async {
         await txn.rawInsert(
             'INSERT INTO ' +
-                TableHomePageData.tableName +
+                TableThumnailMovie.tableName +
                 '(' +
-                TableHomePageData.columnIdMovie +
+                TableThumnailMovie.columnIdMovie +
                 ', ' +
-                TableHomePageData.columnPathPoster +
+                TableThumnailMovie.columnPathPoster +
                 ') VALUES(?,?)',
             [data.id, data.posterPath]);
       });

@@ -30,6 +30,6 @@ class ModuleBloc {
       BlocHome(liveStore, api, offMovie, offCast, appDb);
 
   @provide
-  BlocDetail blocDetail(OfflineMovie offMovie, LiveStore liveStore) =>
-      BlocDetail(offMovie, liveStore);
+  BlocDetail blocDetail(OfflineMovie offMovie, LiveStore liveStore, APIs api) =>
+      BlocDetail(offMovie, liveStore, api);
 }

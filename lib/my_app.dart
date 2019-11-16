@@ -3,6 +3,7 @@ import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
@@ -20,24 +21,19 @@ import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
 import 'package:provider/provider.dart';
 
+@provide
 class MyApp extends StatelessWidget {
+  ComponentInjector componentInjector;
+
   // This widget is the root of your application.
   // All PageRoute in onGenerateRout must be declare RouteSetting.
   // All routes must be declare in onGeneratRoute also.
   // settings parameter must be implement.
-
-  final BlocInitialSplash _blocInitialSplash;
-  final BlocHome _blocHome;
-  final BlocDetail _blocDetail;
-
-  @provide
-  MyApp(this._blocInitialSplash, this._blocHome, this._blocDetail);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       // home: TestCachedImage(),
-      home: InitialSplash(_blocInitialSplash),
+      home: InitialSplash(componentInjector.blocSplash),
       // home: MainTabBar(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -47,7 +43,7 @@ class MyApp extends StatelessWidget {
             return CupertinoPageRoute(
                 settings: _addName(settings, MainTabBar.nameRoute),
                 builder: (context) => Provider<BlocHome>(
-                      builder: (context) => _blocHome,
+                      builder: (context) => componentInjector.blocHome,
                       child: MainTabBar(),
                     ));
 
@@ -60,7 +56,9 @@ class MyApp extends StatelessWidget {
           ///
           case Detail.nameRoute:
             final detailArgs = settings.arguments as DetailArguments;
-            _blocDetail
+            final blocDetail = componentInjector.blocDetail;
+
+            blocDetail
               ..movie = detailArgs.movie
               ..tagPrefix = detailArgs.tagPrefix
               ..casts = detailArgs.casts;
@@ -69,7 +67,7 @@ class MyApp extends StatelessWidget {
                 settings: _addName(settings, Detail.nameRoute),
                 pageBuilder: (context, animation, secondAnimation) =>
                     Provider<BlocDetail>(
-                      builder: (context) => _blocDetail,
+                      builder: (context) => blocDetail,
                       child: Detail(),
                     ));
 

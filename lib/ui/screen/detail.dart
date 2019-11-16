@@ -153,7 +153,7 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                           child: HeroImage(
                             emptyMode: false,
                             tag: _bloc.tagPrefix + _bloc.movie.posterPath,
-                            path: _bloc.posterPath(),
+                            path: _bloc.currentPosterPath(),
                             height: _heightImage,
                             fit: BoxFit.fill,
                           ),

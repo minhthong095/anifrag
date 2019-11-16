@@ -10,7 +10,7 @@ import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/material.dart';
 
 class ListImageHome extends StatelessWidget {
-  final List<ResponseHomePageMovie> listHomePageMovie;
+  final List<ResponseThumbnailMovie> listHomePageMovie;
   final EdgeInsets padding;
   final String heroTagPrefix;
   final String baseUrlImg;

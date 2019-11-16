@@ -10,6 +10,7 @@ abstract class AbsUrl {
   String trending;
   String movieDetail(int idMovie);
   String movieCast(int idMovie);
+  String moreLikeThis(int idMovie);
 }
 
 class Url extends AbsUrl {
@@ -27,4 +28,8 @@ class Url extends AbsUrl {
 
   @override
   String movieCast(int idMovie) => "/movie/" + idMovie.toString() + "/credits";
+
+  @override
+  String moreLikeThis(int idMovie) =>
+      "/movie/" + idMovie.toString() + "/similar";
 }
