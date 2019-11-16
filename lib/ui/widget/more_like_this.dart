@@ -15,7 +15,7 @@ class MoreLikeThis extends StatelessWidget {
         mainAxisSpacing: 10,
         children: List.generate(MockData.listImage.length, (index) {
           return HeroImage(
-            emptyMode: false,
+            emptyMode: true,
             path: MockData.listImage[index],
             tag: MockData.listImage[index],
           );

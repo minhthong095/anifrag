@@ -1,3 +1,4 @@
+import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
@@ -27,9 +28,10 @@ class MyApp extends StatelessWidget {
 
   final BlocInitialSplash _blocInitialSplash;
   final BlocHome _blocHome;
+  final BlocDetail _blocDetail;
 
   @provide
-  MyApp(this._blocInitialSplash, this._blocHome);
+  MyApp(this._blocInitialSplash, this._blocHome, this._blocDetail);
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +60,17 @@ class MyApp extends StatelessWidget {
           ///
           case Detail.nameRoute:
             final detailArgs = settings.arguments as DetailArguments;
+            _blocDetail
+              ..movie = detailArgs.movie
+              ..tagPrefix = detailArgs.tagPrefix
+              ..casts = detailArgs.casts;
+
             return PageRouteBuilder(
                 settings: _addName(settings, Detail.nameRoute),
-                pageBuilder: (context, animation, secondAnimation) => Detail(
-                      arguments: DetailArguments(
-                          imagePath: detailArgs.imagePath,
-                          tagPrefix: detailArgs.tagPrefix),
+                pageBuilder: (context, animation, secondAnimation) =>
+                    Provider<BlocDetail>(
+                      builder: (context) => _blocDetail,
+                      child: Detail(),
                     ));
 
           ///

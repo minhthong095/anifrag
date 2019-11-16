@@ -8,6 +8,8 @@ abstract class AbsUrl {
   String configuration;
   String categories;
   String trending;
+  String movieDetail(int idMovie);
+  String movieCast(int idMovie);
 }
 
 class Url extends AbsUrl {
@@ -19,4 +21,10 @@ class Url extends AbsUrl {
 
   @override
   String trending = "/trending/movie/day";
+
+  @override
+  String movieDetail(int idMovie) => "/movie/" + idMovie.toString();
+
+  @override
+  String movieCast(int idMovie) => "/movie/" + idMovie.toString() + "/credits";
 }

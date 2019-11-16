@@ -1,8 +1,24 @@
 import 'dart:io';
 
+import 'package:Anifrag/bloc/bloc_detail.dart';
+import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class StoryOverview extends StatelessWidget {
+class StoryOverview extends StatefulWidget {
+  @override
+  _StoryOverviewState createState() => _StoryOverviewState();
+}
+
+class _StoryOverviewState extends State<StoryOverview> {
+  BlocDetail _blocDetail;
+
+  @override
+  void didChangeDependencies() {
+    _blocDetail = Provider.of<BlocDetail>(context);
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -12,16 +28,26 @@ class StoryOverview extends StatelessWidget {
             text: 'Storyline',
           ),
           Text(
-            'A cynical American expatriate struggles to decide whether or not he should help his former lover and her fugitive husband escape French Morocco.',
+            _blocDetail.movie.overview,
             style: TextStyle(color: Colors.white),
           ),
-          _Cast(),
+          _Cast(casts: _blocDetail.casts),
           if (Platform.isAndroid) SizedBox.fromSize(size: Size(0, 30)),
         ],
       );
 }
 
 class _Cast extends StatelessWidget {
+  final List<ResponseCast> casts;
+  String _stringCasts = '';
+
+  _Cast({@required this.casts}) {
+    casts.forEach((cast) {
+      _stringCasts += cast.name + ', ';
+    });
+    _stringCasts = _stringCasts.substring(0, _stringCasts.length - 2);
+  }
+
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +56,7 @@ class _Cast extends StatelessWidget {
             text: 'Cast',
           ),
           Text(
-            'Robert De Niro, Jack Nicholson, Marlon Brando, Denzel Washington, Tom Hanks, Leonardo DiCaptio',
+            _stringCasts,
             style: TextStyle(color: Colors.white),
           ),
         ],

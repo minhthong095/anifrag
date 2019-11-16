@@ -24,10 +24,10 @@ class BlocInitialSplash {
       this._liveStore, this._offCategory, this._offHomePageData);
 
   Future init(VoidCallback finish) async {
-    // String databasePath = await getDatabasesPath();
-    // String path = databasePath + '/anifrag.db';
-    // await deleteDatabase(path);
-    // print("PATH DATABASE " + path);
+    String databasePath = await getDatabasesPath();
+    String path = databasePath + '/anifrag.db';
+    await deleteDatabase(path);
+    print("PATH DATABASE " + path);
 
     final watch = Stopwatch()..start();
     _prefs = await SharedPreferences.getInstance();

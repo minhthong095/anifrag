@@ -1,5 +1,7 @@
+import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_configuration.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
+import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/network/api_key.dart';
 import 'package:Anifrag/network/requesting.dart';
 import 'package:Anifrag/network/url.dart';
@@ -7,10 +9,10 @@ import 'package:inject/inject.dart';
 
 abstract class AbsAPI {
   Future<ResponseConfiguration> getConfiguration();
-
   Future<List<String>> getCategories();
-
   Future<List<ResponseHomePageMovie>> getHomePageList(int categorySize);
+  Future<ResponseMovie> getMovieDetail(int idMovie);
+  Future<List<ResponseCast>> getCasts(int idMovie);
 }
 
 class APIs extends AbsAPI {
@@ -22,47 +24,16 @@ class APIs extends AbsAPI {
 
   @override
   Future<ResponseConfiguration> getConfiguration() async {
-    // final watch2 = Stopwatch()..start();
-    // final result = await _requesting.sendGETv3(_url.configuration);
-    // final result2 = await _requesting
-    //     .sendGET(_url.configuration, args: {"api_key": ApiKey.v3});
-    // final result10 = await _requesting
-    //     .sendGET(_url.configuration, args: {"api_key": ApiKey.v3});
-    // final result3 = await _requesting
-    //     .sendGET(_url.configuration, args: {"api_key": ApiKey.v3});
-    // final result4 = await _requesting
-    //     .sendGET(_url.configuration, args: {"api_key": ApiKey.v3});
-    // final result5 = await _requesting
-    //     .sendGET(_url.configuration, args: {"api_key": ApiKey.v3});
-    // final result6 = await _requesting
-    //     .sendGET(_url.configuration, args: {"api_key": ApiKey.v3});
-    // final result7 = await _requesting
-    //     .sendGET(_url.configuration, args: {"api_key": ApiKey.v3});
-    // final result8 = await _requesting
-    //     .sendGET(_url.configuration, args: {"api_key": ApiKey.v3});
-    // final result9 = await _requesting
-    //     .sendGET(_url.configuration, args: {"api_key": ApiKey.v3});
-    // print("stop1 " + watch2.elapsed.toString());
-    // watch2.stop();
-
-    // final watch = Stopwatch()..start();
-    // final all = await Future.wait([
-    //   _requesting.sendGETv3(_url.configuration),
-    //   _requesting.sendGETv3(_url.configuration),
-    //   _requesting.sendGETv3(_url.configuration),
-    //   _requesting.sendGETv3(_url.configuration),
-    //   _requesting.sendGETv3(_url.configuration),
-    //   _requesting.sendGETv3(_url.configuration),
-    //   _requesting.sendGETv3(_url.configuration),
-    //   _requesting.sendGETv3(_url.configuration),
-    //   _requesting.sendGETv3(_url.configuration),
-    //   _requesting.sendGETv3(_url.configuration),
-    // ]);
-    // print("stop2 " + watch.elapsed.toString());
-    // watch.stop();
-
     final result = await _requesting.sendGETv3(_url.configuration);
     return ResponseConfiguration.fromJson(result.data);
+  }
+
+  @override
+  Future<List<ResponseCast>> getCasts(int idMovie) async {
+    final result = await _requesting.sendGETv3(_url.movieCast(idMovie));
+    return result.data['cast']
+        .map<ResponseCast>((cast) => ResponseCast.fromJson(cast))
+        .toList();
   }
 
   @override
@@ -80,6 +51,11 @@ class APIs extends AbsAPI {
         });
       });
     return result3;
+  }
+
+  Future<ResponseMovie> getMovieDetail(int idMovie) async {
+    final result = await _requesting.sendGETv3(_url.movieDetail(idMovie));
+    return ResponseMovie.fromJson(result.data);
   }
 
   @override

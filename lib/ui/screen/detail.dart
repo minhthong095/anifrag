@@ -1,5 +1,8 @@
+import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/model/responses/response_cast.dart';
+import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/ui/widget/button_circle.dart';
 import 'package:Anifrag/ui/widget/detail_tabbar.dart';
 
@@ -10,13 +13,10 @@ import 'package:Anifrag/ui/widget/text_percent.dart';
 import 'package:Anifrag/ui/widget/text_star.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class Detail extends StatefulWidget {
   static const String nameRoute = '/detail';
-
-  final DetailArguments arguments;
-
-  const Detail({this.arguments});
 
   @override
   _Detail createState() => _Detail();
@@ -33,6 +33,7 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
   Animation<double> _animationPaddingCircle;
   Animation<double> _animationOpacityCircle;
   AnimationController _controller;
+  BlocDetail _bloc;
 
   @override
   void initState() {
@@ -54,7 +55,21 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     _getSizeOfCircle();
+    _getBlocDetail();
     super.didChangeDependencies();
+  }
+
+  void _getSizeOfCircle() {
+    final widthScreen = MediaQuery.of(context).size.width;
+    if (widthScreen < 300) {
+      _defaultDiameterCircle = widthScreen;
+    } else {
+      _defaultDiameterCircle = 300;
+    }
+  }
+
+  void _getBlocDetail() {
+    _bloc = Provider.of<BlocDetail>(context);
   }
 
   @override
@@ -88,7 +103,10 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                     ),
                   ),
                   SlideTransition(
-                      position: _animationBotToTop, child: _Content()),
+                      position: _animationBotToTop,
+                      child: _Content(
+                        movie: _bloc.movie,
+                      )),
                 ],
               ),
               SafeArea(
@@ -133,24 +151,12 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                                 ModalRoute.withName(Detail.nameRoute));
                           },
                           child: HeroImage(
-                            tag: widget.arguments.tagPrefix +
-                                widget.arguments.imagePath,
-                            path: widget.arguments.imagePath,
+                            emptyMode: false,
+                            tag: _bloc.tagPrefix + _bloc.movie.posterPath,
+                            path: _bloc.posterPath(),
                             height: _heightImage,
                             fit: BoxFit.fill,
                           ),
-                          // child: Container(
-                          //   decoration: BoxDecoration(boxShadow: [
-                          //     BoxShadow(blurRadius: 30, color: Colors.grey[600])
-                          //   ]),
-                          //   child: HeroImage(
-                          //     tag: widget.arguments.tagPrefix +
-                          //         widget.arguments.imagePath,
-                          //     path: widget.arguments.imagePath,
-                          //     height: _heightImage,
-                          //     fit: BoxFit.fill,
-                          //   ),
-                          // ),
                         ),
                         Expanded(
                           child: Align(
@@ -185,18 +191,12 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
           ),
         ),
       );
-
-  void _getSizeOfCircle() {
-    final widthScreen = MediaQuery.of(context).size.width;
-    if (widthScreen < 300) {
-      _defaultDiameterCircle = widthScreen;
-    } else {
-      _defaultDiameterCircle = 300;
-    }
-  }
 }
 
 class _Content extends StatelessWidget {
+  final ResponseMovie movie;
+  const _Content({@required this.movie});
+
   @override
   Widget build(BuildContext context) => Container(
         decoration: BoxDecoration(
@@ -210,7 +210,8 @@ class _Content extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(
-                'Casablanca',
+                movie.title,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -220,7 +221,12 @@ class _Content extends StatelessWidget {
                 size: Size(0, 7),
               ),
               Text(
-                '1942 * 1h 42min',
+                movie.releaseDate.year.toString() +
+                    ' * ' +
+                    (movie.runtime / 60).toStringAsFixed(0) +
+                    'h ' +
+                    (movie.runtime % 60).toStringAsFixed(0) +
+                    'min',
                 style: TextStyle(color: Colors.grey),
               ),
               SizedBox.fromSize(
@@ -234,28 +240,29 @@ class _Content extends StatelessWidget {
                       child: Comment(
                         top: TextStar(
                           fontSize: 25,
-                          value: 8.2,
+                          value:
+                              double.parse(movie.popularity.toStringAsFixed(1)),
                         ),
-                        comment: '77 857',
+                        comment: movie.voteCount.toStringAsFixed(0),
                       ),
                     ),
                     Flexible(
                       child: Comment(
                         top: TextPercent(
-                          iconPath: PathIcon.smallChart,
-                          fontSize: 25,
-                          value: 9,
-                        ),
+                            iconPath: PathIcon.smallChart,
+                            fontSize: 25,
+                            value: double.parse(
+                                movie.voteAverage.toStringAsFixed(1))),
                         comment: 'In your taste',
                       ),
                     ),
                     Flexible(
                       child: Comment(
                         top: TextPercent(
-                          iconPath: PathIcon.fresh,
-                          fontSize: 25,
-                          value: 98,
-                        ),
+                            iconPath: PathIcon.fresh,
+                            fontSize: 25,
+                            value: double.parse(
+                                movie.popularity.toStringAsFixed(1))),
                         comment: 'Fresh',
                       ),
                     )
@@ -280,8 +287,8 @@ class _Content extends StatelessWidget {
 }
 
 class DetailArguments {
-  final String imagePath;
   final String tagPrefix;
-
-  const DetailArguments({@required this.imagePath, @required this.tagPrefix});
+  final ResponseMovie movie;
+  final List<ResponseCast> casts;
+  const DetailArguments(this.tagPrefix, this.movie, this.casts);
 }

@@ -22,3 +22,23 @@ class TableCategory {
 
   static const String columnName = 'name';
 }
+
+class TableMovie {
+  static const String tableName = "MOVIE";
+
+  static const String columnIdMovie = 'idMovie';
+  static const String columnTitle = 'title';
+  static const String columnOverview = 'overview';
+  static const String columnRuntime = 'runtim';
+  static const String columnPopularity = 'popularity';
+  static const String columnReleaseDate = 'releaseDate';
+  static const String columnVoteAverage = 'voteAverate';
+  static const String columnVoteCount = 'voteCount';
+}
+
+class TableCast {
+  static const String tableName = 'CAST';
+
+  static const String columnName = 'name';
+  static const String columnIdMovie = 'idMovie';
+}

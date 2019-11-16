@@ -30,7 +30,7 @@ ResponseConfigurationImages _$ResponseConfigurationImagesFromJson(
   return ResponseConfigurationImages(
     posterSizes:
         (json['poster_sizes'] as List)?.map((e) => e as String)?.toList(),
-    secureBaseUrl: json['secure_base_url'] as String,
+    secureBaseUrl: (json['secure_base_url'] as String) + 'w300',
   );
 }
 

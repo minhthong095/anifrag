@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
+import 'package:Anifrag/ui/screen/home.dart';
 import 'package:Anifrag/ui/screen/main_tab.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,21 +40,22 @@ class _TheCarousel extends State<TheCarousel> {
         controller: _pageController,
         itemCount: _blocHome.listCarousel().length,
         itemBuilder: (context, index) {
-          final posterPath = _blocHome.baseUrlImage() +
-              _blocHome.listCarousel().elementAt(index).posterPath;
+          final movie = _blocHome.listCarousel().elementAt(index);
+          //     final movie = _blocHome.baseUrlImage() +
+          // _blocHome.listCarousel().elementAt(index).posterPath;
           return AnimatedBuilder(
             animation: _pageController,
             builder: (context, widget) {
               try {
                 return _Item(
-                  imagePath: posterPath,
+                  movie: movie,
                   scale: ((_pageController.page - index).abs() * (0.9 - 1)) + 1,
                 );
               } catch (e) {
                 // First time pageController still not init yet, need some hack
                 // _pageController.page equal 0
                 return _Item(
-                  imagePath: posterPath,
+                  movie: movie,
                   scale: (index * (0.9 - 1)) + 1,
                 );
               }
@@ -64,34 +67,40 @@ class _TheCarousel extends State<TheCarousel> {
   }
 }
 
-class _Item extends StatelessWidget {
+class _Item extends StatefulWidget {
   final double scale;
-  final String imagePath;
-  const _Item({@required this.scale, @required this.imagePath});
+  final ResponseHomePageMovie movie;
+  const _Item({@required this.scale, @required this.movie});
+
+  @override
+  __ItemState createState() => __ItemState();
+}
+
+class __ItemState extends State<_Item> {
+  BlocHome _blocHome;
+  OnItemTap _onItemTap;
+
+  @override
+  void didChangeDependencies() {
+    _blocHome = Provider.of<BlocHome>(context);
+    _onItemTap = Provider.of<OnItemTap>(context);
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
-      scale: scale,
+      scale: widget.scale,
       child: GestureDetector(
-        onTap: () async {
-          // Navigator.of(context).push(DetailTransition(
-          //     child: Detail(
-          //   arguments: DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'),
-          // )));
-          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mod));
-          // Navigator.pop(context)
-          // Navigator.of(context).pushNamed(Detail.nameRoute,
-          //     arguments:
-          //         DetailArguments(imagePath: imagePath, tagPrefix: 'AtoB'));
-          Navigator.of(context).popUntil(LoadingRoute.loadingRoutePredicate());
+        onTap: () {
+          _onItemTap(widget.movie.id, 'Carousel');
         },
         child: HeroImage(
           emptyMode: false,
           filterQuality: FilterQuality.low,
-          path: imagePath,
+          path: _blocHome.baseUrlImage() + widget.movie.posterPath,
           fit: BoxFit.fitWidth,
-          tag: "AtoB" + imagePath,
+          tag: "Carousel" + widget.movie.posterPath,
         ),
       ),
     );

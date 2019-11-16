@@ -5,6 +5,7 @@ import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
+import 'package:Anifrag/ui/screen/home.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,11 @@ class ListImageHome extends StatelessWidget {
   final EdgeInsets padding;
   final String heroTagPrefix;
   final String baseUrlImg;
+  final OnItemTap onItemTap;
 
   ListImageHome(
       {@required this.listHomePageMovie,
+      @required this.onItemTap,
       @required this.padding,
       @required this.heroTagPrefix,
       @required this.baseUrlImg});
@@ -34,17 +37,13 @@ class ListImageHome extends StatelessWidget {
             padding: EdgeInsets.only(right: 10),
             child: GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, Detail.nameRoute,
-                      arguments: DetailArguments(
-                          imagePath: posterPath, tagPrefix: heroTagPrefix));
+                  onItemTap(listHomePageMovie[index].id, heroTagPrefix);
                 },
                 child: HeroImage(
                   emptyMode: false,
                   path: posterPath,
-                  tag: heroTagPrefix + posterPath,
-                )
-                // child: Container(color: Colors.red),
-                ),
+                  tag: heroTagPrefix + listHomePageMovie[index].posterPath,
+                )),
           );
         },
       ),
