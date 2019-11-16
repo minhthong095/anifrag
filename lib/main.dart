@@ -7,7 +7,6 @@ import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab.dart';
-import 'package:Anifrag/ui/screen/test_cached_image.dart';
 import 'package:Anifrag/ui/transition/page_route_blank.dart';
 import 'package:Anifrag/ui/widget/category_demo.dart';
 import 'package:Anifrag/ui/widget/detail_tabbar.dart';

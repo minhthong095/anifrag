@@ -9,7 +9,7 @@ import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab.dart';
-import 'package:Anifrag/ui/screen/test_cached_image.dart';
+import 'package:Anifrag/ui/screen/no_wifi.dart';
 import 'package:Anifrag/ui/transition/page_route_blank.dart';
 import 'package:Anifrag/ui/widget/category_demo.dart';
 import 'package:Anifrag/ui/widget/detail_tabbar.dart';
@@ -32,11 +32,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: TestCachedImage(),
       home: InitialSplash(componentInjector.blocSplash),
       // home: MainTabBar(),
+      // home: NoWifi(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
+          case InitialSplash.nameRoute:
+            return PageRouteBuilder(
+                transitionDuration: const Duration(milliseconds: 0),
+                settings: _addName(settings, InitialSplash.nameRoute),
+                pageBuilder: (context, ani, secondAni) =>
+                    InitialSplash(componentInjector.blocSplash));
 
           ///
           case MainTabBar.nameRoute:
@@ -74,6 +80,13 @@ class MyApp extends StatelessWidget {
           ///
           case LoadingRoute.nameRoute:
             return LoadingRoute();
+
+          ///
+          case NoWifi.nameRoute:
+            return PageRouteBuilder(
+                transitionDuration: const Duration(milliseconds: 0),
+                settings: _addName(settings, NoWifi.nameRoute),
+                pageBuilder: (context, ani, secondAni) => NoWifi());
         }
 
         return MaterialPageRoute(

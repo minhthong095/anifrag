@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'login.dart';
+import 'no_wifi.dart';
 
 class InitialSplash extends StatefulWidget {
+  static const String nameRoute = '/';
   final BlocInitialSplash bloc;
 
   const InitialSplash(this.bloc);
@@ -22,62 +24,46 @@ class InitialSplash extends StatefulWidget {
 // regular new instance bloc
 
 class _InitialSplashState extends State<InitialSplash> {
-  int i = 0;
   // AnimationController _controller;
   // Tween roundTween = Tween<double>(begin: 0, end: 100 * pi);
   Animation _animation;
+  bool isVisibleNoWifi = false;
 
   @override
   void didChangeDependencies() {
-    widget.bloc.init(() {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          MainTabBar.nameRoute, (Route<dynamic> route) => false);
-    });
+    // widget.bloc.init(() {
+    //   Navigator.of(context).pushNamedAndRemoveUntil(
+    //       MainTabBar.nameRoute, (Route<dynamic> route) => false);
+    // });
     super.didChangeDependencies();
+  }
+
+  void _switchNoWifi() {
+    setState(() {
+      isVisibleNoWifi = !isVisibleNoWifi;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
-      body: Container(
-        child: Center(
-            child: InkWell(
-                onTap: () {
-                  // if (i == 0) {
-                  //   i++;
-                  //   // widget.bloc.init(() {
-
-                  //   // });
-                  // }
-                  // widget.bloc.init(() {
-                  //   Navigator.of(context).pushNamedAndRemoveUntil(
-                  //       MainTabBar.nameRoute, (Route<dynamic> route) => false);
-                  //   // Navigator.of(context).pushNamed(MainTabBar.nameRouete);
-                  //   // Navigator.of(context).push(MaterialPageRoute(
-                  //   //     builder: (context) => Container(
-                  //   //           color: Colors.green,
-                  //   //         )));
-                  // });
-                },
-                // child: AnimatedBuilder(
-                //   animation: _controller,
-                //   child: Image.asset(
-                //     PathImage.splash,
-                //     height: 200,
-                //     width: 200,
-                //   ),
-                //   builder: (context, widget) => Transform.rotate(
-                //     angle: _animation.value,
-                //     child: widget,
-                //   ),
-                // ))),
-                child: Image.asset(
-                  PathImage.splash,
-                  height: 200,
-                  width: 200,
-                ))),
-      ),
+      body: isVisibleNoWifi
+          ? NoWifi(
+              onTryAgainTap: () {
+                _switchNoWifi();
+              },
+            )
+          : Center(
+              child: InkWell(
+                  onTap: () {
+                    _switchNoWifi();
+                  },
+                  child: Image.asset(
+                    PathImage.splash,
+                    height: 200,
+                    width: 200,
+                  ))),
     );
   }
 }
