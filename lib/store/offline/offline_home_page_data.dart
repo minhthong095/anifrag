@@ -24,4 +24,23 @@ class OfflineHomePageData {
     });
     // await _appDb.closeDb();
   }
+
+  List<String> queryInsertThumbnail(List<ResponseThumbnailMovie> homePageData) {
+    return homePageData
+        .map<String>((d) =>
+            'INSERT INTO ' +
+            TableThumnailMovie.tableName +
+            '(' +
+            TableThumnailMovie.columnIdMovie +
+            ', ' +
+            TableThumnailMovie.columnPathPoster +
+            ') VALUES(' +
+            d.id.toString() +
+            ',"' +
+            d.posterPath +
+            '")')
+        .toList();
+  }
+
+  String queryDeleteAll() => 'DELETE FROM ' + TableThumnailMovie.tableName;
 }

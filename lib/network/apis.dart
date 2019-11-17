@@ -5,6 +5,7 @@ import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/network/api_key.dart';
 import 'package:Anifrag/network/requesting.dart';
 import 'package:Anifrag/network/url.dart';
+import 'package:dio/dio.dart';
 import 'package:inject/inject.dart';
 
 abstract class AbsAPI {
@@ -14,6 +15,7 @@ abstract class AbsAPI {
   Future<ResponseMovie> getMovieDetail(int idMovie);
   Future<List<ResponseCast>> getCasts(int idMovie);
   Future<List<ResponseThumbnailMovie>> getMoreLikeThis(int idMovie);
+  Future<List<dynamic>> getBothConfigureAndCategory();
 }
 
 class APIs extends AbsAPI {
@@ -27,6 +29,18 @@ class APIs extends AbsAPI {
   Future<ResponseConfiguration> getConfiguration() async {
     final result = await _requesting.sendGETv3(_url.configuration);
     return ResponseConfiguration.fromJson(result.data);
+  }
+
+  @override
+  Future<List<dynamic>> getBothConfigureAndCategory() async {
+    final waiting = await Future.wait<Response>([
+      _requesting.sendGETv3(_url.configuration),
+      _requestingAbiary.sendGET(_url.categories)
+    ]);
+    return [
+      ResponseConfiguration.fromJson((waiting[0].data)),
+      (waiting[1].data as Map<String, dynamic>)['categories'].cast<String>()
+    ];
   }
 
   @override

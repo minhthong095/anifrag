@@ -52,6 +52,15 @@ class OfflineMovie {
   //   _appDb.closeDb();
   // }
 
+  String queryDeleteOneMovie(int idMovie) {
+    return 'DELETE FROM ' +
+        TableMovie.tableName +
+        ' WHERE ' +
+        TableMovie.columnIdMovie +
+        ' = ' +
+        idMovie.toString();
+  }
+
   String queryInsertOneMovie(ResponseMovie movie) {
     final String releaseTimeStr = movie.releaseDate.year.toString() +
         '-' +

@@ -26,26 +26,32 @@ class InitialSplash extends StatefulWidget {
 class _InitialSplashState extends State<InitialSplash> {
   // AnimationController _controller;
   // Tween roundTween = Tween<double>(begin: 0, end: 100 * pi);
-  Animation _animation;
+  // Animation _animation;
   bool isVisibleNoWifi = false;
 
-  @override
-  void didChangeDependencies() {
-    // widget.bloc.init(() {
-    //   Navigator.of(context).pushNamedAndRemoveUntil(
-    //       MainTabBar.nameRoute, (Route<dynamic> route) => false);
-    // });
-    super.didChangeDependencies();
+  void _initCallInitData() {
+    widget.bloc.init((isSuccess) {
+      isSuccess
+          ? Navigator.of(context).pushNamedAndRemoveUntil(
+              MainTabBar.nameRoute, (Route<dynamic> route) => false)
+          : _switchNoWifi();
+    });
   }
 
   void _switchNoWifi() {
     setState(() {
       isVisibleNoWifi = !isVisibleNoWifi;
     });
+    // widget.bloc.init((isSuccess) {
+    //   Navigator.of(context).pushNamedAndRemoveUntil(
+    //       MainTabBar.nameRoute, (Route<dynamic> route) => false);
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!isVisibleNoWifi) _initCallInitData();
+
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: isVisibleNoWifi
@@ -55,15 +61,11 @@ class _InitialSplashState extends State<InitialSplash> {
               },
             )
           : Center(
-              child: InkWell(
-                  onTap: () {
-                    _switchNoWifi();
-                  },
-                  child: Image.asset(
-                    PathImage.splash,
-                    height: 200,
-                    width: 200,
-                  ))),
+              child: Image.asset(
+              PathImage.splash,
+              height: 200,
+              width: 200,
+            )),
     );
   }
 }

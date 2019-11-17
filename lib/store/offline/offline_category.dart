@@ -22,4 +22,17 @@ class OfflineCategory {
     });
     // await _appDb.closeDb();
   }
+
+  List<String> queryCategories(List<String> categories) => categories
+      .map<String>((c) =>
+          'INSERT INTO ' +
+          TableCategory.tableName +
+          '(' +
+          TableCategory.columnName +
+          ') VALUES("' +
+          c +
+          '")')
+      .toList();
+
+  String queryDeleteAll() => 'DELETE FROM ' + TableCategory.tableName;
 }

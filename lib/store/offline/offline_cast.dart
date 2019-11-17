@@ -1,4 +1,5 @@
 import 'package:Anifrag/model/responses/response_cast.dart';
+import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/store/app_db.dart';
 import 'package:Anifrag/store/offline/offline_movie.dart';
 
@@ -19,4 +20,13 @@ class OfflineCast {
           idMovie.toString() +
           ')')
       .toList();
+
+  String queryDeleteAllCastWithIdMovie(int idMovie) {
+    return 'DELETE FROM ' +
+        TableCast.tableName +
+        ' WHERE ' +
+        TableCast.columnIdMovie +
+        ' = ' +
+        idMovie.toString();
+  }
 }

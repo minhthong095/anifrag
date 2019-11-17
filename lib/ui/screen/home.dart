@@ -129,7 +129,7 @@ class _CategoryTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: EdgeInsets.only(left: $Home.paddingInHome, top: 17, bottom: 7),
+        padding: EdgeInsets.only(left: $Home.paddingInHome, top: 25, bottom: 7),
         child: Text(
           this.title,
           style: TextStyle(

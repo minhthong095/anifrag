@@ -47,18 +47,23 @@ class BlocHome {
       int idMovie, Function(ResponseMovie, List<ResponseCast>) callback) async {
     final movieDetail = await _api.getMovieDetail(idMovie);
     final movieCasts = await _api.getCasts(idMovie);
+
     callback(movieDetail, movieCasts);
+
     final db = await _appDb.getDb();
-    await db.transaction((txn) async {
+    db.transaction((txn) async {
       final batch = txn.batch();
-      _offMovie.queryInsertOneMovie(movieDetail);
-      _offCast.queryInsertCasts(movieCasts, movieDetail.id);
-      batch.rawInsert(_offMovie.queryInsertOneMovie(movieDetail));
+
+      batch.execute(_offMovie.queryDeleteOneMovie(movieDetail.id));
+      batch.execute(_offCast.queryDeleteAllCastWithIdMovie(movieDetail.id));
+
+      batch.execute(_offMovie.queryInsertOneMovie(movieDetail));
       _offCast
           .queryInsertCasts(movieCasts, movieDetail.id)
           .forEach((castQuery) {
-        batch.rawInsert(castQuery);
+        batch.execute(castQuery);
       });
+
       batch.commit();
     });
     await _appDb.closeDb();

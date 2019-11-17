@@ -80,13 +80,6 @@ class MyApp extends StatelessWidget {
           ///
           case LoadingRoute.nameRoute:
             return LoadingRoute();
-
-          ///
-          case NoWifi.nameRoute:
-            return PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 0),
-                settings: _addName(settings, NoWifi.nameRoute),
-                pageBuilder: (context, ani, secondAni) => NoWifi());
         }
 
         return MaterialPageRoute(

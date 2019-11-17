@@ -60,16 +60,6 @@ class AppDb {
 
   static const List<String> _scriptTableV1 = <String>[
     'CREATE TABLE ' +
-        TablePosterSize.tableName +
-        ' (id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-        TablePosterSize.columnValue +
-        ' TEXT)',
-    'CREATE TABLE ' +
-        TableChangeKey.tableName +
-        ' (id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-        TableChangeKey.columnValue +
-        ' TEXT)',
-    'CREATE TABLE ' +
         TableThumnailMovie.tableName +
         '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
         TableThumnailMovie.columnIdMovie +
@@ -109,3 +99,14 @@ class AppDb {
         ' INTEGER)'
   ];
 }
+
+// 'CREATE TABLE ' +
+//     TablePosterSize.tableName +
+//     ' (id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+//     TablePosterSize.columnValue +
+//     ' TEXT)',
+// 'CREATE TABLE ' +
+//     TableChangeKey.tableName +
+//     ' (id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+//     TableChangeKey.columnValue +
+//     ' TEXT)',
