@@ -33,13 +33,7 @@ class $Home extends State<Home> {
     _blocHome = Provider.of<BlocHome>(context);
     _rest = _blocHome.listRestMovies();
     _onItemTap = (int idMovie, String prefix) {
-      Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
-      _blocHome.getMovie(idMovie, (responseMovie, responseCast, isSucces) {
-        Navigator.of(context).popUntil(LoadingRoute.loadingRoutePredicate());
-        if (isSucces)
-          Navigator.of(context).pushNamed(Detail.nameRoute,
-              arguments: DetailArguments(prefix, responseMovie, responseCast));
-      });
+      _blocHome.getMovie(context, idMovie, prefix);
     };
     super.didChangeDependencies();
   }

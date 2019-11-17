@@ -9,6 +9,10 @@ class BlocMainTabbar {
     subjectPopup.sink.add(1);
   }
 
+  void triggerPopupLong() {
+    subjectPopup.sink.add(5);
+  }
+
   void dispose() {
     subjectPopup.close();
   }

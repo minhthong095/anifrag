@@ -7,7 +7,10 @@ import 'package:Anifrag/store/app_db.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/store/offline/offline_cast.dart';
 import 'package:Anifrag/store/offline/offline_movie.dart';
+import 'package:Anifrag/ui/screen/detail.dart';
+import 'package:Anifrag/ui/widget/loading_route.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BlocHome {
@@ -48,23 +51,32 @@ class BlocHome {
     return result;
   }
 
-  void getMovie(
-      int idMovie,
-      Function(ResponseMovie, List<ResponseCast>, bool isSuccess)
-          callback) async {
+  void _moveToDetail(BuildContext context, ResponseMovie movieDetail,
+      List<ResponseCast> movieCasts, bool isSucces, String prefix) {
+    Navigator.of(context).popUntil(LoadingRoute.loadingRoutePredicate());
+    if (isSucces)
+      Navigator.of(context).pushNamed(Detail.nameRoute,
+          arguments: DetailArguments(prefix, movieDetail, movieCasts));
+  }
+
+  void getMovie(BuildContext context, int idMovie, String prefix) async {
+    bool isSuccess = false;
     bool isCallFailed = false;
     ResponseMovie movieDetail;
     List<ResponseCast> movieCasts;
+
+    Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
+
     try {
       movieDetail = await _api.getMovieDetail(idMovie);
       movieCasts = await _api.getCasts(idMovie);
     } catch (er) {
       isCallFailed = true;
-      blocMainTabbar.triggerPopup();
+      blocMainTabbar.triggerPopupLong();
     }
 
     if (!isCallFailed) {
-      callback(movieDetail, movieCasts, true);
+      _moveToDetail(context, movieDetail, movieCasts, true, prefix);
       final db = await _appDb.getDb();
       db.transaction((txn) async {
         final batch = txn.batch();
@@ -97,9 +109,9 @@ class BlocHome {
               .map<ResponseCast>((f) => ResponseCast.fromJson(f))
               .toList();
 
-          callback(responseMovie, responseCast, true);
+          _moveToDetail(context, responseMovie, responseCast, true, prefix);
         } catch (er) {
-          callback(null, null, false);
+          _moveToDetail(context, null, null, false, prefix);
         }
       });
       await _appDb.closeDb();
@@ -111,5 +123,3 @@ class BlocHome {
   String baseUrlImage() =>
       _liveStore.responseConfiguration.images.secureBaseUrl;
 }
-
-// 485057808
