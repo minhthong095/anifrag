@@ -1,6 +1,8 @@
 import 'package:Anifrag/bloc/bloc_detail.dart';
+import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
+import 'package:Anifrag/ui/screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,11 +16,17 @@ class MoreLikeThis extends StatefulWidget {
 
 class _MoreLikeThisState extends State<MoreLikeThis> {
   BlocDetail _blocDetail;
+  BlocHome _blocHome;
+  OnItemTap _onItemTap;
 
   @override
   void didChangeDependencies() {
     _blocDetail = Provider.of<BlocDetail>(context);
+    _blocHome = Provider.of<BlocHome>(context);
     _blocDetail.callMoreLikeThis();
+    _onItemTap = (int idMovie, String prefix) {
+      _blocHome.getMovie(context, idMovie, prefix);
+    };
     super.didChangeDependencies();
   }
 
@@ -59,11 +67,16 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
               physics: ClampingScrollPhysics(),
               mainAxisSpacing: 10,
               children: List.generate(moreLikeThisList.length, (index) {
-                return HeroImage(
-                  emptyMode: false,
-                  path: _blocDetail.baseUrlImg() +
-                      moreLikeThisList[index].posterPath,
-                  tag: 'MoreLikeThis' + moreLikeThisList[index].posterPath,
+                return GestureDetector(
+                  onTap: () {
+                    _onItemTap(moreLikeThisList[index].id, 'MoreLikeThis');
+                  },
+                  child: HeroImage(
+                    emptyMode: false,
+                    path: _blocDetail.baseUrlImg() +
+                        moreLikeThisList[index].posterPath,
+                    tag: 'MoreLikeThis' + moreLikeThisList[index].posterPath,
+                  ),
                 );
               }),
             );
