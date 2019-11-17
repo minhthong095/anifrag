@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:Anifrag/bloc/bloc_home.dart';
+import 'package:Anifrag/bloc/bloc_maintabbar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
@@ -33,10 +34,11 @@ class $Home extends State<Home> {
     _rest = _blocHome.listRestMovies();
     _onItemTap = (int idMovie, String prefix) {
       Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
-      _blocHome.getMovie(idMovie, (responseMovie, responseCast) {
+      _blocHome.getMovie(idMovie, (responseMovie, responseCast, isSucces) {
         Navigator.of(context).popUntil(LoadingRoute.loadingRoutePredicate());
-        Navigator.of(context).pushNamed(Detail.nameRoute,
-            arguments: DetailArguments(prefix, responseMovie, responseCast));
+        if (isSucces)
+          Navigator.of(context).pushNamed(Detail.nameRoute,
+              arguments: DetailArguments(prefix, responseMovie, responseCast));
       });
     };
     super.didChangeDependencies();
@@ -96,17 +98,7 @@ class $Home extends State<Home> {
                   Provider<OnItemTap>(
                     builder: (context) => _onItemTap,
                     child: ListImageHome(
-                      onItemTap: (int idMovie, String prefix) {
-                        Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
-                        _blocHome.getMovie(idMovie,
-                            (responseMovie, responseCast) {
-                          Navigator.of(context)
-                              .popUntil(LoadingRoute.loadingRoutePredicate());
-                          Navigator.of(context).pushNamed(Detail.nameRoute,
-                              arguments: DetailArguments(
-                                  prefix, responseMovie, responseCast));
-                        });
-                      },
+                      onItemTap: _onItemTap,
                       baseUrlImg: _blocHome.baseUrlImage(),
                       heroTagPrefix: categoryTitle,
                       padding: EdgeInsets.only(left: paddingInHome),

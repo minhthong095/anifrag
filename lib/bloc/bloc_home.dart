@@ -1,3 +1,4 @@
+import 'package:Anifrag/bloc/bloc_maintabbar.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
@@ -7,6 +8,7 @@ import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/store/offline/offline_cast.dart';
 import 'package:Anifrag/store/offline/offline_movie.dart';
 import 'package:dio/dio.dart';
+import 'package:sqflite/sqflite.dart';
 
 class BlocHome {
   LiveStore _liveStore;
@@ -14,6 +16,9 @@ class BlocHome {
   OfflineMovie _offMovie;
   OfflineCast _offCast;
   AppDb _appDb;
+
+  // inject in my_app.dart
+  BlocMainTabbar blocMainTabbar;
 
   BlocHome(
       this._liveStore, this._api, this._offMovie, this._offCast, this._appDb);
@@ -44,29 +49,61 @@ class BlocHome {
   }
 
   void getMovie(
-      int idMovie, Function(ResponseMovie, List<ResponseCast>) callback) async {
-    final movieDetail = await _api.getMovieDetail(idMovie);
-    final movieCasts = await _api.getCasts(idMovie);
+      int idMovie,
+      Function(ResponseMovie, List<ResponseCast>, bool isSuccess)
+          callback) async {
+    bool isCallFailed = false;
+    ResponseMovie movieDetail;
+    List<ResponseCast> movieCasts;
+    try {
+      movieDetail = await _api.getMovieDetail(idMovie);
+      movieCasts = await _api.getCasts(idMovie);
+    } catch (er) {
+      isCallFailed = true;
+      blocMainTabbar.triggerPopup();
+    }
 
-    callback(movieDetail, movieCasts);
+    if (!isCallFailed) {
+      callback(movieDetail, movieCasts, true);
+      final db = await _appDb.getDb();
+      db.transaction((txn) async {
+        final batch = txn.batch();
 
-    final db = await _appDb.getDb();
-    db.transaction((txn) async {
-      final batch = txn.batch();
+        batch.execute(_offMovie.queryDeleteOneMovie(movieDetail.id));
+        batch.execute(_offCast.queryDeleteAllCastWithIdMovie(movieDetail.id));
 
-      batch.execute(_offMovie.queryDeleteOneMovie(movieDetail.id));
-      batch.execute(_offCast.queryDeleteAllCastWithIdMovie(movieDetail.id));
+        batch.execute(_offMovie.queryInsertOneMovie(movieDetail));
+        _offCast
+            .queryInsertCasts(movieCasts, movieDetail.id)
+            .forEach((castQuery) {
+          batch.execute(castQuery);
+        });
 
-      batch.execute(_offMovie.queryInsertOneMovie(movieDetail));
-      _offCast
-          .queryInsertCasts(movieCasts, movieDetail.id)
-          .forEach((castQuery) {
-        batch.execute(castQuery);
+        batch.commit();
       });
+      await _appDb.closeDb();
+    } else {
+      // Get from offline here
+      final db = await _appDb.getDb();
+      await db.transaction((txn) async {
+        try {
+          final List<dynamic> queries = await Future.wait([
+            txn.rawQuery(_offMovie.querySelectMovie(idMovie)),
+            txn.rawQuery(_offCast.querySelectCasts(idMovie))
+          ]);
 
-      batch.commit();
-    });
-    await _appDb.closeDb();
+          final responseMovie = ResponseMovie.fromJson(queries[0][0]);
+          final responseCast = (queries[1] as List<Map>)
+              .map<ResponseCast>((f) => ResponseCast.fromJson(f))
+              .toList();
+
+          callback(responseMovie, responseCast, true);
+        } catch (er) {
+          callback(null, null, false);
+        }
+      });
+      await _appDb.closeDb();
+    }
   }
 
   String mainCategory() => _liveStore.categories[0];
@@ -74,3 +111,5 @@ class BlocHome {
   String baseUrlImage() =>
       _liveStore.responseConfiguration.images.secureBaseUrl;
 }
+
+// 485057808

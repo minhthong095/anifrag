@@ -1,6 +1,7 @@
 import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
+import 'package:Anifrag/bloc/bloc_maintabbar.dart';
 import 'package:Anifrag/di/module/module_bloc.dart';
 import 'package:Anifrag/di/module/module_network.dart';
 import 'package:Anifrag/di/module/module_store.dart';
@@ -22,6 +23,8 @@ abstract class ComponentInjector {
 
   // This is dynamic injector thanks to https://github.com/asi-pwr/HackYeah2019
   BlocInitialSplash get blocSplash;
+
+  BlocMainTabbar get blocMainTabbar;
 
   static final create = g.ComponentInjector$Injector.create;
 }

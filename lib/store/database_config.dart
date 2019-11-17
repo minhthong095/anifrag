@@ -13,8 +13,8 @@ class TableChangeKey {
 class TableThumnailMovie {
   static const String tableName = 'THUMBNAIL_MOVIE';
 
-  static const String columnIdMovie = 'idMovie';
-  static const String columnPathPoster = 'pathPoster';
+  static const String columnIdMovie = 'id';
+  static const String columnPosterPath = 'poster_path';
 }
 
 class TableCategory {
@@ -26,19 +26,20 @@ class TableCategory {
 class TableMovie {
   static const String tableName = "MOVIE";
 
-  static const String columnIdMovie = 'idMovie';
+  static const String columnIdMovie = 'id';
   static const String columnTitle = 'title';
   static const String columnOverview = 'overview';
-  static const String columnRuntime = 'runtim';
+  static const String columnRuntime = 'runtime';
   static const String columnPopularity = 'popularity';
-  static const String columnReleaseDate = 'releaseDate';
-  static const String columnVoteAverage = 'voteAverate';
-  static const String columnVoteCount = 'voteCount';
+  static const String columnReleaseDate = 'release_date';
+  static const String columnVoteAverage = 'vote_average';
+  static const String columnVoteCount = 'vote_count';
+  static const String columnPosterPath = 'poster_path';
 }
 
 class TableCast {
   static const String tableName = 'CAST';
 
   static const String columnName = 'name';
-  static const String columnIdMovie = 'idMovie';
+  static const String columnIdMovie = 'id';
 }

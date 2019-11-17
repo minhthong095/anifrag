@@ -13,11 +13,12 @@ import '../network/apis.dart' as _i12;
 import '../network/requesting.dart' as _i13;
 import '../store/offline/offline_cast.dart' as _i14;
 import '../store/offline/offline_movie.dart' as _i15;
-import '../bloc/bloc_detail.dart' as _i16;
-import '../bloc/bloc_initial_spalsh.dart' as _i17;
-import '../store/offline/offline_configuration_image.dart' as _i18;
-import '../store/offline/offline_category.dart' as _i19;
-import '../store/offline/offline_home_page_data.dart' as _i20;
+import '../bloc/bloc_maintabbar.dart' as _i16;
+import '../bloc/bloc_detail.dart' as _i17;
+import '../bloc/bloc_initial_spalsh.dart' as _i18;
+import '../store/offline/offline_configuration_image.dart' as _i19;
+import '../store/offline/offline_category.dart' as _i20;
+import '../store/offline/offline_home_page_data.dart' as _i21;
 
 class ComponentInjector$Injector implements _i1.ComponentInjector {
   ComponentInjector$Injector._(
@@ -53,7 +54,8 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
       _createAPIs(),
       _createOfflineCast(),
       _createOfflineMovie(),
-      _createAppDb());
+      _createAppDb(),
+      _createBlocMainTabbar());
   _i4.LiveStore _createLiveStore() =>
       _singletonLiveStore ??= _moduleStore.liveConfIma();
   _i12.APIs _createAPIs() => _moduleNetwork.api(
@@ -68,9 +70,10 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   _i14.OfflineCast _createOfflineCast() => _moduleStore.offCast();
   _i15.OfflineMovie _createOfflineMovie() => _moduleStore.offMovie();
   _i8.AppDb _createAppDb() => _singletonAppDb ??= _moduleStore.db();
-  _i16.BlocDetail _createBlocDetail() => _moduleBloc.blocDetail(
+  _i16.BlocMainTabbar _createBlocMainTabbar() => _moduleBloc.blocMainTabbar();
+  _i17.BlocDetail _createBlocDetail() => _moduleBloc.blocDetail(
       _createOfflineMovie(), _createLiveStore(), _createAPIs());
-  _i17.BlocInitialSplash _createBlocInitialSplash() =>
+  _i18.BlocInitialSplash _createBlocInitialSplash() =>
       _moduleBloc.blocInitialSplash(
           _createAPIs(),
           _createAppDb(),
@@ -78,18 +81,20 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
           _createLiveStore(),
           _createOfflineCategory(),
           _createOfflineHomePageData());
-  _i18.OfflineConfigurationImage _createOfflineConfigurationImage() =>
+  _i19.OfflineConfigurationImage _createOfflineConfigurationImage() =>
       _moduleStore.offConfIma(_createAppDb());
-  _i19.OfflineCategory _createOfflineCategory() =>
+  _i20.OfflineCategory _createOfflineCategory() =>
       _moduleStore.offCategory(_createAppDb());
-  _i20.OfflineHomePageData _createOfflineHomePageData() =>
+  _i21.OfflineHomePageData _createOfflineHomePageData() =>
       _moduleStore.offHomeData(_createAppDb());
   @override
   _i10.MyApp get app => _createMyApp();
   @override
   _i11.BlocHome get blocHome => _createBlocHome();
   @override
-  _i16.BlocDetail get blocDetail => _createBlocDetail();
+  _i17.BlocDetail get blocDetail => _createBlocDetail();
   @override
-  _i17.BlocInitialSplash get blocSplash => _createBlocInitialSplash();
+  _i18.BlocInitialSplash get blocSplash => _createBlocInitialSplash();
+  @override
+  _i16.BlocMainTabbar get blocMainTabbar => _createBlocMainTabbar();
 }

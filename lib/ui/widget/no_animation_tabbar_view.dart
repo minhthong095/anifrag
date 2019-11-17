@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:Anifrag/bloc/bloc_maintabbar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'no_connection_popup.dart';
 
@@ -26,12 +28,19 @@ class _NoAnimationTabbarView extends State<NoAnimationTabBarView>
   AnimationController _controller;
   Function _listener;
   Animation _animationPopup;
+  BlocMainTabbar _blocMainTabbar;
 
   @override
   void initState() {
-    _initOnTap();
+    _initOnTapTabbar();
     _initAnimationController();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _initPopupSubscription();
+    super.didChangeDependencies();
   }
 
   @override
@@ -39,7 +48,16 @@ class _NoAnimationTabbarView extends State<NoAnimationTabBarView>
     _controller.removeStatusListener(_animationControllerStatusListener);
     _streamControllerIndex.close();
     widget.tabController.removeListener(_listener);
+    _blocMainTabbar.dispose();
     super.dispose();
+  }
+
+  void _initPopupSubscription() {
+    _blocMainTabbar = Provider.of<BlocMainTabbar>(context);
+    _blocMainTabbar.subjectPopup.stream.listen((empty) {
+      if (_controller.status == AnimationStatus.dismissed)
+        _controller.forward();
+    });
   }
 
   void _animationControllerStatusListener(AnimationStatus status) async {
@@ -58,7 +76,7 @@ class _NoAnimationTabbarView extends State<NoAnimationTabBarView>
         .animate(_controller);
   }
 
-  void _initOnTap() {
+  void _initOnTapTabbar() {
     _listener = () {
       if (widget.tabController.indexIsChanging) {
         // _streamControllerIndex.add(widget.tabController.index);

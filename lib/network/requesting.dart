@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:inject/inject.dart';
 
 abstract class AbsRequesting {
-  final int timeOut = 7; // second
+  final int timeOut = 10; // second
   final Function throwTimeout = () {
     throw DioError(
       error: 'Local connect timeout in AbsRequesting.',

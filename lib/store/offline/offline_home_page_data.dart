@@ -17,7 +17,7 @@ class OfflineHomePageData {
                 '(' +
                 TableThumnailMovie.columnIdMovie +
                 ', ' +
-                TableThumnailMovie.columnPathPoster +
+                TableThumnailMovie.columnPosterPath +
                 ') VALUES(?,?)',
             [data.id, data.posterPath]);
       });
@@ -33,7 +33,7 @@ class OfflineHomePageData {
             '(' +
             TableThumnailMovie.columnIdMovie +
             ', ' +
-            TableThumnailMovie.columnPathPoster +
+            TableThumnailMovie.columnPosterPath +
             ') VALUES(' +
             d.id.toString() +
             ',"' +

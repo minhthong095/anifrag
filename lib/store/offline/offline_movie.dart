@@ -85,6 +85,8 @@ class OfflineMovie {
         ', ' +
         TableMovie.columnVoteAverage +
         ', ' +
+        TableMovie.columnPosterPath +
+        ', ' +
         TableMovie.columnVoteCount +
         ') VALUES(' +
         movie.id.toString() +
@@ -100,8 +102,19 @@ class OfflineMovie {
         releaseTimeStr +
         '",' +
         movie.voteAverage.toString() +
-        ',' +
+        ',"' +
+        movie.posterPath.toString() +
+        '",' +
         movie.voteCount.toString() +
         ')';
+  }
+
+  String querySelectMovie(int idMovie) {
+    return 'SELECT * FROM ' +
+        TableMovie.tableName +
+        ' WHERE ' +
+        TableMovie.columnIdMovie +
+        ' = ' +
+        idMovie.toString();
   }
 }

@@ -29,4 +29,14 @@ class OfflineCast {
         ' = ' +
         idMovie.toString();
   }
+
+  String querySelectCasts(int idMovie) {
+    return 'SELECT * FROM ' +
+        TableCast.tableName +
+        ' WHERE ' +
+        TableMovie.columnIdMovie +
+        ' = ' +
+        idMovie.toString();
+    ;
+  }
 }

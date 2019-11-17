@@ -13,23 +13,30 @@ class BlocDetail {
   final LiveStore _liveStore;
   final AbsAPI _api;
 
-  ResponseMovie movie;
-  List<ResponseCast> casts;
-  String tagPrefix;
+  ResponseMovie _movie;
+  void setMovie(movie) => _movie = movie;
+  get getMovie => _movie;
+
+  List<ResponseCast> _casts;
+  void setCasts(casts) => _casts = casts;
+  get getCasts => _casts;
+
+  String _tagPrefix;
+  void setTagPrefix(tagPrefix) => _tagPrefix = tagPrefix;
+  get getTagPrefix => _tagPrefix;
+
   PublishSubject subjectMoreLikeThis =
       PublishSubject<List<ResponseThumbnailMovie>>();
 
-  BlocDetail(this._offlineMovie, this._liveStore, this._api) {
-    print("YOU R ");
-  }
+  BlocDetail(this._offlineMovie, this._liveStore, this._api);
 
   String currentPosterPath() =>
-      _liveStore.responseConfiguration.images.secureBaseUrl + movie.posterPath;
+      _liveStore.responseConfiguration.images.secureBaseUrl + _movie.posterPath;
 
   String baseUrlImg() => _liveStore.responseConfiguration.images.secureBaseUrl;
 
   void callMoreLikeThis() {
-    _api.getMoreLikeThis(movie.id).then((onValue) {
+    _api.getMoreLikeThis(_movie.id).then((onValue) {
       subjectMoreLikeThis.sink.add(onValue);
     });
   }

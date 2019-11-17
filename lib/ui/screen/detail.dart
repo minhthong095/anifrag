@@ -105,7 +105,7 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                   SlideTransition(
                       position: _animationBotToTop,
                       child: _Content(
-                        movie: _bloc.movie,
+                        movie: _bloc.getMovie,
                       )),
                 ],
               ),
@@ -152,7 +152,7 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                           },
                           child: HeroImage(
                             emptyMode: false,
-                            tag: _bloc.tagPrefix + _bloc.movie.posterPath,
+                            tag: _bloc.getTagPrefix + _bloc.getMovie.posterPath,
                             path: _bloc.currentPosterPath(),
                             height: _heightImage,
                             fit: BoxFit.fill,

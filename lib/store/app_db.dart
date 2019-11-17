@@ -61,19 +61,19 @@ class AppDb {
   static const List<String> _scriptTableV1 = <String>[
     'CREATE TABLE ' +
         TableThumnailMovie.tableName +
-        '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        '\(no INTEGER PRIMARY KEY AUTOINCREMENT, ' +
         TableThumnailMovie.columnIdMovie +
         ' INTEGER, ' +
-        TableThumnailMovie.columnPathPoster +
+        TableThumnailMovie.columnPosterPath +
         ' TEXT)',
     'CREATE TABLE ' +
         TableCategory.tableName +
-        '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        '\(no INTEGER PRIMARY KEY AUTOINCREMENT, ' +
         TableCategory.columnName +
         ' TEXT)',
     'CREATE TABLE ' +
         TableMovie.tableName +
-        '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        '\(no INTEGER PRIMARY KEY AUTOINCREMENT, ' +
         TableMovie.columnIdMovie +
         ' INTEGER, ' +
         TableMovie.columnOverview +
@@ -88,11 +88,13 @@ class AppDb {
         ' DATETIME, ' +
         TableMovie.columnVoteAverage +
         ' FLOAT, ' +
+        TableMovie.columnPosterPath +
+        ' TEXT, ' +
         TableMovie.columnVoteCount +
-        ' FLOAT)',
+        ' INTEGER)',
     'CREATE TABLE ' +
         TableCast.tableName +
-        '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        '\(no INTEGER PRIMARY KEY AUTOINCREMENT, ' +
         TableCast.columnName +
         ' TEXT, ' +
         TableCast.columnIdMovie +
@@ -102,11 +104,11 @@ class AppDb {
 
 // 'CREATE TABLE ' +
 //     TablePosterSize.tableName +
-//     ' (id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+//     ' \(no INTEGER PRIMARY KEY AUTOINCREMENT, ' +
 //     TablePosterSize.columnValue +
 //     ' TEXT)',
 // 'CREATE TABLE ' +
 //     TableChangeKey.tableName +
-//     ' (id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+//     ' \(no INTEGER PRIMARY KEY AUTOINCREMENT, ' +
 //     TableChangeKey.columnValue +
 //     ' TEXT)',

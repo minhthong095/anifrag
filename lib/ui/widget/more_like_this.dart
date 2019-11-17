@@ -48,7 +48,6 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
   Widget build(BuildContext context) => StreamBuilder(
         stream: _blocDetail.subjectMoreLikeThis,
         builder: (context, snapshot) {
-          print("SNAPSHOT STATE " + snapshot.connectionState.toString());
           if (snapshot.connectionState == ConnectionState.active) {
             final List<ResponseThumbnailMovie> moreLikeThisList = snapshot.data;
             return GridView.count(

@@ -28,10 +28,10 @@ class _StoryOverviewState extends State<StoryOverview> {
             text: 'Storyline',
           ),
           Text(
-            _blocDetail.movie.overview,
+            _blocDetail.getMovie.overview,
             style: TextStyle(color: Colors.white),
           ),
-          _Cast(casts: _blocDetail.casts),
+          _Cast(casts: _blocDetail.getCasts),
           if (Platform.isAndroid) SizedBox.fromSize(size: Size(0, 30)),
         ],
       );

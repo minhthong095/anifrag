@@ -1,4 +1,5 @@
 import 'package:Anifrag/bloc/bloc_home.dart';
+import 'package:Anifrag/bloc/bloc_maintabbar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/ui/screen/home.dart';
@@ -8,6 +9,7 @@ import 'package:Anifrag/ui/widget/no_splash_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class MainTabBar extends StatefulWidget {
   static const String nameRoute = '/mainTabBar';

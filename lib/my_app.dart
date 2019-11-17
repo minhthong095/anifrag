@@ -1,6 +1,7 @@
 import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
+import 'package:Anifrag/bloc/bloc_maintabbar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/di/component.dart';
@@ -46,10 +47,17 @@ class MyApp extends StatelessWidget {
 
           ///
           case MainTabBar.nameRoute:
+            final blocHome = componentInjector.blocHome;
+            blocHome.blocMainTabbar = componentInjector.blocMainTabbar;
             return CupertinoPageRoute(
                 settings: _addName(settings, MainTabBar.nameRoute),
-                builder: (context) => Provider<BlocHome>(
-                      builder: (context) => componentInjector.blocHome,
+                builder: (context) => MultiProvider(
+                      providers: [
+                        Provider<BlocHome>.value(value: blocHome),
+                        Provider<BlocMainTabbar>.value(
+                          value: blocHome.blocMainTabbar,
+                        )
+                      ],
                       child: MainTabBar(),
                     ));
 
@@ -65,9 +73,9 @@ class MyApp extends StatelessWidget {
             final blocDetail = componentInjector.blocDetail;
 
             blocDetail
-              ..movie = detailArgs.movie
-              ..tagPrefix = detailArgs.tagPrefix
-              ..casts = detailArgs.casts;
+              ..setMovie(detailArgs.movie)
+              ..setTagPrefix(detailArgs.tagPrefix)
+              ..setCasts(detailArgs.casts);
 
             return PageRouteBuilder(
                 settings: _addName(settings, Detail.nameRoute),
@@ -98,3 +106,5 @@ class MyApp extends StatelessWidget {
     return RouteSettings(arguments: args.arguments, name: name);
   }
 }
+
+// 581852225

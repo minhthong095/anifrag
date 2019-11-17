@@ -34,8 +34,9 @@ class ResponseMovie {
       @required this.popularity,
       @required this.voteCount});
 
-  factory ResponseMovie.fromJson(Map<String, dynamic> json) =>
-      _$ResponseMovieFromJson(json);
+  factory ResponseMovie.fromJson(Map<String, dynamic> json) {
+    return _$ResponseMovieFromJson(json);
+  }
 
   Map<String, dynamic> toJson() => _$ResponseMovieToJson(this);
 }

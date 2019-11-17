@@ -1,6 +1,7 @@
 import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
+import 'package:Anifrag/bloc/bloc_maintabbar.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/app_db.dart';
 import 'package:Anifrag/store/live_store.dart';
@@ -25,8 +26,11 @@ class ModuleBloc {
           offlineCategory, offHomePageData);
 
   @provide
+  BlocMainTabbar blocMainTabbar() => BlocMainTabbar();
+
+  @provide
   BlocHome blocHome(LiveStore liveStore, APIs api, OfflineCast offCast,
-          OfflineMovie offMovie, AppDb appDb) =>
+          OfflineMovie offMovie, AppDb appDb, BlocMainTabbar blocMainTabbar) =>
       BlocHome(liveStore, api, offMovie, offCast, appDb);
 
   @provide
