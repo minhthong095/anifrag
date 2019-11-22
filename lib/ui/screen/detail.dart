@@ -143,14 +143,7 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         InkWell(
-                          onTap: () async {
-                            Navigator.of(context)
-                                .pushNamed(LoadingRoute.nameRoute);
-                            await new Future.delayed(
-                                const Duration(seconds: 7));
-                            Navigator.of(context).popUntil(
-                                ModalRoute.withName(Detail.nameRoute));
-                          },
+                          onTap: () {},
                           child: HeroImage(
                             emptyMode: false,
                             tag: _bloc.getTagPrefix + _bloc.getMovie.posterPath,
