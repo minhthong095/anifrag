@@ -89,15 +89,16 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                             _mergeGap),
                     child: AnimatedBuilder(
                       animation: _animationCircle,
-                      builder: (context, animation) {
+                      child: Container(
+                        constraints: BoxConstraints.tightFor(
+                            height: _defaultDiameterCircle),
+                        decoration: BoxDecoration(
+                            color: AppColor.yellow, shape: BoxShape.circle),
+                      ),
+                      builder: (context, child) {
                         return Transform.scale(
                           scale: _animationCircle.value,
-                          child: Container(
-                            constraints: BoxConstraints.tightFor(
-                                height: _defaultDiameterCircle),
-                            decoration: BoxDecoration(
-                                color: AppColor.yellow, shape: BoxShape.circle),
-                          ),
+                          child: child,
                         );
                       },
                     ),

@@ -105,13 +105,14 @@ class _NoAnimationTabbarView extends State<NoAnimationTabBarView>
               ),
               AnimatedBuilder(
                   animation: _animationPopup,
+                  child: NoConnectionPopup(),
                   builder: (BuildContext context, Widget child) {
                     return Positioned(
                       right: 0,
                       left: 0,
                       height: _heightPopupWifi,
                       bottom: _animationPopup.value,
-                      child: NoConnectionPopup(),
+                      child: child,
                     );
                   })
             ],
