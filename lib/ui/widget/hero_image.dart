@@ -35,24 +35,26 @@ class HeroImage extends StatelessWidget {
     // return EmptyImage();
   }
 
-  Widget _borderImage() => ClipRRect(
-        borderRadius: BorderRadius.circular(7.0),
-        // child: Image.asset(
-        //   path,
-        //   height: height,
-        //   fit: fit,
-        //   filterQuality: filterQuality,
-        // ),
-        child: CachedNetworkImage(
-          imageUrl: path,
-          height: height,
-          fit: fit,
-          filterQuality: filterQuality,
-          placeholder: (context, text) => Shimmer.fromColors(
-              period: Duration(seconds: 4),
-              baseColor: Color(0xff292831),
-              highlightColor: Color(0xff393747),
-              child: EmptyImage()),
-        ),
-      );
+  Widget _borderImage() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(7.0),
+      // child: Image.asset(
+      //   path,
+      //   height: height,
+      //   fit: fit,
+      //   filterQuality: filterQuality,
+      // ),
+      child: CachedNetworkImage(
+        imageUrl: path,
+        height: height,
+        fit: fit,
+        filterQuality: filterQuality,
+        placeholder: (context, text) => Shimmer.fromColors(
+            period: Duration(seconds: 4),
+            baseColor: Color(0xff292831),
+            highlightColor: Color(0xff393747),
+            child: EmptyImage()),
+      ),
+    );
+  }
 }

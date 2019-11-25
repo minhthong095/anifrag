@@ -66,7 +66,7 @@ class $Home extends State<Home> {
                               color: Colors.white),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 5),
+                          padding: EdgeInsets.only(top: 5, bottom: 20),
                           child: Text(
                             "Trending movies today",
                             style: TextStyle(fontSize: 17, color: Colors.white),
