@@ -59,8 +59,8 @@ class BlocHome {
           arguments: DetailArguments(prefix, movieDetail, movieCasts));
   }
 
-  void getMovie(BuildContext context, int idMovie, String prefix) async {
-    bool isSuccess = false;
+  void moveDetailProcess(
+      BuildContext context, int idMovie, String prefix) async {
     bool isCallFailed = false;
     ResponseMovie movieDetail;
     List<ResponseCast> movieCasts;
@@ -118,8 +118,7 @@ class BlocHome {
     }
   }
 
-  String mainCategory() => _liveStore.categories[0];
+  String get baseUrlImage => _liveStore.baseUrlImage;
 
-  String baseUrlImage() =>
-      _liveStore.responseConfiguration.images.secureBaseUrl;
+  String mainCategory() => _liveStore.categories[0];
 }

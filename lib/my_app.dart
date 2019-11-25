@@ -37,9 +37,6 @@ class MyApp extends StatelessWidget {
       // home: MainTabBar(),
       // home: NoWifi(),
       onGenerateRoute: (settings) {
-        final blocHome = componentInjector.blocHome;
-        blocHome.blocMainTabbar = componentInjector.blocMainTabbar;
-
         switch (settings.name) {
           case InitialSplash.nameRoute:
             return PageRouteBuilder(
@@ -50,6 +47,8 @@ class MyApp extends StatelessWidget {
 
           ///
           case MainTabBar.nameRoute:
+            final blocHome = _generateBlocHome();
+
             return CupertinoPageRoute(
                 settings: _addName(settings, MainTabBar.nameRoute),
                 builder: (context) => MultiProvider(
@@ -72,13 +71,15 @@ class MyApp extends StatelessWidget {
           case Detail.nameRoute:
             final detailArgs = settings.arguments as DetailArguments;
             final blocDetail = componentInjector.blocDetail;
-
             blocDetail
               ..setMovie(detailArgs.movie)
               ..setTagPrefix(detailArgs.tagPrefix)
               ..setCasts(detailArgs.casts);
 
+            final blocHome = _generateBlocHome();
+
             return PageRouteBuilder(
+                transitionDuration: Detail.durationTransition,
                 settings: _addName(settings, Detail.nameRoute),
                 pageBuilder: (context, animation, secondAnimation) =>
                     MultiProvider(
@@ -106,6 +107,12 @@ class MyApp extends StatelessWidget {
                 ));
       },
     );
+  }
+
+  BlocHome _generateBlocHome() {
+    final blocHome = componentInjector.blocHome;
+    blocHome.blocMainTabbar = componentInjector.blocMainTabbar;
+    return blocHome;
   }
 
   RouteSettings _addName(RouteSettings args, String name) {

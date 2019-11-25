@@ -29,7 +29,7 @@ class _NoAnimationTabbarView extends State<NoAnimationTabBarView>
   Function _listener;
   Animation _animationPopup;
   BlocMainTabbar _blocMainTabbar;
-  int _timeDuration = 1;
+  Duration _timeDuration;
 
   @override
   void initState() {
@@ -55,17 +55,17 @@ class _NoAnimationTabbarView extends State<NoAnimationTabBarView>
 
   void _initPopupSubscription() {
     _blocMainTabbar = Provider.of<BlocMainTabbar>(context);
-    _blocMainTabbar.subjectPopup.stream.listen((duration) {
-      if (_controller.status == AnimationStatus.dismissed) {
-        _timeDuration = duration;
-        _controller.forward();
-      }
+    _blocMainTabbar.subjectPopup.stream
+        .where((duration) => _controller.status == AnimationStatus.dismissed)
+        .listen((duration) {
+      _timeDuration = duration;
+      _controller.forward();
     });
   }
 
   void _animationControllerStatusListener(AnimationStatus status) async {
     if (status == AnimationStatus.completed) {
-      await Future.delayed(Duration(seconds: _timeDuration), () {});
+      await Future.delayed(_timeDuration, () {});
       _controller.reverse();
     }
   }

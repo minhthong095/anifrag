@@ -18,16 +18,25 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
   BlocDetail _blocDetail;
   BlocHome _blocHome;
   OnItemTap _onItemTap;
+  List<ResponseThumbnailMovie> _moreLikeThis;
 
   @override
   void didChangeDependencies() {
-    _blocDetail = Provider.of<BlocDetail>(context);
+    _initBlocDetail();
     _blocHome = Provider.of<BlocHome>(context);
-    _blocDetail.callMoreLikeThis();
     _onItemTap = (int idMovie, String prefix) {
-      _blocHome.getMovie(context, idMovie, prefix);
+      _blocHome.moveDetailProcess(context, idMovie, prefix);
     };
     super.didChangeDependencies();
+  }
+
+  void _initBlocDetail() {
+    _blocDetail = Provider.of<BlocDetail>(context);
+    _blocDetail.setCallbackDoneMoreLikeThis = (moreLikeThis) {
+      setState(() {
+        _moreLikeThis = moreLikeThis;
+      });
+    };
   }
 
   Widget _defaultMoreLikeThis() => GridView.count(
@@ -47,43 +56,33 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
       );
 
   @override
-  void dispose() {
-    _blocDetail.dipose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) => StreamBuilder(
-        stream: _blocDetail.subjectMoreLikeThis,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            final List<ResponseThumbnailMovie> moreLikeThisList = snapshot.data;
-            return GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 3,
-              childAspectRatio: 324 / 480,
-              crossAxisSpacing: 20,
-              padding: EdgeInsets.zero,
-              physics: ClampingScrollPhysics(),
-              mainAxisSpacing: 10,
-              children: List.generate(moreLikeThisList.length, (index) {
-                return GestureDetector(
-                  onTap: () {
-                    _onItemTap(moreLikeThisList[index].id, 'MoreLikeThis');
-                  },
-                  child: HeroImage(
-                    emptyMode: false,
-                    path: _blocDetail.baseUrlImg() +
-                        moreLikeThisList[index].posterPath,
-                    tag: 'MoreLikeThis' + moreLikeThisList[index].posterPath,
-                  ),
-                );
-              }),
-            );
-          } else
-            return _defaultMoreLikeThis();
-        },
+  Widget build(BuildContext context) {
+    if (_moreLikeThis != null && _moreLikeThis.length > 0) {
+      return GridView.count(
+        shrinkWrap: true,
+        crossAxisCount: 3,
+        childAspectRatio: 324 / 480,
+        crossAxisSpacing: 20,
+        padding: EdgeInsets.zero,
+        physics: ClampingScrollPhysics(),
+        mainAxisSpacing: 10,
+        children: List.generate(_moreLikeThis.length, (index) {
+          return GestureDetector(
+            onTap: () {
+              _onItemTap(_moreLikeThis[index].id, 'MoreLikeThis');
+            },
+            child: HeroImage(
+              emptyMode: false,
+              path: _blocDetail.baseUrlImage + _moreLikeThis[index].posterPath,
+              tag: 'MoreLikeThis' + _moreLikeThis[index].posterPath,
+            ),
+          );
+        }),
       );
+    } else
+      return _defaultMoreLikeThis();
+  }
+  // _defaultMoreLikeThis();
 }
 
 // List.generate(MockData.listImage.length, (index) {

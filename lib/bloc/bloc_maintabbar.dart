@@ -3,14 +3,14 @@ import 'dart:ui';
 import 'package:rxdart/subjects.dart';
 
 class BlocMainTabbar {
-  final subjectPopup = PublishSubject<int>();
+  final subjectPopup = PublishSubject<Duration>();
 
   void triggerPopup() {
-    subjectPopup.sink.add(1);
+    subjectPopup.sink.add(Duration(seconds: 1));
   }
 
   void triggerPopupLong() {
-    subjectPopup.sink.add(5);
+    subjectPopup.sink.add(Duration(seconds: 5));
   }
 
   void dispose() {

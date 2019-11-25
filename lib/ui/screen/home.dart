@@ -33,7 +33,7 @@ class $Home extends State<Home> {
     _blocHome = Provider.of<BlocHome>(context);
     _rest = _blocHome.listRestMovies();
     _onItemTap = (int idMovie, String prefix) {
-      _blocHome.getMovie(context, idMovie, prefix);
+      _blocHome.moveDetailProcess(context, idMovie, prefix);
     };
     super.didChangeDependencies();
   }
@@ -93,7 +93,7 @@ class $Home extends State<Home> {
                     builder: (context) => _onItemTap,
                     child: ListImageHome(
                       onItemTap: _onItemTap,
-                      baseUrlImg: _blocHome.baseUrlImage(),
+                      baseUrlImg: _blocHome.baseUrlImage,
                       heroTagPrefix: categoryTitle,
                       padding: EdgeInsets.only(left: paddingInHome),
                       listHomePageMovie: _rest[categoryTitle],

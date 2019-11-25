@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 
 class Detail extends StatefulWidget {
   static const String nameRoute = '/detail';
+  static const Duration durationTransition = const Duration(milliseconds: 500);
 
   @override
   _Detail createState() => _Detail();
@@ -38,7 +39,7 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+        AnimationController(vsync: this, duration: Detail.durationTransition);
     _animationBotToTop = Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
         .chain(CurveTween(curve: Curves.easeOutCubic))
         .animate(_controller);
@@ -48,15 +49,30 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
     _animationOpacityCircle = Tween<double>(begin: 0, end: 1)
         .chain(CurveTween(curve: Curves.easeInQuint))
         .animate(_controller);
+    _controller.addStatusListener(_controllerListener);
     _controller.forward();
+
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
     _getSizeOfCircle();
-    _getBlocDetail();
+    _initBlocDetail();
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _bloc.dipose();
+    _controller.removeStatusListener(_controllerListener);
+    super.dispose();
+  }
+
+  void _controllerListener(AnimationStatus status) {
+    if (status == AnimationStatus.completed) {
+      _bloc.callFinishTransition();
+    }
   }
 
   void _getSizeOfCircle() {
@@ -68,8 +84,9 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
     }
   }
 
-  void _getBlocDetail() {
+  void _initBlocDetail() {
     _bloc = Provider.of<BlocDetail>(context);
+    _bloc.callMoreLikeThis();
   }
 
   @override
@@ -143,11 +160,13 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            // _bloc.callMoreLikeThis();
+                          },
                           child: HeroImage(
                             emptyMode: false,
                             tag: _bloc.getTagPrefix + _bloc.getMovie.posterPath,
-                            path: _bloc.currentPosterPath(),
+                            path: _bloc.currentPosterPath,
                             height: _heightImage,
                             fit: BoxFit.fill,
                           ),
