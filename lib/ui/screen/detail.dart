@@ -1,6 +1,8 @@
 import 'package:Anifrag/bloc/bloc_detail.dart';
+import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/ui/widget/button_circle.dart';
@@ -15,15 +17,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class Detail extends StatefulWidget {
+class DetailScreen extends StatelessWidget {
+  final DetailScreenArgument argument;
   static const String nameRoute = '/detail';
   static const Duration durationTransition = const Duration(milliseconds: 370);
 
+  DetailScreen({@required this.argument});
+
   @override
-  _Detail createState() => _Detail();
+  Widget build(BuildContext context) {
+    final blocDetail = ComponentInjector.I.blocDetail;
+    blocDetail
+      ..setMovie(argument.movie)
+      ..setTagPrefix(argument.tagPrefix)
+      ..setCasts(argument.casts);
+
+    return MultiProvider(
+      providers: [
+        Provider<BlocHome>.value(value: ComponentInjector.I.blocHome),
+        Provider<BlocDetail>.value(
+          value: blocDetail,
+        )
+      ],
+      child: _DetailScreen(),
+    );
+  }
 }
 
-class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
+class _DetailScreen extends StatefulWidget {
+  @override
+  _DetailScreenState createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<_DetailScreen>
+    with SingleTickerProviderStateMixin {
   static final double _paddingTopImage = 20;
   final double _mergeGap = 30;
   final double _heightImage = 320 + _paddingTopImage;
@@ -38,8 +65,8 @@ class _Detail extends State<Detail> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    _controller =
-        AnimationController(vsync: this, duration: Detail.durationTransition);
+    _controller = AnimationController(
+        vsync: this, duration: DetailScreen.durationTransition);
     _animationBotToTop = Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
         .chain(CurveTween(curve: Curves.easeOutCubic))
         .animate(_controller);
@@ -288,8 +315,8 @@ class _Content extends StatelessWidget {
               SafeArea(
                 top: false,
                 child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: _Detail.paddingContent),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: _DetailScreenState.paddingContent),
                   child: DetailTabbar(),
                 ),
               )
@@ -299,9 +326,9 @@ class _Content extends StatelessWidget {
       );
 }
 
-class DetailArguments {
+class DetailScreenArgument {
   final String tagPrefix;
   final ResponseMovie movie;
   final List<ResponseCast> casts;
-  const DetailArguments(this.tagPrefix, this.movie, this.casts);
+  const DetailScreenArgument(this.tagPrefix, this.movie, this.casts);
 }

@@ -13,7 +13,7 @@ import '../network/apis.dart' as _i12;
 import '../network/requesting.dart' as _i13;
 import '../store/offline/offline_cast.dart' as _i14;
 import '../store/offline/offline_movie.dart' as _i15;
-import '../bloc/bloc_maintabbar.dart' as _i16;
+import '../bloc/bloc_maintab_bar.dart' as _i16;
 import '../bloc/bloc_detail.dart' as _i17;
 import '../bloc/bloc_initial_spalsh.dart' as _i18;
 import '../store/offline/offline_configuration_image.dart' as _i19;

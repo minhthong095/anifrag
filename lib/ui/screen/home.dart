@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:Anifrag/bloc/bloc_home.dart';
-import 'package:Anifrag/bloc/bloc_maintabbar.dart';
+import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';

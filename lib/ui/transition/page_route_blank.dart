@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PageRouteBlank extends PageRouteBuilder {
   PageRouteBlank(
-      {@required Detail child, @required RouteSettings routeSettings})
+      {@required DetailScreen child, @required RouteSettings routeSettings})
       : super(
             settings: routeSettings,
             transitionDuration: Duration(milliseconds: 300),

@@ -1,4 +1,4 @@
-import 'package:Anifrag/bloc/bloc_maintabbar.dart';
+import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
@@ -14,17 +14,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BlocHome {
-  LiveStore _liveStore;
-  AbsAPI _api;
-  OfflineMovie _offMovie;
-  OfflineCast _offCast;
-  AppDb _appDb;
+  final LiveStore _liveStore;
+  final AbsAPI _api;
+  final OfflineMovie _offMovie;
+  final OfflineCast _offCast;
+  final AppDb _appDb;
+  final BlocMainTabbar _blocMainTabbar;
+  BlocMainTabbar get blocMainTabbar => _blocMainTabbar;
 
-  // inject in my_app.dart
-  BlocMainTabbar blocMainTabbar;
-
-  BlocHome(
-      this._liveStore, this._api, this._offMovie, this._offCast, this._appDb);
+  BlocHome(this._liveStore, this._api, this._offMovie, this._offCast,
+      this._appDb, this._blocMainTabbar);
 
   static const int _indexForListCarousel = 0;
   static const int maxNumEachPage = 20;
@@ -55,8 +54,8 @@ class BlocHome {
       List<ResponseCast> movieCasts, bool isSucces, String prefix) {
     Navigator.of(context).popUntil(LoadingRoute.loadingRoutePredicate());
     if (isSucces)
-      Navigator.of(context).pushNamed(Detail.nameRoute,
-          arguments: DetailArguments(prefix, movieDetail, movieCasts));
+      Navigator.of(context).pushNamed(DetailScreen.nameRoute,
+          arguments: DetailScreenArgument(prefix, movieDetail, movieCasts));
   }
 
   void moveDetailProcess(
@@ -72,7 +71,7 @@ class BlocHome {
       movieCasts = await _api.getCasts(idMovie);
     } catch (er) {
       isCallFailed = true;
-      blocMainTabbar.triggerPopupLong();
+      _blocMainTabbar.triggerPopupLong();
     }
 
     if (!isCallFailed) {

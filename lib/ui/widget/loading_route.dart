@@ -77,7 +77,7 @@ class _AnimateLoadingState extends State<_AnimateLoading>
             child: GestureDetector(
               onTap: () {
                 Navigator.of(context)
-                    .popUntil(ModalRoute.withName(Detail.nameRoute));
+                    .popUntil(ModalRoute.withName(DetailScreen.nameRoute));
               },
               child: Container(
                 decoration: BoxDecoration(

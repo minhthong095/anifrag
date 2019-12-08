@@ -1,7 +1,7 @@
 import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
-import 'package:Anifrag/bloc/bloc_maintabbar.dart';
+import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/di/component.dart';
@@ -9,7 +9,7 @@ import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
-import 'package:Anifrag/ui/screen/main_tab.dart';
+import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:Anifrag/ui/screen/no_wifi.dart';
 import 'package:Anifrag/ui/transition/page_route_blank.dart';
 import 'package:Anifrag/ui/widget/category_demo.dart';
@@ -24,8 +24,6 @@ import 'package:provider/provider.dart';
 
 @provide
 class MyApp extends StatelessWidget {
-  ComponentInjector componentInjector;
-
   // This widget is the root of your application.
   // All PageRoute in onGenerateRout must be declare RouteSetting.
   // All routes must be declare in onGeneratRoute also.
@@ -33,33 +31,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InitialSplash(componentInjector.blocSplash),
+      home: InitialSplashScreen(),
       // home: MainTabBar(),
       // home: NoWifi(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case InitialSplash.nameRoute:
-            return PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 0),
-                settings: _addName(settings, InitialSplash.nameRoute),
-                pageBuilder: (context, ani, secondAni) =>
-                    InitialSplash(componentInjector.blocSplash));
+          // case InitialSplashScreen.nameRoute:
+          //   return PageRouteBuilder(
+          //       transitionDuration: const Duration(milliseconds: 0),
+          //       settings: _addName(settings, InitialSplashScreen.nameRoute),
+          //       pageBuilder: (context, ani, secondAni) =>
+          //           InitialSplashScreen());
 
           ///
-          case MainTabBar.nameRoute:
-            final blocHome = _generateBlocHome();
-
+          case MainTabBarScreen.nameRoute:
             return CupertinoPageRoute(
-                settings: _addName(settings, MainTabBar.nameRoute),
-                builder: (context) => MultiProvider(
-                      providers: [
-                        Provider<BlocHome>.value(value: blocHome),
-                        Provider<BlocMainTabbar>.value(
-                          value: blocHome.blocMainTabbar,
-                        )
-                      ],
-                      child: MainTabBar(),
-                    ));
+                settings: _addName(settings, MainTabBarScreen.nameRoute),
+                builder: (context) => MainTabBarScreen());
 
           ///
           case Login.nameRoute:
@@ -68,28 +56,12 @@ class MyApp extends StatelessWidget {
                 pageBuilder: (context, animation, secondAnimation) => Login());
 
           ///
-          case Detail.nameRoute:
-            final detailArgs = settings.arguments as DetailArguments;
-            final blocDetail = componentInjector.blocDetail;
-            blocDetail
-              ..setMovie(detailArgs.movie)
-              ..setTagPrefix(detailArgs.tagPrefix)
-              ..setCasts(detailArgs.casts);
-
-            final blocHome = _generateBlocHome();
-
+          case DetailScreen.nameRoute:
             return PageRouteBuilder(
-                transitionDuration: Detail.durationTransition,
-                settings: _addName(settings, Detail.nameRoute),
-                pageBuilder: (context, animation, secondAnimation) =>
-                    MultiProvider(
-                      providers: [
-                        Provider<BlocHome>.value(value: blocHome),
-                        Provider<BlocDetail>.value(
-                          value: blocDetail,
-                        )
-                      ],
-                      child: Detail(),
+                transitionDuration: DetailScreen.durationTransition,
+                settings: _addName(settings, DetailScreen.nameRoute),
+                pageBuilder: (_, __, ___) => DetailScreen(
+                      argument: settings.arguments,
                     ));
 
           ///
@@ -109,15 +81,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  BlocHome _generateBlocHome() {
-    final blocHome = componentInjector.blocHome;
-    blocHome.blocMainTabbar = componentInjector.blocMainTabbar;
-    return blocHome;
-  }
-
   RouteSettings _addName(RouteSettings args, String name) {
     return RouteSettings(arguments: args.arguments, name: name);
   }
 }
-
-// 581852225

@@ -1,7 +1,8 @@
 import 'package:Anifrag/bloc/bloc_home.dart';
-import 'package:Anifrag/bloc/bloc_maintabbar.dart';
+import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/ui/screen/home.dart';
 import 'package:Anifrag/ui/screen/search.dart';
 import 'package:Anifrag/ui/widget/no_animation_tabbar_view.dart';
@@ -11,14 +12,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class MainTabBar extends StatefulWidget {
+class MainTabBarScreen extends StatefulWidget {
   static const String nameRoute = '/mainTabBar';
 
   @override
-  _MainTabBarState createState() => _MainTabBarState();
+  __MainTabBarScreenState createState() => __MainTabBarScreenState();
 }
 
-class _MainTabBarState extends State<MainTabBar> with TickerProviderStateMixin {
+class __MainTabBarScreenState extends State<MainTabBarScreen> {
+  BlocMainTabbar _blocMainTabbar;
+
+  @override
+  Widget build(BuildContext context) {
+    final blocHome = ComponentInjector.I.blocHome;
+    _blocMainTabbar = blocHome.blocMainTabbar;
+
+    return MultiProvider(
+      providers: [
+        Provider<BlocHome>.value(value: blocHome),
+        Provider<BlocMainTabbar>.value(
+          value: _blocMainTabbar,
+        )
+      ],
+      child: _MainTabBarScreen(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _blocMainTabbar.dispose();
+    super.dispose();
+  }
+}
+
+class _MainTabBarScreen extends StatefulWidget {
+  @override
+  _MainTabBarScreenState createState() => _MainTabBarScreenState();
+}
+
+class _MainTabBarScreenState extends State<_MainTabBarScreen>
+    with TickerProviderStateMixin {
   TabController _tabController;
   final List<String> _tabsSvg = <String>[PathSvg.home, PathSvg.find];
 

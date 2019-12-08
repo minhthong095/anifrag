@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
-import 'package:Anifrag/bloc/bloc_maintabbar.dart';
+import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/di/module/module_bloc.dart';
 import 'package:Anifrag/di/module/module_network.dart';
 import 'package:Anifrag/di/module/module_store.dart';
@@ -12,9 +14,6 @@ import 'component.inject.dart' as g;
 
 @Injector(const [ModuleNetwork, ModuleBloc, ModuleStore])
 abstract class ComponentInjector {
-  @provide
-  MyApp get app;
-
   // This is dynamic injector thanks to https://github.com/asi-pwr/HackYeah2019
   BlocHome get blocHome;
 
@@ -26,5 +25,18 @@ abstract class ComponentInjector {
 
   BlocMainTabbar get blocMainTabbar;
 
-  static final create = g.ComponentInjector$Injector.create;
+  static create() async {
+    _instance = await g.ComponentInjector$Injector.create(
+        ModuleNetwork(), ModuleBloc(), ModuleStore());
+  }
+
+  // static final create = g.ComponentInjector$Injector.create;
+
+  static ComponentInjector _instance;
+  static ComponentInjector get I {
+    if (_instance == null)
+      throw Exception(['ComponentInjector still not implment']);
+
+    return _instance;
+  }
 }

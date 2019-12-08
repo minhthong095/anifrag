@@ -6,7 +6,7 @@ import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/home.dart';
-import 'package:Anifrag/ui/screen/main_tab.dart';
+import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

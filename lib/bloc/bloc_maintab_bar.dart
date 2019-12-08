@@ -1,9 +1,14 @@
 import 'dart:ui';
 
+import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:rxdart/subjects.dart';
 
-class BlocMainTabbar {
+class BlocMainTabbar extends DisposeBag {
   final subjectPopup = PublishSubject<Duration>();
+
+  BlocMainTabbar() {
+    dropStream(subjectPopup);
+  }
 
   void triggerPopup() {
     subjectPopup.sink.add(Duration(seconds: 1));
@@ -11,9 +16,5 @@ class BlocMainTabbar {
 
   void triggerPopupLong() {
     subjectPopup.sink.add(Duration(seconds: 5));
-  }
-
-  void dispose() {
-    subjectPopup.close();
   }
 }

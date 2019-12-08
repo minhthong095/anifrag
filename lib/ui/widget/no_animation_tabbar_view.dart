@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:Anifrag/bloc/bloc_maintabbar.dart';
+import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
