@@ -20,7 +20,7 @@ class TheCarousel extends StatefulWidget {
 }
 
 class _TheCarousel extends State<TheCarousel> {
-  PageController _pageController = PageController(viewportFraction: 0.8);
+  PageController _pageController = PageController(viewportFraction: 0.7);
 
   BlocHome _blocHome;
 
@@ -30,10 +30,12 @@ class _TheCarousel extends State<TheCarousel> {
     super.didChangeDependencies();
   }
 
+  static const double heightImage = 400;
+
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.expand(height: 450),
+      constraints: BoxConstraints.expand(height: heightImage),
       child: PageView.builder(
         onPageChanged: (index) {},
         physics: ClampingScrollPhysics(),
@@ -92,17 +94,15 @@ class __ItemState extends State<_Item> {
     return Transform.scale(
       scale: widget.scale,
       child: GestureDetector(
-        onTap: () {
-          _onItemTap(widget.movie.id, 'Carousel');
-        },
-        child: HeroImage(
-          emptyMode: false,
-          filterQuality: FilterQuality.low,
-          path: _blocHome.baseUrlImage + widget.movie.posterPath,
-          fit: BoxFit.fitWidth,
-          tag: "Carousel" + widget.movie.posterPath,
-        ),
-      ),
+          onTap: () {
+            _onItemTap(widget.movie.id, 'Carousel');
+          },
+          child: HeroImage(
+            emptyMode: false,
+            filterQuality: FilterQuality.low,
+            path: _blocHome.baseUrlImage + widget.movie.posterPath,
+            tag: "Carousel" + widget.movie.posterPath,
+          )),
     );
   }
 }

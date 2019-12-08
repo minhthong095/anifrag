@@ -30,7 +30,9 @@ class HeroImage extends StatelessWidget {
       // return _borderImage();
       return ClipRRect(
         borderRadius: BorderRadius.circular(7.0),
-        child: EmptyImage(),
+        child: EmptyImage(
+          height: this.height,
+        ),
       );
     // return EmptyImage();
   }
@@ -53,7 +55,9 @@ class HeroImage extends StatelessWidget {
             period: Duration(seconds: 4),
             baseColor: Color(0xff292831),
             highlightColor: Color(0xff393747),
-            child: EmptyImage()),
+            child: EmptyImage(
+              height: this.height,
+            )),
       ),
     );
   }

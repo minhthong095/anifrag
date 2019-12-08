@@ -2,6 +2,7 @@ import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
+import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
   BlocHome _blocHome;
   OnItemTap _onItemTap;
   List<ResponseThumbnailMovie> _moreLikeThis;
+  static const double _heightImage = 100;
 
   @override
   void didChangeDependencies() {
@@ -42,7 +44,7 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
   Widget _defaultMoreLikeThis() => GridView.count(
         shrinkWrap: true,
         crossAxisCount: 3,
-        childAspectRatio: 324 / 480,
+        childAspectRatio: LiveStore.tempHardCodeAspectRatio,
         crossAxisSpacing: 20,
         padding: EdgeInsets.zero,
         physics: ClampingScrollPhysics(),
@@ -61,7 +63,7 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
       return GridView.count(
         shrinkWrap: true,
         crossAxisCount: 3,
-        childAspectRatio: 324 / 480,
+        childAspectRatio: LiveStore.tempHardCodeAspectRatio,
         crossAxisSpacing: 20,
         padding: EdgeInsets.zero,
         physics: ClampingScrollPhysics(),

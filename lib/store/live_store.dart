@@ -7,6 +7,8 @@ class LiveStore {
   List<String> categories;
   List<ResponseThumbnailMovie> homePageData;
 
+  static const double tempHardCodeAspectRatio = 2 / 3;
+
   String get baseUrlImage {
     if (responseConfiguration == null ||
         responseConfiguration.images == null ||

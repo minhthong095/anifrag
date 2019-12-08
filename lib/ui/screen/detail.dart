@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 
 class Detail extends StatefulWidget {
   static const String nameRoute = '/detail';
-  static const Duration durationTransition = const Duration(milliseconds: 500);
+  static const Duration durationTransition = const Duration(milliseconds: 370);
 
   @override
   _Detail createState() => _Detail();

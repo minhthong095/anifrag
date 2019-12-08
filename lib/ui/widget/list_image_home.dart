@@ -8,6 +8,7 @@ import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/home.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListImageHome extends StatelessWidget {
   final List<ResponseThumbnailMovie> listHomePageMovie;
@@ -41,6 +42,7 @@ class ListImageHome extends StatelessWidget {
                 },
                 child: HeroImage(
                   emptyMode: false,
+                  height: 150,
                   path: posterPath,
                   tag: heroTagPrefix + listHomePageMovie[index].posterPath,
                 )),
