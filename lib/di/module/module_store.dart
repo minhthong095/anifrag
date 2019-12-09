@@ -22,17 +22,17 @@ class ModuleStore {
 
   @provide
   OfflineConfigurationImage offConfIma(AppDb db) =>
-      OfflineConfigurationImage(db);
+      ImplOfflineConfigurationImage(db);
 
   @provide
-  OfflineCategory offCategory(AppDb db) => OfflineCategory(db);
+  OfflineCategory offCategory(AppDb db) => ImplOfflineCategory(db);
 
   @provide
-  OfflineHomePageData offHomeData(AppDb db) => OfflineHomePageData(db);
+  OfflineHomePageData offHomeData(AppDb db) => ImplOfflineHomePageData(db);
 
   @provide
-  OfflineMovie offMovie() => OfflineMovie();
+  OfflineMovie offMovie() => ImplOfflineMovie();
 
   @provide
-  OfflineCast offCast() => OfflineCast();
+  OfflineCast offCast() => ImplOfflineCast();
 }

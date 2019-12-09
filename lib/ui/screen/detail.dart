@@ -94,7 +94,6 @@ class _DetailScreenState extends State<_DetailScreen>
 
   @override
   void dispose() {
-    _bloc.dipose();
     _controller.removeStatusListener(_controllerListener);
     super.dispose();
   }

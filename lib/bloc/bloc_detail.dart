@@ -7,15 +7,13 @@ import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/store/offline/offline_movie.dart';
-import 'package:flutter/material.dart';
-import 'package:inject/inject.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
 class BlocDetail extends DisposeBag {
   final OfflineMovie _offlineMovie;
   final LiveStore _liveStore;
-  final AbsAPI _api;
+  final API _api;
   bool _isRunFirstTime = true;
 
   ResponseMovie _movie;
@@ -43,7 +41,9 @@ class BlocDetail extends DisposeBag {
     _callbackDoneMoreLikeThis = callback;
   }
 
-  BlocDetail(this._offlineMovie, this._liveStore, this._api);
+  BlocDetail(this._offlineMovie, this._liveStore, this._api) {
+    dropStream(_subjectCallFinishTransition);
+  }
 
   String get currentPosterPath =>
       _liveStore.responseConfiguration.images.secureBaseUrl + _movie.posterPath;
@@ -76,9 +76,4 @@ class BlocDetail extends DisposeBag {
   //  _api.getMoreLikeThis(_movie.id).then((onValue) {
   //       subjectMoreLikeThis.sink.add(onValue);
   //     });
-
-  void dipose() {
-    dispose();
-    _subjectCallFinishTransition.close();
-  }
 }

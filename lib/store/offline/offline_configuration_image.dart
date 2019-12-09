@@ -4,10 +4,15 @@ import 'package:sqflite/sqlite_api.dart';
 
 import '../app_db.dart';
 
-class OfflineConfigurationImage {
+abstract class OfflineConfigurationImage {
+  Future insertPosterSizesAndChangeKeys(
+      List<String> posterSizes, List<String> changeKeys);
+}
+
+class ImplOfflineConfigurationImage extends OfflineConfigurationImage {
   final AppDb _appDb;
 
-  OfflineConfigurationImage(this._appDb);
+  ImplOfflineConfigurationImage(this._appDb);
 
   Future insertPosterSizesAndChangeKeys(
       List<String> posterSizes, List<String> changeKeys) async {

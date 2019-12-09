@@ -5,7 +5,13 @@ import 'package:Anifrag/store/offline/offline_movie.dart';
 
 import '../database_config.dart';
 
-class OfflineCast {
+abstract class OfflineCast {
+  List<String> queryInsertCasts(List<ResponseCast> casts, int idMovie);
+  String queryDeleteAllCastWithIdMovie(int idMovie);
+  String querySelectCasts(int idMovie);
+}
+
+class ImplOfflineCast extends OfflineCast {
   List<String> queryInsertCasts(List<ResponseCast> casts, int idMovie) => casts
       .map<String>((cast) =>
           'INSERT INTO ' +

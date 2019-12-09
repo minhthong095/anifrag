@@ -2,10 +2,16 @@ import 'package:Anifrag/store/database_config.dart';
 
 import '../app_db.dart';
 
-class OfflineCategory {
+abstract class OfflineCategory {
+  Future insertCategories(List<String> categories);
+  List<String> queryCategories(List<String> categories);
+  String queryDeleteAll();
+}
+
+class ImplOfflineCategory extends OfflineCategory {
   final AppDb _appDb;
 
-  OfflineCategory(this._appDb);
+  ImplOfflineCategory(this._appDb);
 
   Future insertCategories(List<String> categories) async {
     final db = await _appDb.getDb();

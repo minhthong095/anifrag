@@ -15,7 +15,7 @@ import 'package:sqflite/sqflite.dart';
 
 class BlocHome {
   final LiveStore _liveStore;
-  final AbsAPI _api;
+  final API _api;
   final OfflineMovie _offMovie;
   final OfflineCast _offCast;
   final AppDb _appDb;

@@ -8,7 +8,7 @@ import 'package:Anifrag/network/url.dart';
 import 'package:dio/dio.dart';
 import 'package:inject/inject.dart';
 
-abstract class AbsAPI {
+abstract class API {
   Future<ResponseConfiguration> getConfiguration();
   Future<List<String>> getCategories();
   Future<List<ResponseThumbnailMovie>> getHomePageList(int categorySize);
@@ -18,12 +18,12 @@ abstract class AbsAPI {
   Future<List<dynamic>> getBothConfigureAndCategory();
 }
 
-class APIs extends AbsAPI {
+class ImplApi extends API {
   final Requesting _requesting;
   final RequestingAbiary _requestingAbiary;
   final AbsUrl _url;
 
-  APIs(this._requesting, this._url, this._requestingAbiary);
+  ImplApi(this._requesting, this._url, this._requestingAbiary);
 
   @override
   Future<ResponseConfiguration> getConfiguration() async {
