@@ -61,7 +61,6 @@ class BlocDetail extends DisposeBag {
       }).zipWith<bool, void>(_subjectCallFinishTransition,
               (moreLikeThis, isFinishTransition) async {
         _isRunFirstTime = false;
-        print("HIHI");
         await Future.delayed(Duration(milliseconds: 300));
         _callbackDoneMoreLikeThis(moreLikeThis);
       }).listen((voidCallback) {}));

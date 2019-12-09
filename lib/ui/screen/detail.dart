@@ -20,7 +20,7 @@ import 'package:provider/provider.dart';
 class DetailScreen extends StatelessWidget {
   final DetailScreenArgument argument;
   static const String nameRoute = '/detail';
-  static const Duration durationTransition = const Duration(milliseconds: 300);
+  static const Duration durationTransition = const Duration(milliseconds: 350);
 
   DetailScreen({@required this.argument});
 
@@ -239,6 +239,14 @@ class _Content extends StatelessWidget {
   final ResponseMovie movie;
   const _Content({@required this.movie});
 
+  String _getRunTime() => movie.runtime != null
+      ? ' * ' +
+          (movie.runtime / 60).toStringAsFixed(0) +
+          'h ' +
+          (movie.runtime % 60).toStringAsFixed(0) +
+          'min'
+      : '';
+
   @override
   Widget build(BuildContext context) => Container(
         decoration: BoxDecoration(
@@ -263,12 +271,7 @@ class _Content extends StatelessWidget {
                 size: Size(0, 7),
               ),
               Text(
-                movie.releaseDate.year.toString() +
-                    ' * ' +
-                    (movie.runtime / 60).toStringAsFixed(0) +
-                    'h ' +
-                    (movie.runtime % 60).toStringAsFixed(0) +
-                    'min',
+                movie.releaseDate.year.toString() + _getRunTime(),
                 style: TextStyle(color: Colors.grey),
               ),
               SizedBox.fromSize(
