@@ -35,8 +35,11 @@ class DetailScreen extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<BlocHome>.value(value: ComponentInjector.I.blocHome),
-        Provider<BlocDetail>.value(
-          value: blocDetail,
+        Provider<BlocDetail>(
+          create: (ctx) => blocDetail,
+          dispose: (_, bloc) {
+            bloc.dispose();
+          },
         )
       ],
       child: _DetailScreen(),

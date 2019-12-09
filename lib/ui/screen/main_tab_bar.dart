@@ -12,36 +12,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class MainTabBarScreen extends StatefulWidget {
+class MainTabBarScreen extends StatelessWidget {
   static const String nameRoute = '/mainTabBar';
-
-  @override
-  __MainTabBarScreenState createState() => __MainTabBarScreenState();
-}
-
-class __MainTabBarScreenState extends State<MainTabBarScreen> {
-  BlocMainTabbar _blocMainTabbar;
-
   @override
   Widget build(BuildContext context) {
     final blocHome = ComponentInjector.I.blocHome;
-    _blocMainTabbar = blocHome.blocMainTabbar;
-
+    final blocMainTabbar = blocHome.blocMainTabbar;
     return MultiProvider(
       providers: [
         Provider<BlocHome>.value(value: blocHome),
-        Provider<BlocMainTabbar>.value(
-          value: _blocMainTabbar,
+        Provider<BlocMainTabbar>(
+          create: (ctx) => blocMainTabbar,
+          dispose: (_, bloc) => bloc.dispose(),
         )
       ],
       child: _MainTabBarScreen(),
     );
-  }
-
-  @override
-  void dispose() {
-    _blocMainTabbar.dispose();
-    super.dispose();
   }
 }
 
