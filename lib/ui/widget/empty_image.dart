@@ -3,17 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EmptyImage extends StatelessWidget {
-  double height;
+  final double height;
+  final double width;
 
-  EmptyImage({this.height}) {
-    this.height ??= 0;
-  }
+  EmptyImage({@required this.height, @required this.width});
 
   @override
   Widget build(BuildContext context) => Container(
         constraints: BoxConstraints.expand(
-            height: this.height,
-            width: (this.height * LiveStore.tempHardCodeAspectRatio)),
+            height: height,
+            // width: (this.height * LiveStore.tempHardCodeAspectRatio)
+            width: width),
         color: Color(0xff2a2b2f),
       );
 }

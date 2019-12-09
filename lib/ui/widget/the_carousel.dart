@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/config/utils.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
+import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/home.dart';
 import 'package:Anifrag/ui/screen/main_tab_bar.dart';
@@ -20,22 +22,37 @@ class TheCarousel extends StatefulWidget {
 }
 
 class _TheCarousel extends State<TheCarousel> {
-  PageController _pageController = PageController(viewportFraction: 0.7);
-
+  // PageController _pageController = PageController(viewportFraction: 0.7);
+  PageController _pageController;
+  double _heightImage;
   BlocHome _blocHome;
 
   @override
   void didChangeDependencies() {
     _blocHome = Provider.of<BlocHome>(context);
+
+    // Calculate carousel image base on data image from API
+    final rawWidthImgDp = Utils.getWidthDpImgApi(context); // w300
+    final ratioPreferWidthScreenSize = 0.7;
+    final ratioRawWidthImgOnScreenSize =
+        rawWidthImgDp / MediaQuery.of(context).size.width;
+    final widthImgDpOnPreferRatio = ratioPreferWidthScreenSize *
+        rawWidthImgDp /
+        ratioRawWidthImgOnScreenSize;
+    final heightImgDbOnPreferRatio =
+        widthImgDpOnPreferRatio / LiveStore.ratioImgApi;
+
+    _pageController =
+        PageController(viewportFraction: ratioPreferWidthScreenSize);
+    _heightImage = heightImgDbOnPreferRatio;
+
     super.didChangeDependencies();
   }
-
-  static const double heightImage = 400;
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.expand(height: heightImage),
+      constraints: BoxConstraints.expand(height: _heightImage),
       child: PageView.builder(
         onPageChanged: (index) {},
         physics: ClampingScrollPhysics(),

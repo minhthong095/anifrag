@@ -20,15 +20,20 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
   BlocHome _blocHome;
   OnItemTap _onItemTap;
   List<ResponseThumbnailMovie> _moreLikeThis;
-  static const double _heightImage = 100;
+  double _widthImg = 0;
+  static const double _preferHeightImg = 150;
 
   @override
   void didChangeDependencies() {
     _initBlocDetail();
+
     _blocHome = Provider.of<BlocHome>(context);
+
     _onItemTap = (int idMovie, String prefix) {
       _blocHome.moveDetailProcess(context, idMovie, prefix);
     };
+
+    _widthImg = LiveStore.ratioImgApi * _preferHeightImg;
     super.didChangeDependencies();
   }
 
@@ -52,7 +57,10 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
         children: List.generate(6, (index) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(7.0),
-            child: EmptyImage(),
+            child: EmptyImage(
+              height: _preferHeightImg,
+              width: _widthImg,
+            ),
           );
         }),
       );
@@ -74,6 +82,7 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
               _onItemTap(_moreLikeThis[index].id, 'MoreLikeThis');
             },
             child: HeroImage(
+              width: _widthImg,
               emptyMode: false,
               path: _blocDetail.baseUrlImage + _moreLikeThis[index].posterPath,
               tag: 'MoreLikeThis' + _moreLikeThis[index].posterPath,

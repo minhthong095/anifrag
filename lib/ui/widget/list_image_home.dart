@@ -3,14 +3,16 @@ import 'dart:math';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/config/utils.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
+import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/home.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ListImageHome extends StatelessWidget {
+class ListImageHome extends StatefulWidget {
   final List<ResponseThumbnailMovie> listHomePageMovie;
   final EdgeInsets padding;
   final String heroTagPrefix;
@@ -25,26 +27,43 @@ class ListImageHome extends StatelessWidget {
       @required this.baseUrlImg});
 
   @override
+  _ListImageHomeState createState() => _ListImageHomeState();
+}
+
+class _ListImageHomeState extends State<ListImageHome> {
+  static const double _preferHeightImg = 150;
+  double _widthImg = 0;
+
+  @override
+  void didChangeDependencies() {
+    _widthImg = _preferHeightImg * LiveStore.ratioImgApi;
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints.expand(height: 150),
+      constraints: BoxConstraints.expand(height: _preferHeightImg),
       child: ListView.builder(
-        itemCount: this.listHomePageMovie.length,
+        itemCount: this.widget.listHomePageMovie.length,
         scrollDirection: Axis.horizontal,
-        padding: this.padding,
+        padding: this.widget.padding,
         itemBuilder: (BuildContext context, int index) {
-          final posterPath = baseUrlImg + listHomePageMovie[index].posterPath;
+          final posterPath =
+              widget.baseUrlImg + widget.listHomePageMovie[index].posterPath;
           return Padding(
             padding: EdgeInsets.only(right: 10),
             child: GestureDetector(
                 onTap: () {
-                  onItemTap(listHomePageMovie[index].id, heroTagPrefix);
+                  widget.onItemTap(
+                      widget.listHomePageMovie[index].id, widget.heroTagPrefix);
                 },
                 child: HeroImage(
                   emptyMode: false,
-                  height: 150,
+                  width: _widthImg,
                   path: posterPath,
-                  tag: heroTagPrefix + listHomePageMovie[index].posterPath,
+                  tag: widget.heroTagPrefix +
+                      widget.listHomePageMovie[index].posterPath,
                 )),
           );
         },

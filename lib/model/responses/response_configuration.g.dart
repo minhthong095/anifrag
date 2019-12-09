@@ -28,10 +28,11 @@ Map<String, dynamic> _$ResponseConfigurationToJson(
 ResponseConfigurationImages _$ResponseConfigurationImagesFromJson(
     Map<String, dynamic> json) {
   return ResponseConfigurationImages(
-    posterSizes:
-        (json['poster_sizes'] as List)?.map((e) => e as String)?.toList(),
-    secureBaseUrl: (json['secure_base_url'] as String) + 'w300',
-  );
+      posterSizes:
+          (json['poster_sizes'] as List)?.map((e) => e as String)?.toList(),
+      secureBaseUrl: (json['secure_base_url'] as String) +
+          'w' +
+          LiveStore.widthImgApi.toString());
 }
 
 Map<String, dynamic> _$ResponseConfigurationImagesToJson(

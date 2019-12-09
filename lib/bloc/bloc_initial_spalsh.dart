@@ -20,7 +20,7 @@ class BlocInitialSplash {
   final OfflineHomePageData _offHomePageData;
   final LiveStore _liveStore;
 
-  SharedPreferences _prefs;
+  // SharedPreferences _prefs;
 
   BlocInitialSplash(this._api, this._appDb, this._offConfigurationImage,
       this._liveStore, this._offCategory, this._offHomePageData);
@@ -32,7 +32,7 @@ class BlocInitialSplash {
     print("PATH DATABASE " + path);
 
     final watch = Stopwatch()..start();
-    _prefs = await SharedPreferences.getInstance();
+    // _prefs = await SharedPreferences.getInstance();
 
     await _appDb.createDb();
 

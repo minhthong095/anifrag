@@ -79,7 +79,7 @@ class $Home extends State<Home> {
               ),
             ),
             Provider<OnItemTap>(
-              builder: (context) => _onItemTap,
+              create: (context) => _onItemTap,
               child: TheCarousel(),
             ),
             for (String categoryTitle in _rest.keys)
@@ -90,7 +90,7 @@ class $Home extends State<Home> {
                     title: categoryTitle,
                   ),
                   Provider<OnItemTap>(
-                    builder: (context) => _onItemTap,
+                    create: (context) => _onItemTap,
                     child: ListImageHome(
                       onItemTap: _onItemTap,
                       baseUrlImg: _blocHome.baseUrlImage,

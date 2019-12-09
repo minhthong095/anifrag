@@ -1,3 +1,4 @@
+import 'package:Anifrag/store/live_store.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'response_configuration.g.dart';

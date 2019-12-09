@@ -23,11 +23,11 @@ class ModuleNetwork {
   }
 
   @provide
-  Requesting requesting(Dio dio) => Requesting(dio);
-
-  @provide
   @baseUrlApiary
   Dio dioApiary() => Dio()..options.baseUrl = AbsUrl.baseUrlAbiary;
+
+  @provide
+  Requesting requesting(Dio dio) => Requesting(dio);
 
   @provide
   RequestingAbiary requestingAbiary(@baseUrlApiary Dio dioApiary) =>

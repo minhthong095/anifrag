@@ -7,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 class HeroImage extends StatelessWidget {
   final String path;
   final double height;
+  final double width;
   final BoxFit fit;
   final String tag;
   final FilterQuality filterQuality;
@@ -15,7 +16,8 @@ class HeroImage extends StatelessWidget {
       {@required this.tag,
       @required this.path,
       this.emptyMode = true,
-      this.height,
+      this.height = 0,
+      this.width = 0,
       this.fit,
       this.filterQuality = FilterQuality.none});
 
@@ -30,9 +32,7 @@ class HeroImage extends StatelessWidget {
       // return _borderImage();
       return ClipRRect(
         borderRadius: BorderRadius.circular(7.0),
-        child: EmptyImage(
-          height: this.height,
-        ),
+        child: EmptyImage(height: this.height, width: this.width),
       );
     // return EmptyImage();
   }
@@ -40,12 +40,6 @@ class HeroImage extends StatelessWidget {
   Widget _borderImage() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(7.0),
-      // child: Image.asset(
-      //   path,
-      //   height: height,
-      //   fit: fit,
-      //   filterQuality: filterQuality,
-      // ),
       child: CachedNetworkImage(
         imageUrl: path,
         height: height,
@@ -56,7 +50,8 @@ class HeroImage extends StatelessWidget {
             baseColor: Color(0xff292831),
             highlightColor: Color(0xff393747),
             child: EmptyImage(
-              height: this.height,
+              width: width,
+              height: height,
             )),
       ),
     );

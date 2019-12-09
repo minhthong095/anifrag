@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../../store/live_store.dart';
 import 'login.dart';
 import 'no_wifi.dart';
 
@@ -58,8 +59,9 @@ class _InitialSplashState extends State<_InitialSplash> {
 
   @override
   Widget build(BuildContext context) {
-    if (!isVisibleNoWifi) _initCallInitData();
-
+    if (!isVisibleNoWifi) {
+      _initCallInitData();
+    }
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: isVisibleNoWifi
