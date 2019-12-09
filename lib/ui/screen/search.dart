@@ -31,7 +31,7 @@ class _Search extends State<Search> {
                     child: Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          padding: EdgeInsets.symmetric(horizontal: 12),
                           child: SvgPicture.asset(
                             PathSvg.find,
                             color: Colors.grey,
@@ -40,6 +40,7 @@ class _Search extends State<Search> {
                         ),
                         Flexible(
                           child: TextFormField(
+                            onChanged: (text) {},
                             cursorColor: Colors.grey,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -52,11 +53,6 @@ class _Search extends State<Search> {
                     ),
                   ),
                 ),
-                // Expanded(
-                //   child: Container(
-                //     color: Colors.red,
-                //   ),
-                // )
               ],
             ),
           ),

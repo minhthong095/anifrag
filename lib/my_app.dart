@@ -15,6 +15,7 @@ import 'package:Anifrag/ui/transition/page_route_blank.dart';
 import 'package:Anifrag/ui/widget/category_demo.dart';
 import 'package:Anifrag/ui/widget/detail_tabbar.dart';
 import 'package:Anifrag/ui/widget/loading_route.dart';
+import 'package:Anifrag/ui/widget/search_item.dart';
 import 'package:Anifrag/ui/widget/story_overview.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -31,9 +32,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InitialSplashScreen(),
-      // home: MainTabBar(),
-      // home: NoWifi(),
+      // home: InitialSplashScreen(),
+      home: SearchItemScreenTest(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           // case InitialSplashScreen.nameRoute:
