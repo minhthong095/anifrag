@@ -16,7 +16,7 @@ import 'package:inject/inject.dart';
 class ModuleBloc {
   @provide
   BlocInitialSplash blocInitialSplash(
-          ImplApi api,
+          API api,
           AppDb appDb,
           OfflineConfigurationImage offConfigurationImage,
           LiveStore liveStore,
@@ -29,12 +29,11 @@ class ModuleBloc {
   BlocMainTabbar blocMainTabbar() => BlocMainTabbar();
 
   @provide
-  BlocHome blocHome(LiveStore liveStore, ImplApi api, OfflineCast offCast,
+  BlocHome blocHome(LiveStore liveStore, API api, OfflineCast offCast,
           OfflineMovie offMovie, AppDb appDb, BlocMainTabbar blocMainTabbar) =>
       BlocHome(liveStore, api, offMovie, offCast, appDb, blocMainTabbar);
 
   @provide
-  BlocDetail blocDetail(
-          OfflineMovie offMovie, LiveStore liveStore, ImplApi api) =>
+  BlocDetail blocDetail(OfflineMovie offMovie, LiveStore liveStore, API api) =>
       BlocDetail(offMovie, liveStore, api);
 }

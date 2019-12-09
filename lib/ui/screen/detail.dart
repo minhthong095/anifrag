@@ -20,7 +20,7 @@ import 'package:provider/provider.dart';
 class DetailScreen extends StatelessWidget {
   final DetailScreenArgument argument;
   static const String nameRoute = '/detail';
-  static const Duration durationTransition = const Duration(milliseconds: 370);
+  static const Duration durationTransition = const Duration(milliseconds: 300);
 
   DetailScreen({@required this.argument});
 

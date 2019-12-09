@@ -34,8 +34,7 @@ class ModuleNetwork {
       RequestingAbiary(dioApiary);
 
   @provide
-  ImplApi api(
-          Requesting requesting, Url url, RequestingAbiary requestingAbiary) =>
+  API api(Requesting requesting, Url url, RequestingAbiary requestingAbiary) =>
       ImplApi(requesting, url, requestingAbiary);
 }
 

@@ -49,14 +49,14 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
 
   _i10.BlocHome _createBlocHome() => _moduleBloc.blocHome(
       _createLiveStore(),
-      _createImplApi(),
+      _createAPI(),
       _createOfflineCast(),
       _createOfflineMovie(),
       _createAppDb(),
       _createBlocMainTabbar());
   _i4.LiveStore _createLiveStore() =>
       _singletonLiveStore ??= _moduleStore.liveConfIma();
-  _i11.ImplApi _createImplApi() => _moduleNetwork.api(
+  _i11.API _createAPI() => _moduleNetwork.api(
       _createRequesting(), _createUrl(), _createRequestingAbiary());
   _i12.Requesting _createRequesting() =>
       _moduleNetwork.requesting(_createDio());
@@ -70,10 +70,10 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   _i8.AppDb _createAppDb() => _singletonAppDb ??= _moduleStore.db();
   _i15.BlocMainTabbar _createBlocMainTabbar() => _moduleBloc.blocMainTabbar();
   _i16.BlocDetail _createBlocDetail() => _moduleBloc.blocDetail(
-      _createOfflineMovie(), _createLiveStore(), _createImplApi());
+      _createOfflineMovie(), _createLiveStore(), _createAPI());
   _i17.BlocInitialSplash _createBlocInitialSplash() =>
       _moduleBloc.blocInitialSplash(
-          _createImplApi(),
+          _createAPI(),
           _createAppDb(),
           _createOfflineConfigurationImage(),
           _createLiveStore(),
