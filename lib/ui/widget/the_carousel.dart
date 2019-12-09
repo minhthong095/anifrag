@@ -117,7 +117,7 @@ class __ItemState extends State<_Item> {
           child: HeroImage(
             emptyMode: false,
             filterQuality: FilterQuality.low,
-            path: _blocHome.baseUrlImage + widget.movie.posterPath,
+            path: _blocHome.getBaseUrlImage + widget.movie.posterPath,
             tag: "Carousel" + widget.movie.posterPath,
           )),
     );

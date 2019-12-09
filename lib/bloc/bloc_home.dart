@@ -117,7 +117,7 @@ class BlocHome {
     }
   }
 
-  String get baseUrlImage => _liveStore.baseUrlImage;
+  String get getBaseUrlImage => _liveStore.baseUrlImage;
 
   String mainCategory() => _liveStore.categories[0];
 }

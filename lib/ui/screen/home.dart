@@ -93,7 +93,7 @@ class $Home extends State<Home> {
                     create: (context) => _onItemTap,
                     child: ListImageHome(
                       onItemTap: _onItemTap,
-                      baseUrlImg: _blocHome.baseUrlImage,
+                      baseUrlImg: _blocHome.getBaseUrlImage,
                       heroTagPrefix: categoryTitle,
                       padding: EdgeInsets.only(left: paddingInHome),
                       listHomePageMovie: _rest[categoryTitle],

@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: InitialSplashScreen(),
-      home: SearchItemScreenTest(),
+      home: InitialSplashScreen(),
+      // home: SearchItemScreenTest(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           // case InitialSplashScreen.nameRoute:

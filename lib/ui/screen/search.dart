@@ -53,6 +53,19 @@ class _Search extends State<Search> {
                     ),
                   ),
                 ),
+                Expanded(
+                  child: Container(
+                    child: Center(
+                        child: CupertinoActivityIndicator(
+                      radius: 12,
+                    )
+                        // CircularProgressIndicator(
+                        //   valueColor:
+                        //       AlwaysStoppedAnimation<Color>(AppColor.yellow),
+                        // ),
+                        ),
+                  ),
+                )
               ],
             ),
           ),

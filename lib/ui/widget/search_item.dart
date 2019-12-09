@@ -1,5 +1,6 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/config/utils.dart';
 import 'package:flutter/material.dart';
 
 class SearchItemScreenTest extends StatelessWidget {
@@ -10,7 +11,10 @@ class SearchItemScreenTest extends StatelessWidget {
       body: Container(
         color: AppColor.backgroundColor,
         child: Center(
-          child: SearchItem(),
+          child: SearchItem(
+            runtime: 120,
+            yearRelease: 2019,
+          ),
         ),
       ),
     );
@@ -18,12 +22,24 @@ class SearchItemScreenTest extends StatelessWidget {
 }
 
 class SearchItem extends StatelessWidget {
+  final String title;
+  final int yearRelease;
+  final int runtime;
+  final String director;
+
+  SearchItem({String title, String director, int runtime, int yearRelease})
+      : this.title = title ?? '',
+        this.yearRelease = yearRelease ?? null,
+        this.runtime = runtime ?? null,
+        this.director = director ?? '';
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      constraints: BoxConstraints.expand(height: 120),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-          color: Colors.red,
+          color: Color(0xff26262c),
           borderRadius: BorderRadius.all(Radius.circular(9))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,19 +48,38 @@ class SearchItem extends StatelessWidget {
             padding: EdgeInsets.only(right: 10),
             child: Image.asset(
               PathImage.dunkirk,
-              height: 100,
-              width: 80,
             ),
           ),
-          Column(
+          Expanded(
+              child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text('Gran Torino'),
-              Text('2018 * 1h56min'),
-              Text('Client Eastwood, Bee Vang')
+              Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Text(
+                '${this.yearRelease == null ? '' : this.yearRelease.toString()}${this.yearRelease == null || this.runtime == null ? '' : ' * '}' +
+                    Utils.generateStringRuntime(runtime),
+                style: TextStyle(color: Colors.grey),
+              ),
+              Expanded(
+                  child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  director,
+                  style: TextStyle(color: Colors.grey),
+                ),
+              )),
             ],
-          )
+          ))
         ],
       ),
     );

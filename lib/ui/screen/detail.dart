@@ -2,6 +2,7 @@ import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/config/utils.dart';
 import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
@@ -240,11 +241,7 @@ class _Content extends StatelessWidget {
   const _Content({@required this.movie});
 
   String _getRunTime() => movie.runtime != null
-      ? ' * ' +
-          (movie.runtime / 60).toStringAsFixed(0) +
-          'h ' +
-          (movie.runtime % 60).toStringAsFixed(0) +
-          'min'
+      ? ' * ' + Utils.generateStringRuntime(movie.runtime)
       : '';
 
   @override
