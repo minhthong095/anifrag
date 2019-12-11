@@ -1,7 +1,10 @@
+import 'dart:collection';
+
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_configuration.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
+import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/network/api_key.dart';
 import 'package:Anifrag/network/requesting.dart';
 import 'package:Anifrag/network/url.dart';
@@ -16,14 +19,33 @@ abstract class API {
   Future<List<ResponseCast>> getCasts(int idMovie);
   Future<List<ResponseThumbnailMovie>> getMoreLikeThis(int idMovie);
   Future<List<dynamic>> getBothConfigureAndCategory();
+  Future<HashMap<String, List<ResponseSearch>>> searchMovies(String keyword);
 }
 
 class ImplApi extends API {
   final Requesting _requesting;
   final RequestingAbiary _requestingAbiary;
-  final AbsUrl _url;
+  final Url _url;
 
   ImplApi(this._requesting, this._url, this._requestingAbiary);
+
+  Future<HashMap<String, List<ResponseSearch>>> searchMovies(
+      String keyword) async {
+    if (keyword.length == 0)
+      return HashMap<String, List<ResponseSearch>>()
+        ..putIfAbsent(keyword, () => []);
+
+    final result = await _requesting.sendGETv3(_url.searchMovies,
+        args: {'include_adult': true, 'query': keyword});
+    final hashmap = HashMap<String, List<ResponseSearch>>();
+    hashmap.putIfAbsent(
+        keyword,
+        () => ((result.data as Map)['results'] as List)
+            .map<ResponseSearch>(
+                (movieThumbnail) => ResponseSearch.fromJson(movieThumbnail))
+            .toList());
+    return hashmap;
+  }
 
   @override
   Future<ResponseConfiguration> getConfiguration() async {

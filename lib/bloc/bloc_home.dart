@@ -9,9 +9,7 @@ import 'package:Anifrag/store/offline/offline_cast.dart';
 import 'package:Anifrag/store/offline/offline_movie.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/widget/loading_route.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sqflite/sqflite.dart';
 
 class BlocHome {
   final LiveStore _liveStore;
@@ -30,7 +28,7 @@ class BlocHome {
 
   List<ResponseThumbnailMovie> listCarousel() {
     // First 20 records is belong to carousel/
-    return _liveStore.homePageData
+    return _liveStore.getHomePageData
         .sublist(_indexForListCarousel, maxNumEachPage);
   }
 
@@ -38,12 +36,12 @@ class BlocHome {
     final result = Map<String, List<ResponseThumbnailMovie>>();
     int pivot = _indexForListCarousel + 1;
     int lastEnd = maxNumEachPage;
-    while (pivot < _liveStore.categories.length) {
+    while (pivot < _liveStore.getCategories.length) {
       final start = lastEnd;
       final end = start + maxNumEachPage;
       lastEnd = end;
-      result[_liveStore.categories[pivot]] =
-          _liveStore.homePageData.sublist(start, end);
+      result[_liveStore.getCategories[pivot]] =
+          _liveStore.getHomePageData.sublist(start, end);
       // print("START $start END $end");
       pivot++;
     }
@@ -119,5 +117,5 @@ class BlocHome {
 
   String get getBaseUrlImage => _liveStore.baseUrlImage;
 
-  String mainCategory() => _liveStore.categories[0];
+  String get getMainCategory => _liveStore.getCategories[0];
 }

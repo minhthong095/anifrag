@@ -18,6 +18,7 @@ import '../bloc/bloc_initial_spalsh.dart' as _i17;
 import '../store/offline/offline_configuration_image.dart' as _i18;
 import '../store/offline/offline_category.dart' as _i19;
 import '../store/offline/offline_home_page_data.dart' as _i20;
+import '../bloc/bloc_search.dart' as _i21;
 
 class ComponentInjector$Injector implements _i1.ComponentInjector {
   ComponentInjector$Injector._(
@@ -33,7 +34,7 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
 
   _i6.Dio _singletonDio;
 
-  _i7.Url _singletonUrl;
+  _i7.ImplUrl _singletonImplUrl;
 
   _i8.AppDb _singletonAppDb;
 
@@ -57,11 +58,11 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   _i4.LiveStore _createLiveStore() =>
       _singletonLiveStore ??= _moduleStore.liveConfIma();
   _i11.API _createAPI() => _moduleNetwork.api(
-      _createRequesting(), _createUrl(), _createRequestingAbiary());
+      _createRequesting(), _createImplUrl(), _createRequestingAbiary());
   _i12.Requesting _createRequesting() =>
       _moduleNetwork.requesting(_createDio());
   _i6.Dio _createDio() => _singletonDio ??= _moduleNetwork.dio();
-  _i7.Url _createUrl() => _singletonUrl ??= _moduleNetwork.url();
+  _i7.ImplUrl _createImplUrl() => _singletonImplUrl ??= _moduleNetwork.url();
   _i12.RequestingAbiary _createRequestingAbiary() =>
       _moduleNetwork.requestingAbiary(_createBaseUrlApiaryDio());
   _i6.Dio _createBaseUrlApiaryDio() => _moduleNetwork.dioApiary();
@@ -85,6 +86,8 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
       _moduleStore.offCategory(_createAppDb());
   _i20.OfflineHomePageData _createOfflineHomePageData() =>
       _moduleStore.offHomeData(_createAppDb());
+  _i21.BlocSearch _createBlocSearch() =>
+      _moduleBloc.blocSearch(_createAPI(), _createLiveStore());
   @override
   _i10.BlocHome get blocHome => _createBlocHome();
   @override
@@ -93,4 +96,6 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   _i17.BlocInitialSplash get blocSplash => _createBlocInitialSplash();
   @override
   _i15.BlocMainTabbar get blocMainTabbar => _createBlocMainTabbar();
+  @override
+  _i21.BlocSearch get blocSearch => _createBlocSearch();
 }

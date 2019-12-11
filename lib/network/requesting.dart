@@ -34,7 +34,7 @@ class Requesting extends AbsRequesting implements IGetV3 {
   Future<Response<T>> sendGETv3<T>(String url,
       {Map<String, dynamic> args}) async {
     args ??= Map<String, dynamic>();
-    args.putIfAbsent('api_key', () => ApiKey.v3);
+    args['api_key'] = ApiKey.v3;
     return await _dio
         .get(url, queryParameters: args)
         .timeout(Duration(seconds: timeOut), onTimeout: throwTimeout);

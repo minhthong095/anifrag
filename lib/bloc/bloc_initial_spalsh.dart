@@ -8,7 +8,6 @@ import 'package:Anifrag/store/offline/offline_category.dart';
 import 'package:Anifrag/store/offline/offline_configuration_image.dart';
 import 'package:Anifrag/store/offline/offline_home_page_data.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BlocInitialSplash {
@@ -74,9 +73,9 @@ class BlocInitialSplash {
       ResponseConfiguration configure,
       List<String> categories,
       List<ResponseThumbnailMovie> homePageData) async {
-    _liveStore.categories = categories;
-    _liveStore.homePageData = homePageData;
-    _liveStore.responseConfiguration = configure;
+    _liveStore.setCategories = categories;
+    _liveStore.setResponseConfiguration = configure;
+    _liveStore.setHomePageData = homePageData;
 
     final db = await _appDb.getDb();
     await db.transaction((txn) async {

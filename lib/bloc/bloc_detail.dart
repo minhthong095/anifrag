@@ -46,7 +46,8 @@ class BlocDetail extends DisposeBag {
   }
 
   String get currentPosterPath =>
-      _liveStore.responseConfiguration.images.secureBaseUrl + _movie.posterPath;
+      _liveStore.getResponseConfiguration.images.secureBaseUrl +
+      _movie.posterPath;
 
   String get baseUrlImage => _liveStore.baseUrlImage;
 

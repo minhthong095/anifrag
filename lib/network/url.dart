@@ -1,6 +1,6 @@
 import 'package:inject/inject.dart';
 
-abstract class AbsUrl {
+abstract class Url {
   static const String baseUrl = "https://api.themoviedb.org/3";
   static const String baseUrlAbiary =
       "https://private-7eef3-anifrag.apiary-mock.com";
@@ -8,20 +8,24 @@ abstract class AbsUrl {
   String configuration;
   String categories;
   String trending;
+  String searchMovies;
   String movieDetail(int idMovie);
   String movieCast(int idMovie);
   String moreLikeThis(int idMovie);
 }
 
-class Url extends AbsUrl {
+class ImplUrl extends Url {
   @override
-  String configuration = "/configuration";
+  String get searchMovies => "/search/movie";
+
+  @override
+  String get configuration => "/configuration";
 
   @override
   String get categories => "/categories";
 
   @override
-  String trending = "/trending/movie/day";
+  String get trending => "/trending/movie/day";
 
   @override
   String movieDetail(int idMovie) => "/movie/" + idMovie.toString();

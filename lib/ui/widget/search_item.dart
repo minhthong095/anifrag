@@ -25,13 +25,13 @@ class SearchItem extends StatelessWidget {
   final String title;
   final int yearRelease;
   final int runtime;
-  final String director;
+  final String popularity;
 
-  SearchItem({String title, String director, int runtime, int yearRelease})
+  SearchItem({String title, String popularity, int runtime, int yearRelease})
       : this.title = title ?? '',
         this.yearRelease = yearRelease ?? null,
         this.runtime = runtime ?? null,
-        this.director = director ?? '';
+        this.popularity = popularity ?? '';
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class SearchItem extends StatelessWidget {
                   child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  director,
+                  popularity + ' point',
                   style: TextStyle(color: Colors.grey),
                 ),
               )),

@@ -59,7 +59,7 @@ class $Home extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          _blocHome.mainCategory(),
+                          _blocHome.getMainCategory,
                           style: TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,

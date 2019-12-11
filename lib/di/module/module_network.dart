@@ -12,19 +12,19 @@ const baseUrlApiary = const Qualifier(#baseUrlApiary);
 class ModuleNetwork {
   @provide
   @singleton
-  Url url() => Url();
+  ImplUrl url() => ImplUrl();
 
   @provide
   @singleton
   Dio dio() {
     return Dio()
-      ..options.baseUrl = AbsUrl.baseUrl
+      ..options.baseUrl = Url.baseUrl
       ..options.headers = {'Authentication': 'Bearer ' + ApiKey.v3};
   }
 
   @provide
   @baseUrlApiary
-  Dio dioApiary() => Dio()..options.baseUrl = AbsUrl.baseUrlAbiary;
+  Dio dioApiary() => Dio()..options.baseUrl = Url.baseUrlAbiary;
 
   @provide
   Requesting requesting(Dio dio) => Requesting(dio);
@@ -34,7 +34,8 @@ class ModuleNetwork {
       RequestingAbiary(dioApiary);
 
   @provide
-  API api(Requesting requesting, Url url, RequestingAbiary requestingAbiary) =>
+  API api(Requesting requesting, ImplUrl url,
+          RequestingAbiary requestingAbiary) =>
       ImplApi(requesting, url, requestingAbiary);
 }
 

@@ -49,7 +49,6 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
   Widget _defaultMoreLikeThis() => GridView.count(
         shrinkWrap: true,
         crossAxisCount: 3,
-        childAspectRatio: LiveStore.tempHardCodeAspectRatio,
         crossAxisSpacing: 20,
         padding: EdgeInsets.zero,
         physics: ClampingScrollPhysics(),
@@ -71,7 +70,6 @@ class _MoreLikeThisState extends State<MoreLikeThis> {
       return GridView.count(
         shrinkWrap: true,
         crossAxisCount: 3,
-        childAspectRatio: LiveStore.tempHardCodeAspectRatio,
         crossAxisSpacing: 20,
         padding: EdgeInsets.zero,
         physics: ClampingScrollPhysics(),

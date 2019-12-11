@@ -51,7 +51,7 @@ class _MainTabBarScreenState extends State<_MainTabBarScreen>
   Widget build(BuildContext context) => Scaffold(
         body: NoAnimationTabBarView(
           tabController: _tabController,
-          children: <Widget>[Home(), Search()],
+          children: <Widget>[Home(), SearchScreen()],
         ),
         bottomNavigationBar: TabBarSvg(
           tabController: _tabController,
@@ -59,6 +59,16 @@ class _MainTabBarScreenState extends State<_MainTabBarScreen>
           children: <String>[PathSvg.home, PathSvg.find],
         ),
       );
+
+  //  Padding(
+  //   padding:
+  //       EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
+  //   child: TabBarSvg(
+  //     tabController: _tabController,
+  //     onTap: (newIndex) {},
+  //     children: <String>[PathSvg.home, PathSvg.find],
+  //   ),
+  // ))
 }
 
 class TabBarSvg extends StatefulWidget {
@@ -84,7 +94,7 @@ class TabBarSvg extends StatefulWidget {
 class _TestTab extends State<TabBarSvg> with TickerProviderStateMixin {
   int _index = 0;
 
-  final double _size = 25;
+  final double _size = 30;
 
   @override
   Widget build(BuildContext context) => Theme(
@@ -97,6 +107,7 @@ class _TestTab extends State<TabBarSvg> with TickerProviderStateMixin {
               color: Colors.grey,
             ),
             Container(
+              padding: EdgeInsets.only(top: 7, bottom: 7),
               color: widget.backgroundColor,
               child: TabBar(
                 onTap: (newIndex) {
