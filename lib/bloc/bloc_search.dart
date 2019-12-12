@@ -4,6 +4,7 @@ import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/live_store.dart';
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
@@ -16,7 +17,8 @@ class BlocSearch extends DisposeBag {
   final observable = PublishSubject<String>();
   final ValueNotifier<bool> valueNotifyIsLoading = ValueNotifier(false);
 
-  final subjectSearchState = BehaviorSubject.seeded(SearchState.kickoff);
+  final subjectSearchState =
+      PublishSubject<Tuple2<SearchState, List<ResponseSearch>>>();
 
   String latestKeyword = '';
 
@@ -28,7 +30,8 @@ class BlocSearch extends DisposeBag {
           latestKeyword = keyword;
           valueNotifyIsLoading.value = true;
           if (_liveStore.getSearchHistory[keyword] != null) {
-            subjectSearchState.sink.add(SearchState.fulfill);
+            subjectSearchState.sink.add(Tuple2(
+                SearchState.fulfill, _liveStore.getSearchHistory[keyword]));
           }
         })
         .where((String keyword) => _liveStore.getSearchHistory[keyword] == null)
@@ -41,9 +44,10 @@ class BlocSearch extends DisposeBag {
           if (latestKeyword == response.keys.first) {
             if (response.values.first == null ||
                 response.values.first.length == 0)
-              subjectSearchState.sink.add(SearchState.empty);
+              subjectSearchState.sink.add(Tuple2(SearchState.empty, []));
             else
-              subjectSearchState.sink.add(SearchState.fulfill);
+              subjectSearchState.sink.add(Tuple2(SearchState.fulfill,
+                  _liveStore.getSearchHistory[latestKeyword]));
           }
         }));
 

@@ -53,6 +53,10 @@ class _MainTabBarScreenState extends State<_MainTabBarScreen>
           tabController: _tabController,
           children: <Widget>[Home(), SearchScreen()],
         ),
+        // body: TabBarView(
+        //   controller: _tabController,
+        //   children: <Widget>[Home(), SearchScreen()],
+        // ),
         bottomNavigationBar: TabBarSvg(
           tabController: _tabController,
           onTap: (newIndex) {},

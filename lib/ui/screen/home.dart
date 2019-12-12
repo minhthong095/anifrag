@@ -21,7 +21,7 @@ class Home extends StatefulWidget {
 
 typedef OnItemTap = void Function(int idMovie, String prefix);
 
-class $Home extends State<Home> {
+class $Home extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
   static final double paddingInHome = 20;
 
   BlocHome _blocHome;
@@ -106,6 +106,9 @@ class $Home extends State<Home> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _CategoryTitle extends StatelessWidget {

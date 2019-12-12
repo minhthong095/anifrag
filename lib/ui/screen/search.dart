@@ -2,16 +2,25 @@ import 'dart:io';
 
 import 'package:Anifrag/bloc/bloc_search.dart';
 import 'package:Anifrag/config/app_color.dart';
+import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/di/component.dart';
+import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/ui/widget/indicator.dart';
+import 'package:Anifrag/ui/widget/search_item.dart';
+import 'package:dartz/dartz.dart' as prefix;
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen>
+    with AutomaticKeepAliveClientMixin<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Provider(
@@ -19,6 +28,9 @@ class SearchScreen extends StatelessWidget {
       child: _Search(),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _Search extends StatefulWidget {
@@ -37,63 +49,88 @@ class _SearchState extends State<_Search> {
                 left: 15, right: 15, top: Platform.isAndroid ? 15 : 0),
             child: Column(
               children: <Widget>[
-                Container(
-                  constraints: BoxConstraints.expand(height: 50),
-                  decoration: BoxDecoration(
-                      color: AppColor.search,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        child: SvgPicture.asset(
-                          PathSvg.find,
-                          color: Colors.grey,
-                          height: 20,
+                Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: Container(
+                    constraints: BoxConstraints.expand(height: 50),
+                    decoration: BoxDecoration(
+                        color: AppColor.search,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: SvgPicture.asset(
+                            PathSvg.find,
+                            color: Colors.grey,
+                            height: 20,
+                          ),
                         ),
-                      ),
-                      Flexible(
-                        child: TextFormField(
-                          enableInteractiveSelection: false,
-                          onChanged: (text) {
-                            Provider.of<BlocSearch>(context).searchMovies(text);
-                          },
-                          cursorColor: Colors.grey,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Search...',
-                              hintStyle: TextStyle(color: Colors.grey)),
-                          style:
-                              TextStyle(color: Colors.grey[50], fontSize: 20),
+                        Flexible(
+                          child: TextFormField(
+                            enableInteractiveSelection: false,
+                            onChanged: (text) {
+                              Provider.of<BlocSearch>(context)
+                                  .searchMovies(text);
+                            },
+                            cursorColor: Colors.grey,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Search...',
+                                hintStyle: TextStyle(color: Colors.grey)),
+                            style:
+                                TextStyle(color: Colors.grey[50], fontSize: 20),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10),
-                        child: ValueListenableBuilder<bool>(
-                          valueListenable: Provider.of<BlocSearch>(context)
-                              .valueNotifyIsLoading,
-                          builder: (_, isLoading, ___) {
-                            if (isLoading) return Indicator();
+                        Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: ValueListenableBuilder<bool>(
+                            valueListenable: Provider.of<BlocSearch>(context)
+                                .valueNotifyIsLoading,
+                            builder: (_, isLoading, ___) {
+                              if (isLoading) return Indicator();
 
-                            return SizedBox();
-                          },
-                        ),
-                      )
-                    ],
+                              return SizedBox();
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
-                    child: StreamBuilder<SearchState>(
+                    child: StreamBuilder<
+                        prefix.Tuple2<SearchState, List<ResponseSearch>>>(
+                  initialData: prefix.Tuple2(SearchState.kickoff, []),
                   stream: Provider.of<BlocSearch>(context).subjectSearchState,
                   builder: (_, snapshot) {
-                    switch (snapshot.data) {
+                    switch (snapshot.data.value1) {
                       case SearchState.kickoff:
                         return _MessageView(
                           message: 'Find what to watch next.',
                         );
                       case SearchState.fulfill:
-                        return Container(
-                          color: Colors.black87,
+                        return ListView.separated(
+                          separatorBuilder: (_, index) {
+                            return SizedBox(
+                              height: 20,
+                              width: 1,
+                            );
+                          },
+                          padding: EdgeInsets.only(bottom: 30),
+                          itemCount: MockData.listSerarch.length,
+                          itemBuilder: (_, index) {
+                            return SearchItem(
+                              posterPath:
+                                  MockData.listSerarch[index].posterPath,
+                              popularity: MockData.listSerarch[index].popularity
+                                  .toString(),
+                              runtime: MockData.listSerarch[index].runtime,
+                              title: MockData.listSerarch[index].originalTitle,
+                              yearRelease:
+                                  MockData.listSerarch[index].releaseDate.year,
+                            );
+                          },
                         );
                       default:
                         return _MessageView(

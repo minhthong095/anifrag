@@ -1,4 +1,5 @@
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/model/responses/response_search.dart';
 
 class MockData {
   static final List<String> listImage = <String>[
@@ -13,5 +14,170 @@ class MockData {
     PathImage.theLastJedi,
     PathImage.thorRagnarok,
     PathImage.wonderWoman,
+  ];
+
+  static final List<ResponseSearch> listSerarch = <ResponseSearch>[
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
+    ResponseSearch(
+      id: 1,
+      originalTitle: 'Title',
+      popularity: 123,
+      posterPath:
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+      releaseDate: DateTime(2019),
+      runtime: 123,
+    ),
   ];
 }

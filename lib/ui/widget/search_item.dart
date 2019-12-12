@@ -1,7 +1,11 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/config/utils.dart';
+import 'package:Anifrag/store/live_store.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
+import 'default_image_shimmer.dart';
 
 class SearchItemScreenTest extends StatelessWidget {
   @override
@@ -11,11 +15,11 @@ class SearchItemScreenTest extends StatelessWidget {
       body: Container(
         color: AppColor.backgroundColor,
         child: Center(
-          child: SearchItem(
-            runtime: 120,
-            yearRelease: 2019,
-          ),
-        ),
+            // child: SearchItem(
+            //   runtime: 120,
+            //   yearRelease: 2019,
+            // ),
+            ),
       ),
     );
   }
@@ -26,8 +30,16 @@ class SearchItem extends StatelessWidget {
   final int yearRelease;
   final int runtime;
   final String popularity;
+  final String posterPath;
 
-  SearchItem({String title, String popularity, int runtime, int yearRelease})
+  static const double _preferHeight = 120;
+
+  SearchItem(
+      {@required String title,
+      @required String popularity,
+      @required int runtime,
+      @required this.posterPath,
+      @required int yearRelease})
       : this.title = title ?? '',
         this.yearRelease = yearRelease ?? null,
         this.runtime = runtime ?? null,
@@ -36,7 +48,7 @@ class SearchItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints.expand(height: 120),
+      constraints: BoxConstraints.expand(height: _preferHeight),
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: Color(0xff26262c),
@@ -46,8 +58,13 @@ class SearchItem extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 10),
-            child: Image.asset(
-              PathImage.dunkirk,
+            child: CachedNetworkImage(
+              filterQuality: FilterQuality.low,
+              imageUrl: posterPath,
+              placeholder: (context, text) => DefaultImageShimmer(
+                width: _preferHeight * LiveStore.ratioImgApi,
+                height: _preferHeight,
+              ),
             ),
           ),
           Expanded(
