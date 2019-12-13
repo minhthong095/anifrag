@@ -1,4 +1,5 @@
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
+import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
@@ -9,19 +10,29 @@ import 'package:Anifrag/store/offline/offline_cast.dart';
 import 'package:Anifrag/store/offline/offline_movie.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/widget/loading_route.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rxdart/subjects.dart';
 
-class BlocHome {
+enum MoveDetailState { loading, finish }
+
+class BlocHome extends DisposeBag {
   final LiveStore _liveStore;
   final API _api;
   final OfflineMovie _offMovie;
   final OfflineCast _offCast;
   final AppDb _appDb;
+
   final BlocMainTabbar _blocMainTabbar;
   BlocMainTabbar get blocMainTabbar => _blocMainTabbar;
 
+  final subjectMoveDetailState = PublishSubject<
+      Either<Null, Tuple4<ResponseMovie, List<ResponseCast>, bool, String>>>();
+
   BlocHome(this._liveStore, this._api, this._offMovie, this._offCast,
-      this._appDb, this._blocMainTabbar);
+      this._appDb, this._blocMainTabbar) {
+    dropStream(subjectMoveDetailState);
+  }
 
   static const int _indexForListCarousel = 0;
   static const int maxNumEachPage = 20;
@@ -56,13 +67,14 @@ class BlocHome {
           arguments: DetailScreenArgument(prefix, movieDetail, movieCasts));
   }
 
-  void moveDetailProcess(
-      BuildContext context, int idMovie, String prefix) async {
+  void moveDetailProcess(int idMovie, String prefix) async {
     bool isCallFailed = false;
     ResponseMovie movieDetail;
     List<ResponseCast> movieCasts;
 
-    Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
+    // Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
+
+    subjectMoveDetailState.add(Left(null));
 
     try {
       movieDetail = await _api.getMovieDetail(idMovie);
@@ -73,7 +85,9 @@ class BlocHome {
     }
 
     if (!isCallFailed) {
-      _moveToDetail(context, movieDetail, movieCasts, true, prefix);
+      // _moveToDetail(context, movieDetail, movieCasts, true, prefix);
+      subjectMoveDetailState
+          .add(Right(Tuple4(movieDetail, movieCasts, true, prefix)));
       final db = await _appDb.getDb();
       db.transaction((txn) async {
         final batch = txn.batch();
@@ -105,10 +119,12 @@ class BlocHome {
           final responseCast = (queries[1] as List<Map>)
               .map<ResponseCast>((f) => ResponseCast.fromJson(f))
               .toList();
-
-          _moveToDetail(context, responseMovie, responseCast, true, prefix);
+          // _moveToDetail(context, responseMovie, responseCast, true, prefix);
+          subjectMoveDetailState
+              .add(Right(Tuple4(responseMovie, responseCast, true, prefix)));
         } catch (er) {
-          _moveToDetail(context, null, null, false, prefix);
+          // _moveToDetail(context, null, null, false, prefix);
+          subjectMoveDetailState.add(Right(Tuple4(null, null, false, prefix)));
         }
       });
       await _appDb.closeDb();

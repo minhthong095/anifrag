@@ -1,6 +1,7 @@
 import 'package:Anifrag/ui/widget/default_image_shimmer.dart';
 import 'package:Anifrag/ui/widget/empty_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';

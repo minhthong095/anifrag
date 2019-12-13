@@ -28,10 +28,6 @@ class BlocDetail extends DisposeBag {
   void setTagPrefix(tagPrefix) => _tagPrefix = tagPrefix;
   get getTagPrefix => _tagPrefix;
 
-  // Stream<void> streamCallFinishTransition() async* {
-  //   yield null;
-  // }
-
   BehaviorSubject<bool> _subjectCallFinishTransition =
       BehaviorSubject.seeded(false);
 

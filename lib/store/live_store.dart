@@ -21,11 +21,12 @@ class LiveStore {
   set setHomePageData(List<ResponseThumbnailMovie> value) =>
       _homePageData = value;
 
-  HashMap<String, List<ResponseSearch>> _searchHistory =
-      HashMap<String, List<ResponseSearch>>();
-  HashMap<String, List<ResponseSearch>> get getSearchHistory => _searchHistory;
-  set setSearchHistory(HashMap<String, List<ResponseSearch>> value) =>
-      _searchHistory = value;
+  SplayTreeMap<String, List<ResponseSearch>> _searchHistory =
+      SplayTreeMap<String, List<ResponseSearch>>();
+  SplayTreeMap<String, List<ResponseSearch>> get getSearchHistory =>
+      _searchHistory;
+  // set setSearchHistory(HashMap<String, List<ResponseSearch>> value) =>
+  //     _searchHistory = value;
 
   static const int widthImgApi = 300; // pixel
   static const int heightImgApi = 450; // pixel

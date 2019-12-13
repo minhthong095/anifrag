@@ -30,6 +30,7 @@ dependencies:
   provider:
   dartz:
   shimmer:
+  palette_generator:
   dio:
   sqflite:
   json_annotation:
