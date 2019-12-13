@@ -22,7 +22,7 @@ class MockData {
       originalTitle: 'Title',
       popularity: 123,
       posterPath:
-          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+          "https://image.tmdb.org/t/p/w300/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpga",
       releaseDate: DateTime(2019),
       runtime: 123,
     ),

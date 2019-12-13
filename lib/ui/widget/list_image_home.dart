@@ -35,9 +35,9 @@ class _ListImageHomeState extends State<ListImageHome> {
   double _widthImg = 0;
 
   @override
-  void didChangeDependencies() {
-    _widthImg = _preferHeightImg * LiveStore.ratioImgApi;
-    super.didChangeDependencies();
+  void initState() {
+    _widthImg = Utils.widthInRatio(_preferHeightImg, LiveStore.ratioImgApi);
+    super.initState();
   }
 
   @override

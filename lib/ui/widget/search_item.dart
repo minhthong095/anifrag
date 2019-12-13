@@ -27,29 +27,29 @@ class SearchItemScreenTest extends StatelessWidget {
 
 class SearchItem extends StatelessWidget {
   final String title;
-  final int yearRelease;
+  final DateTime yearRelease;
   final int runtime;
   final String popularity;
   final String posterPath;
+  final double heightImg;
+  final double widthImg;
 
-  static const double _preferHeight = 120;
+  static const double _padding = 12;
 
   SearchItem(
-      {@required String title,
-      @required String popularity,
-      @required int runtime,
+      {@required this.title,
+      @required this.popularity,
+      @required this.runtime,
       @required this.posterPath,
-      @required int yearRelease})
-      : this.title = title ?? '',
-        this.yearRelease = yearRelease ?? null,
-        this.runtime = runtime ?? null,
-        this.popularity = popularity ?? '';
+      @required this.heightImg,
+      @required this.widthImg,
+      @required this.yearRelease});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints.expand(height: _preferHeight),
-      padding: EdgeInsets.all(12),
+      constraints: BoxConstraints.expand(height: this.heightImg + _padding * 2),
+      padding: EdgeInsets.all(_padding),
       decoration: BoxDecoration(
           color: Color(0xff26262c),
           borderRadius: BorderRadius.all(Radius.circular(9))),
@@ -57,16 +57,17 @@ class SearchItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: CachedNetworkImage(
-              filterQuality: FilterQuality.low,
-              imageUrl: posterPath,
-              placeholder: (context, text) => DefaultImageShimmer(
-                width: _preferHeight * LiveStore.ratioImgApi,
-                height: _preferHeight,
-              ),
-            ),
-          ),
+              padding: EdgeInsets.only(right: 15),
+              // child: CachedNetworkImage(
+              //     imageUrl: posterPath + 'a',
+              //     placeholder: (_, __) => DefaultImageShimmer(
+              //           width: widthImg,
+              //           height: heightImg,
+              //         ))
+              child: FadeInImage(
+                image: NetworkImage(posterPath),
+                placeholder: AssetImage(PathImage.placeHolder),
+              )),
           Expanded(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,6 +77,8 @@ class SearchItem extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 10),
                 child: Text(
                   title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -83,7 +86,7 @@ class SearchItem extends StatelessWidget {
                 ),
               ),
               Text(
-                '${this.yearRelease == null ? '' : this.yearRelease.toString()}${this.yearRelease == null || this.runtime == null ? '' : ' * '}' +
+                '${this.yearRelease == null ? '' : yearRelease.year.toString()}${this.yearRelease == null || this.runtime == 0 ? '' : ' * '}' +
                     Utils.generateStringRuntime(runtime),
                 style: TextStyle(color: Colors.grey),
               ),

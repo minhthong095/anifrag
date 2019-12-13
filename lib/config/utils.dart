@@ -8,8 +8,10 @@ class Utils {
   static double getHeightDpImgApi(BuildContext context) =>
       LiveStore.heightImgApi / MediaQuery.of(context).devicePixelRatio;
 
+  static double widthInRatio(double height, double ratio) => height * ratio;
+
   static String generateStringRuntime(int runtime) {
-    if (runtime == null || runtime == 0) return '';
+    if (runtime == 0) return '';
 
     return (runtime / 60).toStringAsFixed(0) +
         'h ' +

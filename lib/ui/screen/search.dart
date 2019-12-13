@@ -4,13 +4,16 @@ import 'package:Anifrag/bloc/bloc_search.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
+import 'package:Anifrag/config/utils.dart';
 import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
+import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/widget/indicator.dart';
 import 'package:Anifrag/ui/widget/search_item.dart';
 import 'package:dartz/dartz.dart' as prefix;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +42,23 @@ class _Search extends StatefulWidget {
 }
 
 class _SearchState extends State<_Search> {
+  static const double _heightImgSearchItem = 80;
+  double _widthImgSearchItem;
+  BlocSearch _blocSearch;
+
+  @override
+  void initState() {
+    _widthImgSearchItem =
+        Utils.widthInRatio(_heightImgSearchItem, LiveStore.ratioImgApi);
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _blocSearch = Provider.of<BlocSearch>(context);
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: AppColor.backgroundColor,
@@ -68,10 +88,12 @@ class _SearchState extends State<_Search> {
                         ),
                         Flexible(
                           child: TextFormField(
+                            // inputFormatters: [
+                            //   WhitelistingTextInputFormatter.digitsOnly
+                            // ],
                             enableInteractiveSelection: false,
                             onChanged: (text) {
-                              Provider.of<BlocSearch>(context)
-                                  .searchMovies(text);
+                              _blocSearch.searchMovies(text);
                             },
                             cursorColor: Colors.grey,
                             decoration: InputDecoration(
@@ -85,8 +107,7 @@ class _SearchState extends State<_Search> {
                         Padding(
                           padding: EdgeInsets.only(right: 10),
                           child: ValueListenableBuilder<bool>(
-                            valueListenable: Provider.of<BlocSearch>(context)
-                                .valueNotifyIsLoading,
+                            valueListenable: _blocSearch.valueNotifyIsLoading,
                             builder: (_, isLoading, ___) {
                               if (isLoading) return Indicator();
 
@@ -102,7 +123,7 @@ class _SearchState extends State<_Search> {
                     child: StreamBuilder<
                         prefix.Tuple2<SearchState, List<ResponseSearch>>>(
                   initialData: prefix.Tuple2(SearchState.kickoff, []),
-                  stream: Provider.of<BlocSearch>(context).subjectSearchState,
+                  stream: _blocSearch.subjectSearchState,
                   builder: (_, snapshot) {
                     switch (snapshot.data.value1) {
                       case SearchState.kickoff:
@@ -113,22 +134,24 @@ class _SearchState extends State<_Search> {
                         return ListView.separated(
                           separatorBuilder: (_, index) {
                             return SizedBox(
-                              height: 20,
+                              height: 15,
                               width: 1,
                             );
                           },
                           padding: EdgeInsets.only(bottom: 30),
-                          itemCount: MockData.listSerarch.length,
+                          itemCount: snapshot.data.value2.length,
                           itemBuilder: (_, index) {
                             return SearchItem(
-                              posterPath:
-                                  MockData.listSerarch[index].posterPath,
-                              popularity: MockData.listSerarch[index].popularity
+                              heightImg: _heightImgSearchItem,
+                              widthImg: _widthImgSearchItem,
+                              posterPath: _blocSearch.getBaseUrlImage +
+                                  snapshot.data.value2[index].posterPath,
+                              popularity: snapshot.data.value2[index].popularity
                                   .toString(),
-                              runtime: MockData.listSerarch[index].runtime,
-                              title: MockData.listSerarch[index].originalTitle,
+                              runtime: snapshot.data.value2[index].runtime,
+                              title: snapshot.data.value2[index].originalTitle,
                               yearRelease:
-                                  MockData.listSerarch[index].releaseDate.year,
+                                  snapshot.data.value2[index].releaseDate,
                             );
                           },
                         );

@@ -7,19 +7,19 @@ part 'response_search.g.dart';
 class ResponseSearch {
   final int id;
 
-  @JsonKey(name: 'original_title')
+  @JsonKey(name: 'original_title', defaultValue: '')
   final String originalTitle;
 
-  @JsonKey(name: 'poster_path')
+  @JsonKey(name: 'poster_path', defaultValue: '')
   final String posterPath;
 
   @JsonKey(name: 'release_date')
   final DateTime releaseDate;
 
-  @JsonKey(name: 'vote_count')
+  @JsonKey(name: 'vote_count', defaultValue: 0)
   final int runtime;
 
-  @JsonKey(name: 'popularity')
+  @JsonKey(name: 'popularity', defaultValue: 0)
   final double popularity;
 
   ResponseSearch(
@@ -31,6 +31,9 @@ class ResponseSearch {
       @required this.runtime});
 
   factory ResponseSearch.fromJson(Map<String, dynamic> json) {
+    if (json['release_date'] == '') {
+      json['release_date'] = null;
+    }
     return _$ResponseSearchFromJson(json);
   }
 

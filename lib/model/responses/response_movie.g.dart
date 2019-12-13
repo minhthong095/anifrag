@@ -10,12 +10,12 @@ ResponseMovie _$ResponseMovieFromJson(Map<String, dynamic> json) {
   return ResponseMovie(
     id: json['id'] as int,
     title: json['title'] as String,
+    posterPath: json['poster_path'] as String,
     overview: json['overview'] as String,
     runtime: json['runtime'] as int,
     releaseDate: json['release_date'] == null
         ? null
         : DateTime.parse(json['release_date'] as String),
-    posterPath: json['poster_path'] as String,
     voteAverage: (json['vote_average'] as num)?.toDouble(),
     popularity: (json['popularity'] as num)?.toDouble(),
     voteCount: json['vote_count'] as int,

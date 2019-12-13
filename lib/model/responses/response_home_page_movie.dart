@@ -3,11 +3,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'response_home_page_movie.g.dart';
 
-// @JsonSerializable()
+@JsonSerializable()
 class ResponseThumbnailMovie {
   final int id;
 
-  // @JsonKey(name: 'poster_path')
+  @JsonKey(name: 'poster_path')
   final String posterPath;
 
   ResponseThumbnailMovie({@required this.id, @required this.posterPath});

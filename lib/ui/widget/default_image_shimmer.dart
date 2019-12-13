@@ -11,13 +11,18 @@ class DefaultImageShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-        period: Duration(seconds: 4),
-        baseColor: Color(0xff292831),
-        highlightColor: Color(0xff393747),
-        child: EmptyImage(
-          width: width,
-          height: height,
-        ));
+    return EmptyImage(
+      width: width,
+      height: height,
+    );
+
+    // return Shimmer.fromColors(
+    //     period: Duration(seconds: 4),
+    //     baseColor: Color(0xff292831),
+    //     highlightColor: Color(0xff393747),
+    //     child: EmptyImage(
+    //       width: width,
+    //       height: height,
+    //     ));
   }
 }

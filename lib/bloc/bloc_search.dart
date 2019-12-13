@@ -29,9 +29,13 @@ class BlocSearch extends DisposeBag {
         .doOnData((String keyword) {
           latestKeyword = keyword;
           valueNotifyIsLoading.value = true;
-          if (_liveStore.getSearchHistory[keyword] != null) {
+          final searchHistory = _liveStore.getSearchHistory[keyword];
+          if (searchHistory != null) {
             subjectSearchState.sink.add(Tuple2(
-                SearchState.fulfill, _liveStore.getSearchHistory[keyword]));
+                searchHistory.length > 0
+                    ? SearchState.fulfill
+                    : SearchState.empty,
+                _liveStore.getSearchHistory[keyword]));
           }
         })
         .where((String keyword) => _liveStore.getSearchHistory[keyword] == null)
@@ -59,6 +63,8 @@ class BlocSearch extends DisposeBag {
   void searchMovies(String keyword) async {
     observable.add(keyword);
   }
+
+  String get getBaseUrlImage => _liveStore.baseUrlImage;
 
   @override
   void dispose() {

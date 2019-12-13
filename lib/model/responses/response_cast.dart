@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'response_cast.g.dart';
 
-// @JsonSerializable()
+@JsonSerializable()
 class ResponseCast {
   final String name;
 

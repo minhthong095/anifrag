@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'response_configuration.g.dart';
 
-// @JsonSerializable()
+@JsonSerializable()
 class ResponseConfiguration {
   final ResponseConfigurationImages images;
 
@@ -17,7 +17,7 @@ class ResponseConfiguration {
   Map<String, dynamic> toJson() => _$ResponseConfigurationToJson(this);
 }
 
-// @JsonSerializable()
+@JsonSerializable()
 class ResponseConfigurationImages {
   @JsonKey(name: 'poster_sizes')
   final List<String> posterSizes;

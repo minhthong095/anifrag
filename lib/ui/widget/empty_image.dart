@@ -10,10 +10,7 @@ class EmptyImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        constraints: BoxConstraints.expand(
-            height: height,
-            // width: (this.height * LiveStore.tempHardCodeAspectRatio)
-            width: width),
-        color: Color(0xff2a2b2f),
+        constraints: BoxConstraints.tight(Size(width, height)),
+        color: Color(0xff404145),
       );
 }

@@ -42,7 +42,7 @@ class HeroImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(7.0),
       child: CachedNetworkImage(
-        imageUrl: path + 'a',
+        imageUrl: path,
         height: height,
         fit: fit,
         filterQuality: filterQuality,

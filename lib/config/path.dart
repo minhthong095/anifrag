@@ -13,6 +13,7 @@ class PathImage {
   static const String thorRagnarok = _baseUrl + 'thor_ragnarok.jpg';
   static const String wonderWoman = _baseUrl + 'wonder_woman.jpg';
   static const String splash = _baseUrl + 'forgeground_launcher.png';
+  static const String placeHolder = _baseUrl + 'place_holder.png';
 }
 
 class PathIcon {
