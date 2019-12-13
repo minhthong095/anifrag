@@ -131,29 +131,39 @@ class _SearchState extends State<_Search> {
                           message: 'Find what to watch next.',
                         );
                       case SearchState.fulfill:
-                        return ListView.separated(
-                          separatorBuilder: (_, index) {
-                            return SizedBox(
-                              height: 15,
-                              width: 1,
-                            );
+                        return NotificationListener<ScrollNotification>(
+                          onNotification: (notification) {
+                            if (notification is ScrollStartNotification) {
+                              FocusScope.of(context).unfocus();
+                            }
+                            return false;
                           },
-                          padding: EdgeInsets.only(bottom: 30),
-                          itemCount: snapshot.data.value2.length,
-                          itemBuilder: (_, index) {
-                            return SearchItem(
-                              heightImg: _heightImgSearchItem,
-                              widthImg: _widthImgSearchItem,
-                              posterPath: _blocSearch.getBaseUrlImage +
-                                  snapshot.data.value2[index].posterPath,
-                              popularity: snapshot.data.value2[index].popularity
-                                  .toString(),
-                              runtime: snapshot.data.value2[index].runtime,
-                              title: snapshot.data.value2[index].originalTitle,
-                              yearRelease:
-                                  snapshot.data.value2[index].releaseDate,
-                            );
-                          },
+                          child: ListView.separated(
+                            separatorBuilder: (_, index) {
+                              return SizedBox(
+                                height: 15,
+                                width: 1,
+                              );
+                            },
+                            padding: EdgeInsets.only(bottom: 30),
+                            itemCount: snapshot.data.value2.length,
+                            itemBuilder: (_, index) {
+                              return SearchItem(
+                                heightImg: _heightImgSearchItem,
+                                widthImg: _widthImgSearchItem,
+                                posterPath: _blocSearch.getBaseUrlImage +
+                                    snapshot.data.value2[index].posterPath,
+                                popularity: snapshot
+                                    .data.value2[index].popularity
+                                    .toString(),
+                                runtime: snapshot.data.value2[index].runtime,
+                                title:
+                                    snapshot.data.value2[index].originalTitle,
+                                yearRelease:
+                                    snapshot.data.value2[index].releaseDate,
+                              );
+                            },
+                          ),
                         );
                       default:
                         return _MessageView(

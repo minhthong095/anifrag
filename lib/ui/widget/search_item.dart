@@ -58,12 +58,6 @@ class SearchItem extends StatelessWidget {
         children: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 15),
-              // child: CachedNetworkImage(
-              //     imageUrl: posterPath + 'a',
-              //     placeholder: (_, __) => DefaultImageShimmer(
-              //           width: widthImg,
-              //           height: heightImg,
-              //         ))
               child: FadeInImage(
                 image: NetworkImage(posterPath),
                 placeholder: AssetImage(PathImage.placeHolder),
