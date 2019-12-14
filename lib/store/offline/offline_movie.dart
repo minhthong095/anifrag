@@ -50,13 +50,13 @@ class ImplOfflineMovie extends OfflineMovie {
         ') VALUES(' +
         movie.id.toString() +
         ',"' +
-        movie.overview +
+        movie.overview.replaceAll('"', '""""') +
         '",' +
         movie.runtime.toString() +
         ',' +
         movie.popularity.toString() +
         ',"' +
-        movie.title +
+        movie.title.replaceAll('"', '""') +
         '","' +
         releaseTimeStr +
         '",' +

@@ -59,20 +59,10 @@ class BlocHome extends DisposeBag {
     return result;
   }
 
-  void _moveToDetail(BuildContext context, ResponseMovie movieDetail,
-      List<ResponseCast> movieCasts, bool isSucces, String prefix) {
-    Navigator.of(context).popUntil(LoadingRoute.loadingRoutePredicate());
-    if (isSucces)
-      Navigator.of(context).pushNamed(DetailScreen.nameRoute,
-          arguments: DetailScreenArgument(prefix, movieDetail, movieCasts));
-  }
-
   void moveDetailProcess(int idMovie, String prefix) async {
     bool isCallFailed = false;
     ResponseMovie movieDetail;
     List<ResponseCast> movieCasts;
-
-    // Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
 
     subjectMoveDetailState.add(Left(null));
 
@@ -85,7 +75,6 @@ class BlocHome extends DisposeBag {
     }
 
     if (!isCallFailed) {
-      // _moveToDetail(context, movieDetail, movieCasts, true, prefix);
       subjectMoveDetailState
           .add(Right(Tuple4(movieDetail, movieCasts, true, prefix)));
       final db = await _appDb.getDb();

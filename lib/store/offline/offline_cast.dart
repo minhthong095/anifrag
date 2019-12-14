@@ -21,7 +21,7 @@ class ImplOfflineCast extends OfflineCast {
           ', ' +
           TableCast.columnIdMovie +
           ') VALUES("' +
-          cast.name +
+          cast.name.replaceAll('"', '""') +
           '", ' +
           idMovie.toString() +
           ')')
