@@ -11,6 +11,7 @@ import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:Anifrag/ui/screen/no_wifi.dart';
+import 'package:Anifrag/ui/screen/search_detail.dart';
 import 'package:Anifrag/ui/transition/page_route_blank.dart';
 import 'package:Anifrag/ui/widget/category_demo.dart';
 import 'package:Anifrag/ui/widget/detail_tabbar.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: InitialSplashScreen(),
-      // home: SearchItemScreenTest(),
+      // home: SearchDetail(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           // case InitialSplashScreen.nameRoute:

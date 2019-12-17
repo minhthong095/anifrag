@@ -47,54 +47,58 @@ class SearchItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(height: this.heightImg + _padding * 2),
-      padding: EdgeInsets.all(_padding),
-      decoration: BoxDecoration(
-          color: Color(0xff26262c),
-          borderRadius: BorderRadius.all(Radius.circular(9))),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 15),
-              child: FadeInImage(
-                image: NetworkImage(posterPath),
-                placeholder: AssetImage(PathImage.placeHolder),
-              )),
-          Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        constraints:
+            BoxConstraints.expand(height: this.heightImg + _padding * 2),
+        padding: EdgeInsets.all(_padding),
+        decoration: BoxDecoration(
+            color: Color(0xff26262c),
+            borderRadius: BorderRadius.all(Radius.circular(9))),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 15),
+                child: FadeInImage(
+                  image: NetworkImage(posterPath),
+                  placeholder: AssetImage(PathImage.placeHolder),
+                )),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              Text(
-                '${this.yearRelease == null ? '' : yearRelease.year.toString()}${this.yearRelease == null || this.runtime == 0 ? '' : ' * '}' +
-                    Utils.generateStringRuntime(runtime),
-                style: TextStyle(color: Colors.grey),
-              ),
-              Expanded(
-                  child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  popularity + ' point',
+                Text(
+                  '${this.yearRelease == null ? '' : yearRelease.year.toString()}${this.yearRelease == null || this.runtime == 0 ? '' : ' * '}' +
+                      Utils.generateStringRuntime(runtime),
                   style: TextStyle(color: Colors.grey),
                 ),
-              )),
-            ],
-          ))
-        ],
+                Expanded(
+                    child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    popularity + ' point',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                )),
+              ],
+            ))
+          ],
+        ),
       ),
     );
   }
