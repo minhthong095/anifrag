@@ -36,29 +36,17 @@ class _SearchDetailState extends State<SearchDetail> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   body: GestureDetector(
-    //     onTap: this.widget.onTap,
-    //     child: Container(
-    //       constraints: BoxConstraints.expand(),
-    //       child: Center(
-    //         child: Container(
-    //           constraints: BoxConstraints.tight(Size(200, 200)),
-    //           color: Colors.pink,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
-
-    return Container(
-      color: AppColor.backgroundColor,
-      child: GestureDetector(
-        onTap: this.widget.onTap,
-        child: Center(
-          child: Container(
-            constraints: BoxConstraints.tight(Size(200, 200)),
-            color: Colors.pink,
+    return SingleChildScrollView(
+      child: Container(
+        height: 1500,
+        color: AppColor.backgroundColor,
+        child: GestureDetector(
+          onTap: this.widget.onTap,
+          child: Center(
+            child: Container(
+              constraints: BoxConstraints.tight(Size(200, 200)),
+              color: Colors.pink,
+            ),
           ),
         ),
       ),

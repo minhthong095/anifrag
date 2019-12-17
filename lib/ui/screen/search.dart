@@ -67,45 +67,6 @@ class _SearchState extends State<_Search> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // return AnimatedCrossFade(
-    //   alignment: Alignment.center,
-    //   firstChild: SearchDetail(
-    //     onTap: () {
-    //       _swtichDetail();
-    //     },
-    //   ),
-    //   secondChild: GestureDetector(
-    //     onTap: () {
-    //       _swtichDetail();
-    //     },
-    //     child: Container(
-    //       color: Colors.blue,
-    //     ),
-    //   ),
-    //   layoutBuilder: (first, _, second, __) {
-    //     return Stack(
-    //       overflow: Overflow.visible,
-    //       children: <Widget>[
-    //         Positioned(
-    //           key: __,
-    //           left: 0.0,
-    //           top: 0.0,
-    //           right: 0.0,
-    //           bottom: 0.0,
-    //           child: second,
-    //         ),
-    //         Positioned(
-    //           key: _,
-    //           child: first,
-    //         ),
-    //       ],
-    //     );
-    //   },
-    //   duration: Duration(milliseconds: 5000),
-    //   crossFadeState:
-    //       _showSearch ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-    // );
-
     return Scaffold(
         backgroundColor: AppColor.backgroundColor,
         body: SafeArea(
