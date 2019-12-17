@@ -64,7 +64,7 @@ class _NoAnimationTabbarView extends State<NoAnimationTabBarView>
   }
 
   void _initPopupSubscription() {
-    _blocMainTabbar = Provider.of<BlocMainTabbar>(context);
+    _blocMainTabbar = Provider.of<BlocMainTabbar>(context, listen: false);
     _blocMainTabbar.subjectPopup.stream
         .where(
             (duration) => _popupController.status == AnimationStatus.dismissed)

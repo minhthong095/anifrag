@@ -15,7 +15,7 @@ class _StoryOverviewState extends State<StoryOverview> {
 
   @override
   void didChangeDependencies() {
-    _blocDetail = Provider.of<BlocDetail>(context);
+    _blocDetail = Provider.of<BlocDetail>(context, listen: false);
     super.didChangeDependencies();
   }
 

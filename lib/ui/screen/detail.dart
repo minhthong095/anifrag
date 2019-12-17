@@ -115,7 +115,7 @@ class _DetailScreenState extends State<_DetailScreen>
   }
 
   void _initBlocDetail() {
-    _bloc = Provider.of<BlocDetail>(context);
+    _bloc = Provider.of<BlocDetail>(context, listen: false);
     _bloc.callMoreLikeThis();
   }
 

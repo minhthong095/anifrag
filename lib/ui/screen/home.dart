@@ -34,17 +34,27 @@ class $Home extends State<Home>
   OnItemTap _onItemTap;
   Map<String, List<ResponseThumbnailMovie>> _rest;
 
-  // Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
-
   @override
   void didChangeDependencies() {
-    _blocHome = Provider.of<BlocHome>(context);
-    _rest = _blocHome.listRestMovies();
+    _initBlocHome();
+    _initRestMovies();
+    _initOnItemTap();
+    initListenerMoveToDetailState(context, _blocHome);
+    super.didChangeDependencies();
+  }
+
+  void _initOnItemTap() {
     _onItemTap = (int idMovie, String prefix) {
       _blocHome.moveDetailProcess(idMovie, prefix);
     };
-    initListenerMoveToDetailState(context, _blocHome);
-    super.didChangeDependencies();
+  }
+
+  void _initRestMovies() {
+    _rest = _blocHome.listRestMovies();
+  }
+
+  void _initBlocHome() {
+    _blocHome = Provider.of<BlocHome>(context, listen: false);
   }
 
   @override

@@ -55,7 +55,7 @@ class _SearchState extends State<_Search> {
 
   @override
   void didChangeDependencies() {
-    _blocSearch = Provider.of<BlocSearch>(context);
+    _blocSearch = Provider.of<BlocSearch>(context, listen: false);
     super.didChangeDependencies();
   }
 

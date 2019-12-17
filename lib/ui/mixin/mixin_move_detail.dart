@@ -11,9 +11,9 @@ mixin MoveDetailMixin {
     blocHome.subjectMoveDetailState.listen((dartz.Either<MoveDetailState,
             dartz.Tuple4<ResponseMovie, List<ResponseCast>, bool, String>>
         moveDetailState) {
-      moveDetailState.fold(
-          (ifLeft) => Navigator.of(context).pushNamed(LoadingRoute.nameRoute),
-          (ifRight) {
+      moveDetailState.fold((ifLeft) {
+        return Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
+      }, (ifRight) {
         Navigator.of(context).popUntil(LoadingRoute.loadingRoutePredicate());
         if (ifRight.value3) {
           Navigator.of(context).pushNamed(DetailScreen.nameRoute,

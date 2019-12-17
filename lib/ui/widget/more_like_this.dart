@@ -28,7 +28,7 @@ class _MoreLikeThisState extends State<MoreLikeThis> with MoveDetailMixin {
   @override
   void didChangeDependencies() {
     _initBlocDetail();
-    _blocHome = Provider.of<BlocHome>(context);
+    _blocHome = Provider.of<BlocHome>(context, listen: false);
     _onItemTap = (int idMovie, String prefix) {
       _blocHome.moveDetailProcess(idMovie, prefix);
     };
@@ -38,7 +38,7 @@ class _MoreLikeThisState extends State<MoreLikeThis> with MoveDetailMixin {
   }
 
   void _initBlocDetail() {
-    _blocDetail = Provider.of<BlocDetail>(context);
+    _blocDetail = Provider.of<BlocDetail>(context, listen: false);
     _blocDetail.setCallbackDoneMoreLikeThis = (moreLikeThis) {
       setState(() {
         _moreLikeThis = moreLikeThis;
@@ -46,7 +46,7 @@ class _MoreLikeThisState extends State<MoreLikeThis> with MoveDetailMixin {
     };
   }
 
-  Widget _defaultMoreLikeThis() => _gridGenerate(List.generate(6, (index) {
+  Widget _defaultMoreLikeThis() => _gridFrame(List.generate(6, (index) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(7.0),
           child: EmptyImage(
@@ -56,7 +56,7 @@ class _MoreLikeThisState extends State<MoreLikeThis> with MoveDetailMixin {
         );
       }));
 
-  Widget _gridGenerate(List<Widget> children) {
+  Widget _gridFrame(List<Widget> children) {
     return GridView.count(
       shrinkWrap: true,
       crossAxisCount: 3,
@@ -72,7 +72,7 @@ class _MoreLikeThisState extends State<MoreLikeThis> with MoveDetailMixin {
   @override
   Widget build(BuildContext context) {
     if (_moreLikeThis != null && _moreLikeThis.length > 0) {
-      return _gridGenerate(List.generate(_moreLikeThis.length, (index) {
+      return _gridFrame(List.generate(_moreLikeThis.length, (index) {
         return GestureDetector(
           onTap: () {
             _onItemTap(_moreLikeThis[index].id, 'MLT');

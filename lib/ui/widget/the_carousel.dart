@@ -29,7 +29,7 @@ class _TheCarousel extends State<TheCarousel> {
 
   @override
   void didChangeDependencies() {
-    _blocHome = Provider.of<BlocHome>(context);
+    _blocHome = Provider.of<BlocHome>(context, listen: false);
 
     // Calculate carousel image base on data image from API
     final rawWidthImgDp = Utils.getWidthDpImgApi(context); // w300
@@ -101,8 +101,8 @@ class __ItemState extends State<_Item> {
 
   @override
   void didChangeDependencies() {
-    _blocHome = Provider.of<BlocHome>(context);
-    _onItemTap = Provider.of<OnItemTap>(context);
+    _blocHome = Provider.of<BlocHome>(context, listen: false);
+    _onItemTap = Provider.of<OnItemTap>(context, listen: false);
     super.didChangeDependencies();
   }
 

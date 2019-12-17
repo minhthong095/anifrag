@@ -61,6 +61,7 @@ class _AnimateLoadingState extends State<_AnimateLoading>
   @override
   void dispose() {
     LoadingRoute.isWillPop = false;
+    _controller.dispose();
     super.dispose();
   }
 
