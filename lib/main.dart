@@ -7,11 +7,12 @@ import 'package:flutter/services.dart';
 import 'my_app.dart';
 
 void main() async {
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
-  //     statusBarColor: Colors.black.withOpacity(0.4), // Color for Android
-  //     statusBarBrightness:
-  //         Brightness.dark // Dark == white status bar -- for IOS.
-  //     ));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+      statusBarColor: Colors.black.withOpacity(0.4), // Color for Android
+      statusBarBrightness:
+          Brightness.dark // Dark == white status bar -- for IOS.
+      ));
   await ComponentInjector.create();
   runApp(MyApp());
 }

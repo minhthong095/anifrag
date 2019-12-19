@@ -159,6 +159,7 @@ class _SearchViewState extends State<_SearchView> {
                           itemBuilder: (_, index) {
                             return GestureDetector(
                               onTap: () {
+                                FocusScope.of(context).unfocus();
                                 widget.onItemClick(
                                     snapshot.data.value2[index].id);
                               },
