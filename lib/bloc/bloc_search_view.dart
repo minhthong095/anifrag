@@ -11,7 +11,7 @@ import 'package:rxdart/rxdart.dart';
 
 enum SearchState { fulfill, empty, kickoff }
 
-class BlocSearch extends DisposeBag {
+class BlocSearchView extends DisposeBag {
   final API _api;
   final LiveStore _liveStore;
   final observable = PublishSubject<String>();
@@ -22,7 +22,7 @@ class BlocSearch extends DisposeBag {
 
   String latestKeyword = '';
 
-  BlocSearch(this._api, this._liveStore) {
+  BlocSearchView(this._api, this._liveStore) {
     dropSubscription(observable
         .where((String keyword) => keyword != '')
         .map((String keywrod) => keywrod.trim().replaceAll(RegExp(' +'), ' '))
@@ -58,6 +58,8 @@ class BlocSearch extends DisposeBag {
     dropSubscription(subjectSearchState.listen((searchState) {
       valueNotifyIsLoading.value = false;
     }));
+
+    dropNotifier(valueNotifyIsLoading);
   }
 
   void searchMovies(String keyword) async {
@@ -65,10 +67,4 @@ class BlocSearch extends DisposeBag {
   }
 
   String get getBaseUrlImage => _liveStore.baseUrlImage;
-
-  @override
-  void dispose() {
-    super.dispose();
-    valueNotifyIsLoading.dispose();
-  }
 }

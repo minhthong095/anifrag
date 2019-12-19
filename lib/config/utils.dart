@@ -10,6 +10,8 @@ class Utils {
 
   static double widthInRatio(double height, double ratio) => height * ratio;
 
+  static double heightInRatio(double width, double ratio) => width / ratio;
+
   static String generateStringRuntime(int runtime) {
     if (runtime == 0) return '';
 

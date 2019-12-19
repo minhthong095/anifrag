@@ -18,7 +18,8 @@ import '../bloc/bloc_initial_spalsh.dart' as _i17;
 import '../store/offline/offline_configuration_image.dart' as _i18;
 import '../store/offline/offline_category.dart' as _i19;
 import '../store/offline/offline_home_page_data.dart' as _i20;
-import '../bloc/bloc_search.dart' as _i21;
+import '../bloc/bloc_search_view.dart' as _i21;
+import '../bloc/bloc_search_detail.dart' as _i22;
 
 class ComponentInjector$Injector implements _i1.ComponentInjector {
   ComponentInjector$Injector._(
@@ -86,8 +87,10 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
       _moduleStore.offCategory(_createAppDb());
   _i20.OfflineHomePageData _createOfflineHomePageData() =>
       _moduleStore.offHomeData(_createAppDb());
-  _i21.BlocSearch _createBlocSearch() =>
+  _i21.BlocSearchView _createBlocSearchView() =>
       _moduleBloc.blocSearch(_createAPI(), _createLiveStore());
+  _i22.BlocSearchDetail _createBlocSearchDetail() =>
+      _moduleBloc.blocSearchDetail(_createAPI(), _createLiveStore());
   @override
   _i10.BlocHome get blocHome => _createBlocHome();
   @override
@@ -97,5 +100,7 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   @override
   _i15.BlocMainTabbar get blocMainTabbar => _createBlocMainTabbar();
   @override
-  _i21.BlocSearch get blocSearch => _createBlocSearch();
+  _i21.BlocSearchView get blocSearchView => _createBlocSearchView();
+  @override
+  _i22.BlocSearchDetail get blocSearchDetail => _createBlocSearchDetail();
 }

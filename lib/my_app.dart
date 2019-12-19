@@ -5,6 +5,7 @@ import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/di/component.dart';
+import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
@@ -16,6 +17,7 @@ import 'package:Anifrag/ui/transition/page_route_blank.dart';
 import 'package:Anifrag/ui/widget/category_demo.dart';
 import 'package:Anifrag/ui/widget/detail_tabbar.dart';
 import 'package:Anifrag/ui/widget/loading_route.dart';
+import 'package:Anifrag/ui/widget/parallax.dart';
 import 'package:Anifrag/ui/widget/search_item.dart';
 import 'package:Anifrag/ui/widget/story_overview.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,9 +34,22 @@ class MyApp extends StatelessWidget {
   // settings parameter must be implement.
   @override
   Widget build(BuildContext context) {
+    final responseSearch = ResponseSearch(
+      id: 1,
+      originalTitle: 'Angel has fallen',
+      popularity: 12,
+      posterPath:
+          'https://image.tmdb.org/t/p/w500/fapXd3v9qTcNBTm39ZC4KUVQDNf.jpg',
+      releaseDate: DateTime.now(),
+      runtime: 123,
+    );
+
     return MaterialApp(
       home: InitialSplashScreen(),
       // home: SearchDetail(),
+      // home: SearchDetail(
+      //   onTap: () {},
+      // ),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           // case InitialSplashScreen.nameRoute:

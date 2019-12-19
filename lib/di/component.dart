@@ -4,7 +4,8 @@ import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
-import 'package:Anifrag/bloc/bloc_search.dart';
+import 'package:Anifrag/bloc/bloc_search_detail.dart';
+import 'package:Anifrag/bloc/bloc_search_view.dart';
 import 'package:Anifrag/di/module/module_bloc.dart';
 import 'package:Anifrag/di/module/module_network.dart';
 import 'package:Anifrag/di/module/module_store.dart';
@@ -26,7 +27,9 @@ abstract class ComponentInjector {
 
   BlocMainTabbar get blocMainTabbar;
 
-  BlocSearch get blocSearch;
+  BlocSearchView get blocSearchView;
+
+  BlocSearchDetail get blocSearchDetail;
 
   static create() async {
     _instance = await g.ComponentInjector$Injector.create(
