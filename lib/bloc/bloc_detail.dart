@@ -10,7 +10,7 @@ import 'package:Anifrag/store/offline/offline_movie.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
-class BlocDetail extends DisposeBag {
+class BlocDetail with DisposeBag {
   final OfflineMovie _offlineMovie;
   final LiveStore _liveStore;
   final API _api;
@@ -49,7 +49,7 @@ class BlocDetail extends DisposeBag {
 
   void callMoreLikeThis() {
     if (_isRunFirstTime)
-      dropSubscription(Observable.fromFuture(_api.getMoreLikeThis(_movie.id))
+      dropSubscription(Stream.fromFuture(_api.getMoreLikeThis(_movie.id))
           .where((data) {
         return (_isRunFirstTime &&
             _callbackDoneMoreLikeThis != null &&

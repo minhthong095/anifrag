@@ -25,28 +25,12 @@ class LiveStore {
       SplayTreeMap<String, List<ResponseSearch>>();
   SplayTreeMap<String, List<ResponseSearch>> get getSearchHistory =>
       _searchHistory;
-  // set setSearchHistory(HashMap<String, List<ResponseSearch>> value) =>
-  //     _searchHistory = value;
 
   static const int widthImgApi = 300; // pixel
   static const int heightImgApi = 450; // pixel
   static const double ratioImgApi = widthImgApi / heightImgApi;
 
-  // static const double tempHardCodeAspectRatio = 85.7142857143 / 128.5714285714;
   static const double tempHardCodeAspectRatio = 2 / 3;
-  // static const double tempHardCodeAspectRatio = 85.7142857143 / 128.5714285714;
-
-  // double _widthImgDpApi = 0;
-  // get getWidthImgDpApi => _widthImgDpApi;
-  // set setWidthImgDbApi(double widthDp) {
-  //   _widthImgDpApi = widthDp;
-  // }
-
-  // double _heightImgDpApi = 0;
-  // get getHeightImgDpApi => _heightImgDpApi;
-  // set setHeightImgDbApi(double heightDp) {
-  //   _heightImgDpApi = heightDp;
-  // }
 
   String get baseUrlImage {
     if (_responseConfiguration == null ||
@@ -55,4 +39,10 @@ class LiveStore {
 
     return _responseConfiguration.images.secureBaseUrl;
   }
+}
+
+abstract class LiveStore2 {}
+
+class IBaseUrl {
+  String baseUrlImage;
 }

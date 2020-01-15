@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class DisposeBag {
+mixin DisposeBag {
   final _subscriptionBag = CompositeSubscription();
   final _streamBag = _StreamBag();
   final _notifierBag = _StreamChangeNotifier();

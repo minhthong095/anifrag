@@ -19,11 +19,11 @@ class BlocCarousel extends DisposeBag {
   BehaviorSubject<String> _behaviorIndex =
       BehaviorSubject.seeded(defaultIndex.toString());
 
-  Observable<String> get offset => _behaviorOffset.stream;
-  Observable<ScrollDirection> get scrollDirection =>
+  Stream<String> get offset => _behaviorOffset.stream;
+  Stream<ScrollDirection> get scrollDirection =>
       _behaviorScrollDirection.stream;
-  Observable<bool> get haveDimension => _behaviorHaveDimension.stream;
-  Observable<String> get index => _behaviorIndex.stream;
+  Stream<bool> get haveDimension => _behaviorHaveDimension.stream;
+  Stream<String> get index => _behaviorIndex.stream;
 
   void sendOffset(double offset) {
     _behaviorOffset.sink.add(offset.toString());

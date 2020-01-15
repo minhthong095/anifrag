@@ -10,6 +10,7 @@ import 'package:Anifrag/di/module/module_bloc.dart';
 import 'package:Anifrag/di/module/module_network.dart';
 import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/my_app.dart';
+import 'package:Anifrag/store/live_store.dart';
 import 'package:inject/inject.dart';
 import 'component.inject.dart' as g;
 // @Injector(const [ModuleNetwork])
@@ -31,6 +32,8 @@ abstract class ComponentInjector {
 
   BlocSearchDetail get blocSearchDetail;
 
+  LiveStore get liveStore;
+
   static create() async {
     _instance = await g.ComponentInjector$Injector.create(
         ModuleNetwork(), ModuleBloc(), ModuleStore());
@@ -41,7 +44,7 @@ abstract class ComponentInjector {
   static ComponentInjector _instance;
   static ComponentInjector get I {
     if (_instance == null)
-      throw Exception(['ComponentInjector still not implment']);
+      throw Exception(['ComponentInjector still not implment.']);
 
     return _instance;
   }

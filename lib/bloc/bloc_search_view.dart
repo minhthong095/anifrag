@@ -40,7 +40,7 @@ class BlocSearchView extends DisposeBag {
         })
         .where((String keyword) => _liveStore.getSearchHistory[keyword] == null)
         .flatMap((String keyword) =>
-            Observable.fromFuture(_api.searchMovies(keyword)))
+            Stream.fromFuture(_api.searchMovies(keyword)))
         .listen((HashMap<String, List<ResponseSearch>> response) {
           _liveStore.getSearchHistory
               .putIfAbsent(response.keys.first, () => response.values.first);

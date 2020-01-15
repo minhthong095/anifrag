@@ -7,9 +7,11 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import 'mixin/prefix_url_mixin.dart';
+
 enum SearchDetailState { standby, error, done }
 
-class BlocSearchDetail extends DisposeBag {
+class BlocSearchDetail with DisposeBag, PrefixUrlImgMixin {
   final API _api;
   final LiveStore _liveStore;
 
@@ -28,8 +30,6 @@ class BlocSearchDetail extends DisposeBag {
   BlocSearchDetail(this._api, this._liveStore) {
     dropNotifier(notifyIsLoading);
   }
-
-  String get baseUrlImage => _liveStore.baseUrlImage;
 
   void callGetDetail() async {
     _isAlreadyInit = true;
