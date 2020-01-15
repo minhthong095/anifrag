@@ -1,0 +1,29 @@
+name: inject_generator
+version: 1.0.0-alpha
+description: Dev-time dependency for package:inject.
+authors:
+  - Matan Lurey <matanl@google.com>
+  - Yegor Jbanov <yjbanov@google.com>
+homepage: https://pub.dartlang.org/packages/inject
+
+environment:
+  sdk: '>=2.0.0 <3.0.0'
+
+dependencies:
+  analyzer: ^0.37.1+1
+  build: 
+  code_builder: 
+  collection: 
+  dart_style: 
+  logging:
+  meta: 
+  path:
+  quiver:
+  stack_trace:
+
+dev_dependencies:
+  build_runner: 
+  build_test: 
+  inject:
+    path: ../inject
+  test:
