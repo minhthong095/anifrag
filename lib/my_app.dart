@@ -26,7 +26,6 @@ import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
 import 'package:provider/provider.dart';
 
-@provide
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   // All PageRoute in onGenerateRout must be declare RouteSetting.
