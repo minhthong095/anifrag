@@ -4,13 +4,19 @@ import 'package:synchronized/synchronized.dart';
 
 import 'database_config.dart';
 
-class AppDb {
-  String _dbPath;
-  Database _db;
+abstract class AppDb {
+  bool get isOpen;
+  Future<Database> get getDb;
+  Future<void> closeDb();
+  Future createDb();
+}
 
+class SqfDb extends AppDb {
+  Database _db;
+  String _dbPath;
   final _lock = Lock();
 
-  AppDb() {
+  SqfDb() {
     _initDbPath();
   }
 
@@ -19,6 +25,15 @@ class AppDb {
     _dbPath += "/anifrag.db";
   }
 
+  @override
+  Future<void> closeDb() async {
+    if (_db != null) {
+      await _db.close();
+      _db = null;
+    }
+  }
+
+  @override
   Future createDb() async {
     await _lock.synchronized(() async {
       final db = await openDatabase(_dbPath, version: 1,
@@ -35,7 +50,8 @@ class AppDb {
     });
   }
 
-  Future<Database> getDb() async {
+  @override
+  Future<Database> get getDb async {
     if (_db == null) {
       await _lock.synchronized(() async {
         // Check again once entering the synchronized block
@@ -47,16 +63,8 @@ class AppDb {
     return _db;
   }
 
-  Future<void> closeDb() async {
-    if (_db != null) {
-      await _db.close();
-      _db = null;
-    }
-  }
-
-  bool isOpen() {
-    return _db.isOpen;
-  }
+  @override
+  bool get isOpen => _db.isOpen;
 
   static const List<String> _scriptTableV1 = <String>[
     'CREATE TABLE ' +

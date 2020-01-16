@@ -14,7 +14,7 @@ import 'package:sqflite/sqflite.dart';
 class ModuleStore {
   @provide
   @singleton
-  AppDb db() => AppDb();
+  AppDb db() => SqfDb();
 
   @provide
   @singleton
