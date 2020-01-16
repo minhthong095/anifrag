@@ -16,7 +16,7 @@ class ImplOfflineConfigurationImage extends OfflineConfigurationImage {
 
   Future insertPosterSizesAndChangeKeys(
       List<String> posterSizes, List<String> changeKeys) async {
-    final db = await _appDb.getDb();
+    final db = await _appDb.db;
     await db.transaction((txn) async {
       posterSizes.forEach((poster) async {
         await txn.rawInsert(

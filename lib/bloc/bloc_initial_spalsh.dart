@@ -77,7 +77,7 @@ class BlocInitialSplash {
     _liveStore.setResponseConfiguration = configure;
     _liveStore.setHomePageData = homePageData;
     final a = _liveStore.baseUrlImage;
-    final db = await _appDb.getDb();
+    final db = await _appDb.db;
     await db.transaction((txn) async {
       final batch = txn.batch();
       batch.execute(_offCategory.queryDeleteAll());
@@ -105,7 +105,7 @@ class BlocInitialSplash {
   //   _liveStore.categories = categories;
   //   _liveStore.homePageData = homePageData;
 
-  //   final db = await _appDb.getDb();
+  //   final db = await _appDb.db;
   //   await db.transaction((txn) async {
   //     _offCategory.queryCategories(categories).forEach((queryC) {
   //       txn.rawInsert(queryC);

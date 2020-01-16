@@ -14,7 +14,7 @@ class ImplOfflineHomePageData extends OfflineHomePageData {
   ImplOfflineHomePageData(this._appDb);
 
   Future insertData(List<ResponseThumbnailMovie> homePageData) async {
-    final db = await _appDb.getDb();
+    final db = await _appDb.db;
     await db.transaction((txn) async {
       homePageData.forEach((data) async {
         await txn.rawInsert(

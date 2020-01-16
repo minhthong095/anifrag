@@ -78,7 +78,7 @@ class BlocHome with DisposeBag, PrefixUrlImgMixin {
     if (!isCallFailed) {
       subjectMoveDetailState
           .add(Right(Tuple4(movieDetail, movieCasts, true, prefix)));
-      final db = await _appDb.getDb();
+      final db = await _appDb.db;
       db.transaction((txn) async {
         final batch = txn.batch();
 
@@ -97,7 +97,7 @@ class BlocHome with DisposeBag, PrefixUrlImgMixin {
       await _appDb.closeDb();
     } else {
       // Get from offline here
-      final db = await _appDb.getDb();
+      final db = await _appDb.db;
       await db.transaction((txn) async {
         try {
           final List<dynamic> queries = await Future.wait([

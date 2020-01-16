@@ -14,7 +14,7 @@ class ImplOfflineCategory extends OfflineCategory {
   ImplOfflineCategory(this._appDb);
 
   Future insertCategories(List<String> categories) async {
-    final db = await _appDb.getDb();
+    final db = await _appDb.db;
     await db.transaction((txn) async {
       categories.forEach((category) async {
         await txn.rawInsert(

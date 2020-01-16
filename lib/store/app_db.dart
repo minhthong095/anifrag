@@ -6,7 +6,7 @@ import 'database_config.dart';
 
 abstract class AppDb {
   bool get isOpen;
-  Future<Database> get getDb;
+  Future<Database> get db;
   Future<void> closeDb();
   Future createDb();
 }
@@ -51,7 +51,7 @@ class SqfDb extends AppDb {
   }
 
   @override
-  Future<Database> get getDb async {
+  Future<Database> get db async {
     if (_db == null) {
       await _lock.synchronized(() async {
         // Check again once entering the synchronized block

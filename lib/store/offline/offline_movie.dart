@@ -83,7 +83,7 @@ class ImplOfflineMovie extends OfflineMovie {
 
   // // No need synchronous
   // void insertMovie(ResponseMovie movie) async {
-  //   final Database db = await _appDb.getDb();
+  //   final Database db = await _appDb.db;
   //   // SELECT * FROM MOVIE WHERE strftime('%m', releasedate) = '08'
   //   String releaseTimeStr = movie.releaseDate.year.toString() +
   //       '-' +
