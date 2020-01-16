@@ -13,8 +13,9 @@ import 'package:Anifrag/my_app.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:inject/inject.dart';
 import 'component.inject.dart' as g;
-// @Injector(const [ModuleNetwork])
 
+/// Temporary use instance to inject like service locator.
+/// This package still not supported like Dagger2 with inject annotation.
 @Injector(const [ModuleNetwork, ModuleBloc, ModuleStore])
 abstract class ComponentInjector {
   // This is dynamic injector thanks to https://github.com/asi-pwr/HackYeah2019
@@ -39,13 +40,6 @@ abstract class ComponentInjector {
         ModuleNetwork(), ModuleBloc(), ModuleStore());
   }
 
-  // static final create = g.ComponentInjector$Injector.create;
-
   static ComponentInjector _instance;
-  static ComponentInjector get I {
-    if (_instance == null)
-      throw Exception(['ComponentInjector still not implment.']);
-
-    return _instance;
-  }
+  static ComponentInjector get I => _instance;
 }

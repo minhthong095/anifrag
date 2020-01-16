@@ -3,54 +3,51 @@ import 'package:Anifrag/di/module/module_network.dart';
 import 'package:dio/dio.dart';
 import 'package:inject/inject.dart';
 
-abstract class AbsRequesting {
+abstract class Requesting {
+  final Dio dio;
   final int timeOut = 10; // second
   final Function throwTimeout = () {
     throw DioError(
       error: 'Local connect timeout in AbsRequesting.',
     );
   };
+
+  Requesting(this.dio);
+}
+
+abstract class RequestingAbiary extends Requesting {
+  RequestingAbiary(Dio dio) : super(dio);
+
   Future<Response<T>> sendGET<T>(String url, {Map<String, dynamic> args});
 }
 
-class IGetV3 {
-  void sendGETv3<T>(String url, {Map<String, dynamic> args}) {}
+abstract class RequestingMovie extends Requesting {
+  RequestingMovie(Dio dio) : super(dio);
+  Future<Response<T>> sendGETv3<T>(String url, {Map<String, dynamic> args});
 }
 
-class Requesting extends AbsRequesting implements IGetV3 {
-  final Dio _dio;
-
-  Requesting(this._dio);
-
-  @override
-  Future<Response<T>> sendGET<T>(String url,
-      {Map<String, dynamic> args}) async {
-    return await _dio
-        .get(url, queryParameters: args)
-        .timeout(Duration(seconds: timeOut), onTimeout: throwTimeout);
-  }
+class RequestingMovieImplement extends RequestingMovie {
+  RequestingMovieImplement(Dio dio) : super(dio);
 
   @override
   Future<Response<T>> sendGETv3<T>(String url,
       {Map<String, dynamic> args}) async {
     args ??= Map<String, dynamic>();
     args['api_key'] = ApiKey.v3;
-    return await _dio
+    return await dio
         .get(url, queryParameters: args)
         .timeout(Duration(seconds: timeOut), onTimeout: throwTimeout);
   }
 }
 
-class RequestingAbiary extends AbsRequesting {
-  final Dio _dio;
-
+class RequestingAbiaryImplement extends RequestingAbiary {
   @provide
-  RequestingAbiary(this._dio);
+  RequestingAbiaryImplement(Dio dio) : super(dio);
 
   @override
   Future<Response<T>> sendGET<T>(String url,
       {Map<String, dynamic> args}) async {
-    return await _dio
+    return await dio
         .get(url, queryParameters: args)
         .timeout(Duration(seconds: timeOut), onTimeout: throwTimeout);
   }

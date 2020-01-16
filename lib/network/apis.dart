@@ -22,12 +22,12 @@ abstract class API {
   Future<HashMap<String, List<ResponseSearch>>> searchMovies(String keyword);
 }
 
-class ImplApi extends API {
-  final Requesting _requesting;
+class Api extends API {
+  final RequestingMovie _requesting;
   final RequestingAbiary _requestingAbiary;
   final Url _url;
 
-  ImplApi(this._requesting, this._url, this._requestingAbiary);
+  Api(this._requesting, this._url, this._requestingAbiary);
 
   Future<HashMap<String, List<ResponseSearch>>> searchMovies(
       String keyword) async {

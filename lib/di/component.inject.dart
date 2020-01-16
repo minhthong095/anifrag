@@ -59,13 +59,13 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   _i4.LiveStore _createLiveStore() =>
       _singletonLiveStore ??= _moduleStore.liveConfIma();
   _i11.API _createAPI() => _moduleNetwork.api(
-      _createRequesting(), _createImplUrl(), _createRequestingAbiary());
-  _i12.Requesting _createRequesting() =>
-      _moduleNetwork.requesting(_createDio());
+      _createRequestingMovie(), _createImplUrl(), _createRequestingAbiary());
+  _i12.RequestingMovie _createRequestingMovie() =>
+      _moduleNetwork.normal(_createDio());
   _i6.Dio _createDio() => _singletonDio ??= _moduleNetwork.dio();
   _i7.ImplUrl _createImplUrl() => _singletonImplUrl ??= _moduleNetwork.url();
   _i12.RequestingAbiary _createRequestingAbiary() =>
-      _moduleNetwork.requestingAbiary(_createBaseUrlApiaryDio());
+      _moduleNetwork.abiary(_createBaseUrlApiaryDio());
   _i6.Dio _createBaseUrlApiaryDio() => _moduleNetwork.dioApiary();
   _i13.OfflineCast _createOfflineCast() => _moduleStore.offCast();
   _i14.OfflineMovie _createOfflineMovie() => _moduleStore.offMovie();
@@ -90,7 +90,7 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   _i21.BlocSearchView _createBlocSearchView() =>
       _moduleBloc.blocSearch(_createAPI(), _createLiveStore());
   _i22.BlocSearchDetail _createBlocSearchDetail() =>
-      _moduleBloc.blocSearchDetail(_createAPI(), _createLiveStore());
+      _moduleBloc.blocSearchDetail(_createAPI());
   @override
   _i10.BlocHome get blocHome => _createBlocHome();
   @override
@@ -103,4 +103,6 @@ class ComponentInjector$Injector implements _i1.ComponentInjector {
   _i21.BlocSearchView get blocSearchView => _createBlocSearchView();
   @override
   _i22.BlocSearchDetail get blocSearchDetail => _createBlocSearchDetail();
+  @override
+  _i4.LiveStore get liveStore => _createLiveStore();
 }

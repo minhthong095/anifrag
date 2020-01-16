@@ -37,12 +37,6 @@ class LiveStore {
         _responseConfiguration.images == null ||
         _responseConfiguration.images.secureBaseUrl == null) return '';
 
-    return _responseConfiguration.images.secureBaseUrl;
+    return _responseConfiguration.images.secureBaseUrl + '/w400';
   }
-}
-
-abstract class LiveStore2 {}
-
-class IBaseUrl {
-  String baseUrlImage;
 }

@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:Anifrag/bloc/dispose_bag.dart';
+import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/live_store.dart';
@@ -11,7 +12,7 @@ import 'package:rxdart/rxdart.dart';
 
 enum SearchState { fulfill, empty, kickoff }
 
-class BlocSearchView extends DisposeBag {
+class BlocSearchView with DisposeBag, PrefixUrlImgMixin {
   final API _api;
   final LiveStore _liveStore;
   final observable = PublishSubject<String>();
@@ -39,8 +40,8 @@ class BlocSearchView extends DisposeBag {
           }
         })
         .where((String keyword) => _liveStore.getSearchHistory[keyword] == null)
-        .flatMap((String keyword) =>
-            Stream.fromFuture(_api.searchMovies(keyword)))
+        .flatMap(
+            (String keyword) => Stream.fromFuture(_api.searchMovies(keyword)))
         .listen((HashMap<String, List<ResponseSearch>> response) {
           _liveStore.getSearchHistory
               .putIfAbsent(response.keys.first, () => response.values.first);
@@ -65,6 +66,4 @@ class BlocSearchView extends DisposeBag {
   void searchMovies(String keyword) async {
     observable.add(keyword);
   }
-
-  String get getBaseUrlImage => _liveStore.baseUrlImage;
 }

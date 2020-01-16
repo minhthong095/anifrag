@@ -195,8 +195,8 @@ class _DetailScreenState extends State<_DetailScreen>
                           },
                           child: HeroImage(
                             emptyMode: false,
-                            tag: _bloc.getTagPrefix + _bloc.getMovie.posterPath,
-                            path: _bloc.currentPosterPath,
+                            tag: _bloc.tagImg,
+                            path: _bloc.pathImg,
                             height: _heightImage,
                             fit: BoxFit.fill,
                           ),

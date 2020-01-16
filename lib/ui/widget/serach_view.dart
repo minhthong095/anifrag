@@ -166,7 +166,7 @@ class _SearchViewState extends State<_SearchView> {
                               child: SearchItem(
                                 heightImg: _heightImgSearchItem,
                                 widthImg: _widthImgSearchItem,
-                                posterPath: _blocSearchView.getBaseUrlImage +
+                                posterPath: _blocSearchView.baseUrlImage +
                                     snapshot.data.value2[index].posterPath,
                                 popularity: snapshot
                                     .data.value2[index].popularity

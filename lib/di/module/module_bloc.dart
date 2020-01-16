@@ -45,6 +45,5 @@ class ModuleBloc {
       BlocSearchView(api, liveStore);
 
   @provide
-  BlocSearchDetail blocSearchDetail(API api, LiveStore liveStore) =>
-      BlocSearchDetail(api, liveStore);
+  BlocSearchDetail blocSearchDetail(API api) => BlocSearchDetail(api);
 }

@@ -76,7 +76,7 @@ class BlocInitialSplash {
     _liveStore.setCategories = categories;
     _liveStore.setResponseConfiguration = configure;
     _liveStore.setHomePageData = homePageData;
-
+    final a = _liveStore.baseUrlImage;
     final db = await _appDb.getDb();
     await db.transaction((txn) async {
       final batch = txn.batch();

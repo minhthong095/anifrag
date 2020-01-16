@@ -27,16 +27,14 @@ class ModuleNetwork {
   Dio dioApiary() => Dio()..options.baseUrl = Url.baseUrlAbiary;
 
   @provide
-  Requesting requesting(Dio dio) => Requesting(dio);
+  RequestingMovie normal(Dio dio) => RequestingMovieImplement(dio);
 
   @provide
-  RequestingAbiary requestingAbiary(@baseUrlApiary Dio dioApiary) =>
-      RequestingAbiary(dioApiary);
+  RequestingAbiary abiary(@baseUrlApiary Dio dioApiary) =>
+      RequestingAbiaryImplement(dioApiary);
 
   @provide
-  API api(Requesting requesting, ImplUrl url,
+  API api(RequestingMovie requesting, ImplUrl url,
           RequestingAbiary requestingAbiary) =>
-      ImplApi(requesting, url, requestingAbiary);
+      Api(requesting, url, requestingAbiary);
 }
-
-class A {}

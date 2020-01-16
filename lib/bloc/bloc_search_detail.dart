@@ -13,7 +13,6 @@ enum SearchDetailState { standby, error, done }
 
 class BlocSearchDetail with DisposeBag, PrefixUrlImgMixin {
   final API _api;
-  final LiveStore _liveStore;
 
   bool _isAlreadyInit = false;
   bool get isAlreadyInit => _isAlreadyInit;
@@ -27,7 +26,7 @@ class BlocSearchDetail with DisposeBag, PrefixUrlImgMixin {
   get getIdMovie => _idMovie;
   set setIdMovie(int value) => _idMovie = value;
 
-  BlocSearchDetail(this._api, this._liveStore) {
+  BlocSearchDetail(this._api) {
     dropNotifier(notifyIsLoading);
   }
 

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:rxdart/subjects.dart';
 
-class BlocMainTabbar extends DisposeBag {
+class BlocMainTabbar with DisposeBag {
   final subjectPopup = PublishSubject<Duration>();
 
   BlocMainTabbar() {

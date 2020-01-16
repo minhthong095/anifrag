@@ -1,5 +1,6 @@
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/bloc/dispose_bag.dart';
+import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
@@ -16,7 +17,7 @@ import 'package:rxdart/subjects.dart';
 
 enum MoveDetailState { loading, finish }
 
-class BlocHome extends DisposeBag {
+class BlocHome with DisposeBag, PrefixUrlImgMixin {
   final LiveStore _liveStore;
   final API _api;
   final OfflineMovie _offMovie;
@@ -119,8 +120,6 @@ class BlocHome extends DisposeBag {
       await _appDb.closeDb();
     }
   }
-
-  String get getBaseUrlImage => _liveStore.baseUrlImage;
 
   String get getMainCategory => _liveStore.getCategories[0];
 }

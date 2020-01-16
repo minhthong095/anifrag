@@ -4,7 +4,7 @@ import 'package:rxdart/subjects.dart';
 
 import 'dispose_bag.dart';
 
-class BlocCarousel extends DisposeBag {
+class BlocCarousel with DisposeBag {
   static final String defaultOffset = "0.0";
   static final bool defaultHaveDimension = false;
   static final ScrollDirection defaultScrollDirection = ScrollDirection.idle;

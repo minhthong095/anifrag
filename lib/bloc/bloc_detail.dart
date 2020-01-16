@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:Anifrag/bloc/dispose_bag.dart';
+import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
@@ -10,7 +11,7 @@ import 'package:Anifrag/store/offline/offline_movie.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
-class BlocDetail with DisposeBag {
+class BlocDetail with DisposeBag, PrefixUrlImgMixin {
   final OfflineMovie _offlineMovie;
   final LiveStore _liveStore;
   final API _api;
@@ -26,7 +27,14 @@ class BlocDetail with DisposeBag {
 
   String _tagPrefix;
   void setTagPrefix(tagPrefix) => _tagPrefix = tagPrefix;
-  get getTagPrefix => _tagPrefix;
+
+  String get tagImg {
+    return _tagPrefix + _movie.posterPath;
+  }
+
+  String get pathImg {
+    return baseUrlImage + _movie.posterPath;
+  }
 
   BehaviorSubject<bool> _subjectCallFinishTransition =
       BehaviorSubject.seeded(false);
@@ -44,8 +52,6 @@ class BlocDetail with DisposeBag {
   String get currentPosterPath =>
       _liveStore.getResponseConfiguration.images.secureBaseUrl +
       _movie.posterPath;
-
-  String get baseUrlImage => _liveStore.baseUrlImage;
 
   void callMoreLikeThis() {
     if (_isRunFirstTime)
