@@ -39,4 +39,12 @@ class LiveStore {
 
     return _responseConfiguration.images.secureBaseUrl + '/w400';
   }
+
+  String baseUrlImageWithWidth(String widthConfig) {
+    if (_responseConfiguration == null ||
+        _responseConfiguration.images == null ||
+        _responseConfiguration.images.secureBaseUrl == null) return '';
+
+    return _responseConfiguration.images.secureBaseUrl + widthConfig;
+  }
 }

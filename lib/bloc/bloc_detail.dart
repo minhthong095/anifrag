@@ -2,16 +2,24 @@ import 'dart:ffi';
 
 import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
+import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/store/offline/offline_movie.dart';
+import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
 class BlocDetail with DisposeBag, PrefixUrlImgMixin {
+  static BlocDetail initWithData({DetailScreenArgument argument}) =>
+      ComponentInjector.I.blocDetail
+        ..setMovie(argument.movie)
+        ..setTagPrefix(argument.tagPrefix)
+        ..setCasts(argument.casts);
+
   final OfflineMovie _offlineMovie;
   final LiveStore _liveStore;
   final API _api;

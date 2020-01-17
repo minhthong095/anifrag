@@ -27,17 +27,11 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blocDetail = ComponentInjector.I.blocDetail;
-    blocDetail
-      ..setMovie(argument.movie)
-      ..setTagPrefix(argument.tagPrefix)
-      ..setCasts(argument.casts);
-
     return MultiProvider(
       providers: [
         Provider<BlocHome>.value(value: ComponentInjector.I.blocHome),
         Provider<BlocDetail>(
-          create: (ctx) => blocDetail,
+          create: (ctx) => BlocDetail.initWithData(argument: argument),
           dispose: (_, bloc) {
             bloc.dispose();
           },

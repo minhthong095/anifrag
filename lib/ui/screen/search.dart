@@ -28,21 +28,11 @@ class _SearchState extends State<SearchScreen>
         AutomaticKeepAliveClientMixin<SearchScreen> {
   bool _isShowDetail = false;
   BlocSearchDetail _blocSearchDetail;
-  int _selectedIdMovie;
-  int _lastSelectedIdMovie;
-
-  void _renewBlocSearchDetail() {
-    if (_isShowDetail == true && _selectedIdMovie != _lastSelectedIdMovie) {
-      _blocSearchDetail = ComponentInjector.I.blocSearchDetail;
-      _blocSearchDetail.setIdMovie = _selectedIdMovie;
-    }
-  }
 
   void _showDetail(int idMovie) {
-    _lastSelectedIdMovie = _selectedIdMovie;
+    if (_isShowDetail == false) _blocSearchDetail.callGetDetail(idMovie);
     setState(() {
       _isShowDetail = true;
-      _selectedIdMovie = idMovie;
     });
   }
 
@@ -52,10 +42,21 @@ class _SearchState extends State<SearchScreen>
     });
   }
 
+  @override
+  void initState() {
+    _blocSearchDetail = ComponentInjector.I.blocSearchDetail;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _blocSearchDetail.dispose();
+    super.dispose();
+  }
+
   //TODO: CHECK MEMORY FOR POPIN POPOUT SEARCH DETAIL
   @override
   Widget build(BuildContext context) {
-    _renewBlocSearchDetail();
     return Scaffold(
         backgroundColor: AppColor.backgroundColor,
         body: SafeArea(
@@ -64,18 +65,20 @@ class _SearchState extends State<SearchScreen>
               crossFadeState: _isShowDetail
                   ? CrossFadeState.showSecond
                   : CrossFadeState.showFirst,
+              firstCurve: Interval(0.0, 0.5),
               firstChild: SearchView(
                 onItemClick: (idMovie) {
                   _showDetail(idMovie);
                 },
               ),
+              secondCurve: Interval(0.5, 1),
               secondChild: SearchDetail(
                 blocSearchDetail: _blocSearchDetail,
                 onGoBack: () {
                   _showSearch();
                 },
               ),
-              duration: Duration(milliseconds: 250),
+              duration: Duration(milliseconds: 450),
             )));
   }
 

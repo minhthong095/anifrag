@@ -11,7 +11,7 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.black.withOpacity(0.4), // Color for Android
       statusBarBrightness:
-          Brightness.dark // Dark == white status bar -- for IOS.
+          Brightness.dark // Dark; content will be painted with white color;
       ));
   await ComponentInjector.create();
   runApp(MyApp());

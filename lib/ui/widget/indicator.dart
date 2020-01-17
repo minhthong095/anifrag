@@ -13,8 +13,11 @@ class Indicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (Platform.isIOS)
-      return CupertinoActivityIndicator(
-        radius: 12,
+      return CupertinoTheme(
+        data: CupertinoTheme.of(context).copyWith(brightness: Brightness.dark),
+        child: CupertinoActivityIndicator(
+          radius: 12,
+        ),
       );
 
     return CircularProgressIndicator(

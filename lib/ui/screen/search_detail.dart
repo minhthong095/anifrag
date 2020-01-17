@@ -4,7 +4,10 @@ import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/ui/widget/parallax.dart';
+import 'package:Anifrag/ui/widget/serach_view.dart';
+import 'package:Anifrag/ui/widget/skuru_panel.dart';
 import 'package:dartz/dartz.dart' as dartz;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lottie/flutter_lottie.dart';
 
@@ -44,82 +47,73 @@ class _SearchDetailState extends State<SearchDetail> {
     widget.onGoBack();
   }
 
-  // When open Search Detail. didUpdateWidget will pop, not initState
-  @override
-  void didUpdateWidget(SearchDetail oldWidget) {
-    if (!widget.blocSearchDetail.isAlreadyInit) {
-      widget.blocSearchDetail.callGetDetail();
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
   @override
   Widget build(BuildContext context) {
-    // First time init blocSeachDetail will null
-    if (widget.blocSearchDetail != null)
-      return ValueListenableBuilder<bool>(
-        valueListenable: widget.blocSearchDetail.notifyIsLoading,
-        builder: (_, value, ___) {
-          return AnimatedCrossFade(
-            crossFadeState:
-                value ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            duration: Duration(milliseconds: 350),
-            layoutBuilder: (first, _, second, __) {
-              return Stack(
-                overflow: Overflow.visible,
-                children: <Widget>[
-                  Positioned(
-                    key: __,
-                    left: 0.0,
-                    top: 0.0,
-                    right: 0.0,
-                    bottom: 0.0,
-                    child: second,
-                  ),
-                  Positioned(
-                    key: _,
-                    child: first,
-                  ),
-                ],
-              );
-            },
-            firstChild: Center(
-              child: SizedBox(
-                width: 75,
-                height: 75,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: AppColor.yellow,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: LottieView.fromFile(
-                      filePath: PathLottie.loading,
-                      autoPlay: true,
-                      loop: true,
-                      onViewCreated: (controller) {}),
-                ),
-              ),
-            ),
-            secondChild: ValueListenableBuilder<
-                dartz.Tuple2<SearchDetailState, ResponseMovie>>(
+    return ValueListenableBuilder<bool>(
+      valueListenable: widget.blocSearchDetail.notifyIsLoading,
+      builder: (_, isLoading, ___) {
+        return AnimatedCrossFade(
+          crossFadeState:
+              isLoading ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          duration: Duration(milliseconds: 400),
+          firstCurve: Interval(0.0, 0.5),
+          secondCurve: Interval(0.5, 1.0),
+          firstChild: Container(
+            constraints: BoxConstraints.expand(),
+            child: ValueListenableBuilder<
+                dartz.Tuple3<SearchDetailState, ResponseMovie, ImageProvider>>(
               valueListenable: widget.blocSearchDetail.notifyDetailState,
-              builder: (_, tuple2, ___) {
-                switch (tuple2.value1) {
+              builder: (_, responseMovie, ___) {
+                switch (responseMovie.value1) {
                   case SearchDetailState.error:
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        MessageSearchView(
+                          message: 'Oh damm. Something wrong.',
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 50),
+                          child: CupertinoButton(
+                            color: AppColor.yellow,
+                            onPressed: () {},
+                            child: Text('Try again',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.black,
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: CupertinoButton(
+                            color: AppColor.yellow,
+                            onPressed: () {
+                              _goBack();
+                            },
+                            child: Text('Go back',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.black,
+                                )),
+                          ),
+                        )
+                      ],
+                    );
+
                   case SearchDetailState.standby:
                     return SizedBox.shrink();
 
                   default:
                     return Parallax(
-                      originalTitle: tuple2.value2.title,
-                      imageProvider: NetworkImage(
-                          widget.blocSearchDetail.baseUrlImage +
-                              tuple2.value2.posterPath),
+                      originalTitle: responseMovie.value2.title,
+                      imageProvider: responseMovie.value3,
                       child: InkWell(
                         onTap: () {
                           _goBack();
                         },
                         child: Container(
-                          height: 5000,
+                          height: 1000,
                           color: Colors.red,
                         ),
                       ),
@@ -127,48 +121,31 @@ class _SearchDetailState extends State<SearchDetail> {
                 }
               },
             ),
-          );
-        },
-      );
-    else {
-      return SizedBox.shrink();
-    }
-    //   _isLoading
-    //       ? Center(
-    //           child: SizedBox(
-    //             width: 75,
-    //             height: 75,
-    //             child: Container(
-    //               decoration: BoxDecoration(
-    //                   color: AppColor.yellow,
-    //                   borderRadius: BorderRadius.all(Radius.circular(10))),
-    //               child: InkWell(
-    //                 onTap: () {
-    //                   _switchLoading();
-    //                 },
-    //                 child: LottieView.fromFile(
-    //                     filePath: PathLottie.loading,
-    //                     autoPlay: true,
-    //                     loop: true,
-    //                     onViewCreated: (controller) {}),
-    //               ),
-    //             ),
-    //           ),
-    //         )
-    //       : Parallax(
-    //           originalTitle: responseSearch.originalTitle,
-    //           imageProvider: NetworkImage(responseSearch.posterPath),
-    //           child: InkWell(
-    //             onTap: () {
-    //               _switchLoading();
-    //             },
-    //             child: Container(
-    //               height: 5000,
-    //               color: Colors.red,
-    //             ),
-    //           ),
-    //         ),
-    // ),
-    // );
+          ),
+          secondChild: Visibility(
+            visible: isLoading,
+            child: Container(
+              color: AppColor.backgroundColor,
+              child: Center(
+                child: SizedBox(
+                  width: 75,
+                  height: 75,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: AppColor.yellow,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: LottieView.fromFile(
+                        filePath: PathLottie.loading,
+                        autoPlay: true,
+                        loop: true,
+                        onViewCreated: (controller) {}),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
