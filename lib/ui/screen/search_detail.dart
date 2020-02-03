@@ -3,6 +3,7 @@ import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
+import 'package:Anifrag/ui/widget/content_search_detail.dart';
 import 'package:Anifrag/ui/widget/parallax.dart';
 import 'package:Anifrag/ui/widget/serach_view.dart';
 import 'package:Anifrag/ui/widget/skuru_panel.dart';
@@ -10,17 +11,6 @@ import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lottie/flutter_lottie.dart';
-
-// class SearchDetail extends AnimatedWidget {
-
-//   SearchDetail({Key key, @required AnimationController controller})
-//       : super(key: key, listenable: controller);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedOp;
-//   }
-// }
 
 class SearchDetail extends StatefulWidget {
   final Function onGoBack;
@@ -59,12 +49,11 @@ class _SearchDetailState extends State<SearchDetail> {
           firstCurve: Interval(0.0, 0.5),
           secondCurve: Interval(0.5, 1.0),
           firstChild: Container(
-            constraints: BoxConstraints.expand(),
             child: ValueListenableBuilder<
                 dartz.Tuple3<SearchDetailState, ResponseMovie, ImageProvider>>(
               valueListenable: widget.blocSearchDetail.notifyDetailState,
-              builder: (_, responseMovie, ___) {
-                switch (responseMovie.value1) {
+              builder: (_, detailStateData, ___) {
+                switch (detailStateData.value1) {
                   case SearchDetailState.error:
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -102,21 +91,17 @@ class _SearchDetailState extends State<SearchDetail> {
                     );
 
                   case SearchDetailState.standby:
-                    return SizedBox.shrink();
+                    return Container();
 
                   default:
                     return Parallax(
-                      originalTitle: responseMovie.value2.title,
-                      imageProvider: responseMovie.value3,
+                      originalTitle: detailStateData.value2.title,
+                      imageProvider: detailStateData.value3,
                       child: InkWell(
-                        onTap: () {
-                          _goBack();
-                        },
-                        child: Container(
-                          height: 1000,
-                          color: Colors.red,
-                        ),
-                      ),
+                          onTap: () {
+                            _goBack();
+                          },
+                          child: ContentSearchDetail()),
                     );
                 }
               },

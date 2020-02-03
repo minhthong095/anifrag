@@ -62,6 +62,14 @@ class _SearchState extends State<SearchScreen>
         body: SafeArea(
             bottom: false,
             child: AnimatedCrossFade(
+              layoutBuilder: (topChild, topKey, bottomChild, bottomKey) {
+                return Stack(
+                  children: <Widget>[
+                    bottomChild,
+                    topChild,
+                  ],
+                );
+              },
               crossFadeState: _isShowDetail
                   ? CrossFadeState.showSecond
                   : CrossFadeState.showFirst,

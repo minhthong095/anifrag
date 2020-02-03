@@ -1,48 +1,72 @@
 import 'dart:math';
 
+import 'package:Anifrag/config/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:ui' as ui;
 
 class SkuruPanel extends StatelessWidget {
+  /// Hard code, this is a bug. Temporary have not solution yet.
+  static const double _yUnitHideGap = -25;
+
   final _paddingRightTitle = 13.0;
   final double height;
+  final Color backgroundColor;
+  final String title;
+  final double paddingLeftTitle;
 
-  SkuruPanel({double height})
-      : this.height = height == null || height < 100 ? 100 : height;
+  SkuruPanel(
+      {@required this.height,
+      this.backgroundColor = Colors.white,
+      this.title,
+      this.paddingLeftTitle});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       constraints: BoxConstraints.expand(height: height),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 7,
-            child: Container(
-              padding: EdgeInsets.only(right: _paddingRightTitle),
-              constraints: BoxConstraints.expand(),
-              child: Padding(
-                padding: EdgeInsets.only(top: 20, left: 10),
-                child: Text('ABCDEFGHABCDEFGHABCDEFGHADF'),
+      child: Transform.translate(
+        offset: Offset(0, _yUnitHideGap),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 7,
+              child: Container(
+                padding: EdgeInsets.only(right: _paddingRightTitle),
+                constraints: BoxConstraints.expand(),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20, left: paddingLeftTitle),
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                        color: AppColor.backgroundColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: backgroundColor,
+                    borderRadius:
+                        BorderRadius.only(topLeft: Radius.circular(30))),
               ),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(30))),
             ),
-          ),
-          Expanded(
-            flex: 3,
-            child: _SkyCustomPaint(),
-          )
-        ],
+            Expanded(
+              flex: 3,
+              child: _SkyCustomPaint(backgroundColor: backgroundColor),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
 class _SkyCustomPaint extends StatefulWidget {
+  final Color backgroundColor;
+
+  _SkyCustomPaint({this.backgroundColor});
+
   @override
   __SkyCustomPaintState createState() => __SkyCustomPaintState();
 }
@@ -60,11 +84,13 @@ class __SkyCustomPaintState extends State<_SkyCustomPaint>
           tween: Tween<double>(begin: 0, end: pi),
           curve: Curves.easeInOutQuart,
           duration: Duration(seconds: 2),
-          builder: (_, value, widget) {
+          builder: (_, value, child) {
             return CustomPaint(
               size: constraint.biggest,
               painter: _Sky(
-                  offsetXCircle: _paddingRightTitle, radiusAnimation: value),
+                  backgroundColor: widget.backgroundColor,
+                  offsetXCircle: _paddingRightTitle,
+                  radiusAnimation: value),
             );
           },
         );
@@ -80,21 +106,23 @@ class _Sky extends CustomPainter {
   final double radiusAnimation;
   final double startPoint;
   final int value = 0;
+  final Color backgroundColor;
 
   _Sky(
       {double offsetXCircle,
       Color colorLine,
       Color colorLineBase,
       double startPoint,
+      this.backgroundColor,
       @required this.radiusAnimation})
       : this.offsetXCircle = offsetXCircle ?? 0,
         this.startPoint = startPoint ?? -pi / 2,
         this.colorLineBase = colorLineBase ?? Colors.grey,
-        this.colorLine = colorLine ?? Colors.yellow;
+        this.colorLine = colorLine ?? AppColor.yellow;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final circlePaint = Paint()..color = Colors.white;
+    final circlePaint = Paint()..color = backgroundColor;
     final ratioPadding = 0.45; // relative to radius // ##
     final radius = .42 * size.width; // ##
     final yCircle = -ratioPadding * radius + radius;
@@ -102,7 +130,7 @@ class _Sky extends CustomPainter {
 
     canvas.drawCircle(_offsetCircle, radius, circlePaint);
     final paintLine = Paint()
-      ..color = Colors.white
+      ..color = backgroundColor
       ..style = PaintingStyle.fill;
 
     final xA = radius * 2 - offsetXCircle;
@@ -152,7 +180,7 @@ class _Sky extends CustomPainter {
         (ui.ParagraphBuilder(ui.ParagraphStyle(maxLines: 1))
               ..pushStyle(ui.TextStyle(
                 height: 1,
-                color: Colors.black,
+                color: AppColor.backgroundColor,
                 fontWeight: FontWeight.bold,
                 fontSize: paragraphSize,
               ))

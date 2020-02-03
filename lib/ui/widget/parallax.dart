@@ -11,8 +11,13 @@ class Parallax extends StatefulWidget {
   final String originalTitle;
   final ImageProvider imageProvider;
   final Widget child;
+  final double paddingBottomOriginal;
 
-  Parallax({this.originalTitle, this.imageProvider, this.child});
+  Parallax(
+      {this.originalTitle,
+      this.imageProvider,
+      this.child,
+      this.paddingBottomOriginal = 70});
 
   @override
   _ParallaxState createState() => _ParallaxState();
@@ -101,7 +106,8 @@ class _ParallaxState extends State<Parallax> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 40),
+                    padding:
+                        EdgeInsets.only(bottom: widget.paddingBottomOriginal),
                     child: Text(
                       widget.originalTitle,
                       textAlign: TextAlign.center,

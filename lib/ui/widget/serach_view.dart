@@ -135,7 +135,7 @@ class _SearchViewState extends State<_SearchView> {
                         onTap: () {
                           widget.onItemClick(423204);
                         },
-                        child: _MessageSearchViewWrap(
+                        child: MessageSearchView(
                           message: 'Find what to watch next.',
                         ),
                       );
@@ -182,7 +182,7 @@ class _SearchViewState extends State<_SearchView> {
                         ),
                       );
                     default:
-                      return _MessageSearchViewWrap(
+                      return MessageSearchView(
                         message: 'Oh damm. We dont have that.',
                       );
                   }
@@ -210,21 +210,6 @@ class MessageSearchView extends StatelessWidget {
             style: TextStyle(
                 color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
           ),
-        ));
-  }
-}
-
-class _MessageSearchViewWrap extends StatelessWidget {
-  final String message;
-
-  _MessageSearchViewWrap({@required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        constraints: BoxConstraints.expand(),
-        child: MessageSearchView(
-          message: message,
         ));
   }
 }
