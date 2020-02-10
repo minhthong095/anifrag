@@ -76,13 +76,13 @@ class _DetailTabbar extends State<DetailTabbar>
               return Stack(
                 children: <Widget>[
                   Visibility(
-                    visible: _tabController.index == 0 ? true : false,
+                    visible: _tabController.index == 0,
                     maintainState: true,
                     child: MoreLikeThis(),
                   ),
                   Visibility(
                     // If choose Opacity widget, the gridview in MoreLikeThis will hard to scroll.
-                    visible: _tabController.index == 1 ? true : false,
+                    visible: _tabController.index == 1,
                     child: StoryOverview(),
                   )
                 ],

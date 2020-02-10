@@ -1,5 +1,4 @@
 import 'package:Anifrag/config/app_color.dart';
-import 'package:Anifrag/ui/widget/casts_row.dart';
 import 'package:Anifrag/ui/widget/skuru_panel.dart';
 import 'package:Anifrag/ui/widget/text_more.dart';
 import 'package:flutter/gestures.dart';
@@ -44,7 +43,7 @@ class ContentSearchDetail extends StatelessWidget {
                 text:
                     '''Walter H. White is a chemistry genius, but works as a chemistry teacher in an Albequerque, New Mexico high school. w Mexico high school. Walter H. White is a chemistry genius, but works as a chemistry teacher in an Albequerque, New Mexico high school. w Mexico high school. Walter H. White is a chemistry genius, but works as a chemistry teacher in an Albequerque, New Mexico high school. w Mexico high school.''',
               ),
-              CastsRow(),
+              // CastsRow(),
               SizedBox(
                 height: 100,
                 width: double.infinity,

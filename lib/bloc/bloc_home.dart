@@ -17,6 +17,9 @@ import 'package:rxdart/subjects.dart';
 
 enum MoveDetailState { loading, finish }
 
+const int _indexForListCarousel = 0;
+const int _maxNumEachPage = 20;
+
 class BlocHome with DisposeBag, PrefixUrlImgMixin {
   final LiveStore _liveStore;
   final API _api;
@@ -35,22 +38,19 @@ class BlocHome with DisposeBag, PrefixUrlImgMixin {
     dropStream(subjectMoveDetailState);
   }
 
-  static const int _indexForListCarousel = 0;
-  static const int maxNumEachPage = 20;
-
   List<ResponseThumbnailMovie> listCarousel() {
     // First 20 records is belong to carousel/
     return _liveStore.getHomePageData
-        .sublist(_indexForListCarousel, maxNumEachPage);
+        .sublist(_indexForListCarousel, _maxNumEachPage);
   }
 
   Map<String, List<ResponseThumbnailMovie>> listRestMovies() {
     final result = Map<String, List<ResponseThumbnailMovie>>();
     int pivot = _indexForListCarousel + 1;
-    int lastEnd = maxNumEachPage;
+    int lastEnd = _maxNumEachPage;
     while (pivot < _liveStore.getCategories.length) {
       final start = lastEnd;
-      final end = start + maxNumEachPage;
+      final end = start + _maxNumEachPage;
       lastEnd = end;
       result[_liveStore.getCategories[pivot]] =
           _liveStore.getHomePageData.sublist(start, end);
