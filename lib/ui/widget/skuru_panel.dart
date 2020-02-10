@@ -12,19 +12,21 @@ class SkuruPanel extends StatelessWidget {
   final _paddingRightTitle = 13.0;
   final double height;
   final Color backgroundColor;
+  final Color titleColor;
   final String title;
   final double paddingLeftTitle;
 
   SkuruPanel(
       {@required this.height,
       this.backgroundColor = Colors.white,
+      this.titleColor,
       this.title,
       this.paddingLeftTitle});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: this.backgroundColor,
       constraints: BoxConstraints.expand(height: height),
       child: Transform.translate(
         offset: Offset(0, _yUnitHideGap),
@@ -36,13 +38,26 @@ class SkuruPanel extends StatelessWidget {
                 padding: EdgeInsets.only(right: _paddingRightTitle),
                 constraints: BoxConstraints.expand(),
                 child: Padding(
-                  padding: EdgeInsets.only(top: 20, left: paddingLeftTitle),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        color: AppColor.backgroundColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30),
+                  padding: EdgeInsets.only(top: 18, left: paddingLeftTitle),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        style: TextStyle(
+                            color: this.titleColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Text(
+                          'Crime, Thriller',
+                          style:
+                              TextStyle(color: this.titleColor, fontSize: 18),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 decoration: BoxDecoration(
@@ -53,7 +68,10 @@ class SkuruPanel extends StatelessWidget {
             ),
             Expanded(
               flex: 3,
-              child: _SkyCustomPaint(backgroundColor: backgroundColor),
+              child: _SkyCustomPaint(
+                backgroundColor: backgroundColor,
+                colorValue: titleColor,
+              ),
             )
           ],
         ),
@@ -64,8 +82,9 @@ class SkuruPanel extends StatelessWidget {
 
 class _SkyCustomPaint extends StatefulWidget {
   final Color backgroundColor;
+  final Color colorValue;
 
-  _SkyCustomPaint({this.backgroundColor});
+  _SkyCustomPaint({this.backgroundColor, this.colorValue});
 
   @override
   __SkyCustomPaintState createState() => __SkyCustomPaintState();
@@ -88,6 +107,7 @@ class __SkyCustomPaintState extends State<_SkyCustomPaint>
             return CustomPaint(
               size: constraint.biggest,
               painter: _Sky(
+                  colorValue: widget.colorValue,
                   backgroundColor: widget.backgroundColor,
                   offsetXCircle: _paddingRightTitle,
                   radiusAnimation: value),
@@ -103,6 +123,7 @@ class _Sky extends CustomPainter {
   final double offsetXCircle;
   final Color colorLine;
   final Color colorLineBase;
+  final Color colorValue;
   final double radiusAnimation;
   final double startPoint;
   final int value = 0;
@@ -112,6 +133,7 @@ class _Sky extends CustomPainter {
       {double offsetXCircle,
       Color colorLine,
       Color colorLineBase,
+      this.colorValue,
       double startPoint,
       this.backgroundColor,
       @required this.radiusAnimation})
@@ -180,7 +202,7 @@ class _Sky extends CustomPainter {
         (ui.ParagraphBuilder(ui.ParagraphStyle(maxLines: 1))
               ..pushStyle(ui.TextStyle(
                 height: 1,
-                color: AppColor.backgroundColor,
+                color: colorValue,
                 fontWeight: FontWeight.bold,
                 fontSize: paragraphSize,
               ))

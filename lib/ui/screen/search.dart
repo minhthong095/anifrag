@@ -59,35 +59,33 @@ class _SearchState extends State<SearchScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColor.backgroundColor,
-        body: SafeArea(
-            bottom: false,
-            child: AnimatedCrossFade(
-              layoutBuilder: (topChild, topKey, bottomChild, bottomKey) {
-                return Stack(
-                  children: <Widget>[
-                    bottomChild,
-                    topChild,
-                  ],
-                );
-              },
-              crossFadeState: _isShowDetail
-                  ? CrossFadeState.showSecond
-                  : CrossFadeState.showFirst,
-              firstCurve: Interval(0.0, 0.5),
-              firstChild: SearchView(
-                onItemClick: (idMovie) {
-                  _showDetail(idMovie);
-                },
-              ),
-              secondCurve: Interval(0.5, 1),
-              secondChild: SearchDetail(
-                blocSearchDetail: _blocSearchDetail,
-                onGoBack: () {
-                  _showSearch();
-                },
-              ),
-              duration: Duration(milliseconds: 450),
-            )));
+        body: AnimatedCrossFade(
+          layoutBuilder: (topChild, topKey, bottomChild, bottomKey) {
+            return Stack(
+              children: <Widget>[
+                bottomChild,
+                topChild,
+              ],
+            );
+          },
+          crossFadeState: _isShowDetail
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
+          firstCurve: Interval(0.0, 0.5),
+          firstChild: SearchView(
+            onItemClick: (idMovie) {
+              _showDetail(idMovie);
+            },
+          ),
+          secondCurve: Interval(0.5, 1),
+          secondChild: SearchDetail(
+            blocSearchDetail: _blocSearchDetail,
+            onGoBack: () {
+              _showSearch();
+            },
+          ),
+          duration: Duration(milliseconds: 450),
+        ));
   }
 
   @override

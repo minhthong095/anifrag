@@ -95,13 +95,12 @@ class _SearchDetailState extends State<SearchDetail> {
 
                   default:
                     return Parallax(
+                      onTap: () {
+                        _goBack();
+                      },
                       originalTitle: detailStateData.value2.title,
                       imageProvider: detailStateData.value3,
-                      child: InkWell(
-                          onTap: () {
-                            _goBack();
-                          },
-                          child: ContentSearchDetail()),
+                      child: ContentSearchDetail(),
                     );
                 }
               },

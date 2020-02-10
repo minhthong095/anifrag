@@ -11,11 +11,13 @@ class Parallax extends StatefulWidget {
   final String originalTitle;
   final ImageProvider imageProvider;
   final Widget child;
+  final Function onTap;
   final double paddingBottomOriginal;
 
   Parallax(
       {this.originalTitle,
       this.imageProvider,
+      this.onTap,
       this.child,
       this.paddingBottomOriginal = 70});
 
@@ -95,26 +97,29 @@ class _ParallaxState extends State<Parallax> {
           child: Column(
             children: <Widget>[
               // Cover imageX
-              Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                  Colors.black87,
-                  Colors.transparent,
-                  Colors.transparent
-                ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
-                height: _heightImage,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.only(bottom: widget.paddingBottomOriginal),
-                    child: Text(
-                      widget.originalTitle,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'AbrilFatface',
-                        fontSize: 35,
-                        color: Colors.white,
+              GestureDetector(
+                onTap: widget.onTap,
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                    Colors.black54,
+                    Colors.transparent,
+                    Colors.transparent
+                  ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
+                  height: _heightImage,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(bottom: widget.paddingBottomOriginal),
+                      child: Text(
+                        widget.originalTitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'AbrilFatface',
+                          fontSize: 35,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

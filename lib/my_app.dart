@@ -13,9 +13,11 @@ import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:Anifrag/ui/screen/no_wifi.dart';
 import 'package:Anifrag/ui/screen/search_detail.dart';
+import 'package:Anifrag/ui/screen/test_dropdown.dart';
 import 'package:Anifrag/ui/transition/page_route_blank.dart';
 import 'package:Anifrag/ui/widget/category_demo.dart';
 import 'package:Anifrag/ui/widget/detail_tabbar.dart';
+import 'package:Anifrag/ui/widget/episodes.dart';
 import 'package:Anifrag/ui/widget/loading_route.dart';
 import 'package:Anifrag/ui/widget/parallax.dart';
 import 'package:Anifrag/ui/widget/search_item.dart';
@@ -44,8 +46,8 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp(
-      home: InitialSplashScreen(),
-      // home: SearchDetail(),
+      // home: InitialSplashScreen(),
+      home: TestDropDown(),
       // home: SearchDetail(
       //   onTap: () {},
       // ),

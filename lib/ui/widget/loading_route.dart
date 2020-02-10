@@ -32,13 +32,19 @@ class LoadingRoute extends PopupRoute {
 
   // pop loading route from outside
   // isWillPop turn back to normal when AnimateLoading disposed
-  static RoutePredicate loadingRoutePredicate() => (Route<dynamic> route) {
+  static RoutePredicate _loadingRoutePredicate() => (Route<dynamic> route) {
         isWillPop = true;
         return !route.willHandlePopInternally &&
             route is ModalRoute &&
             route.settings.name != nameRoute &&
             isWillPop;
       };
+
+  static void raise(BuildContext context) =>
+      Navigator.of(context).pushNamed(LoadingRoute.nameRoute);
+
+  static void fall(BuildContext context) =>
+      Navigator.of(context).popUntil(_loadingRoutePredicate());
 }
 
 class _AnimateLoading extends StatefulWidget {
