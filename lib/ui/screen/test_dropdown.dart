@@ -18,6 +18,8 @@ class TestDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final seasonCount = math.Random().nextInt(20);
+    final defaultSeason = math.Random().nextInt(seasonCount);
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -42,7 +44,8 @@ class TestDropDown extends StatelessWidget {
                   child: VirgilAaronDropDown(
                     isBottomNotch: true,
                     isTopNotch: true,
-                    seasonCount: 8,
+                    defaultSeason: defaultSeason,
+                    seasonCount: seasonCount,
                   ),
                   alignment: Alignment.centerLeft,
                 ),
@@ -151,7 +154,8 @@ class RouteVirgilAaronDropDown extends PopupRoute {
 
   Iterable<Widget> _generateItem(
       int seasonCout, double width, double height) sync* {
-    for (int c = 0; c < seasonCout; c++) yield _item(width, height, "1");
+    for (int c = 0; c < seasonCout; c++)
+      yield _item(width, height, (c + 1).toString());
   }
 
   double _goTo(double pixels, double baseHeight) {
