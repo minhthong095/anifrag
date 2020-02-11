@@ -1,3 +1,4 @@
+import 'package:Anifrag/config/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
@@ -20,6 +21,7 @@ class TestDropDown extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           body: Container(
+        color: AppColor.backgroundColor,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
@@ -76,12 +78,16 @@ class VirgilAaronDropDown extends StatefulWidget {
 Widget _item(double width, double height, String showSeason) => Container(
       width: width,
       height: height,
-      decoration: BoxDecoration(
-          color: Colors.green.withOpacity(0.5),
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Text(
-        showSeason,
-        style: TextStyle(fontSize: 30, backgroundColor: Colors.red),
+      color: Color.fromARGB(255, 37, 38, 54),
+      child: Padding(
+        padding: EdgeInsets.only(left: 20),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            showSeason,
+            style: TextStyle(fontSize: 25, color: Colors.white),
+          ),
+        ),
       ),
     );
 
@@ -95,9 +101,7 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown> {
   }
 
   Rect get _findRenderBox {
-    final b =
-        (context.findRenderObject() as RenderBox).localToGlobal(Offset.zero);
-    final c = 0;
+    (context.findRenderObject() as RenderBox).localToGlobal(Offset.zero);
     return (context.findRenderObject() as RenderBox)
             .localToGlobal(Offset.zero) &
         Size(widget.width, widget.height);
@@ -115,7 +119,10 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown> {
                   coordinateRect: _findRenderBox,
                   seasonCout: widget.seasonCount));
         },
-        child: _item(widget.width, widget.height, _showSeason.toString()));
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          child: _item(widget.width, widget.height, _showSeason.toString()),
+        ));
   }
 }
 
@@ -134,7 +141,7 @@ class RouteVirgilAaronDropDown extends PopupRoute {
       this.isTopNotch = false});
 
   @override
-  Color get barrierColor => Colors.black.withOpacity(0.5);
+  Color get barrierColor => AppColor.backgroundColor.withOpacity(0.9);
 
   @override
   bool get barrierDismissible => true;

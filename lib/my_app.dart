@@ -1,32 +1,13 @@
-import 'package:Anifrag/bloc/bloc_detail.dart';
-import 'package:Anifrag/bloc/bloc_home.dart';
-import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
-import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
-import 'package:Anifrag/config/app_color.dart';
-import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
-import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
-import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab_bar.dart';
-import 'package:Anifrag/ui/screen/no_wifi.dart';
-import 'package:Anifrag/ui/screen/search_detail.dart';
 import 'package:Anifrag/ui/screen/test_dropdown.dart';
-import 'package:Anifrag/ui/transition/page_route_blank.dart';
-import 'package:Anifrag/ui/widget/category_demo.dart';
-import 'package:Anifrag/ui/widget/detail_tabbar.dart';
-import 'package:Anifrag/ui/widget/episodes.dart';
 import 'package:Anifrag/ui/widget/loading_route.dart';
-import 'package:Anifrag/ui/widget/parallax.dart';
-import 'package:Anifrag/ui/widget/search_item.dart';
-import 'package:Anifrag/ui/widget/story_overview.dart';
+import 'package:Anifrag/ui/widget/small_arrow_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:inject/inject.dart';
-import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
