@@ -36,8 +36,8 @@ class SmallArrowDropDown extends StatelessWidget {
 
   SmallArrowDropDown(
       {this.smallArrowType = SmallArrowType.up,
-      this.width = 15,
-      this.height = 10,
+      this.width = 10,
+      this.height = 5,
       this.isBold = false});
 
   @override
@@ -65,14 +65,14 @@ class _ArrowPainter extends CustomPainter {
     final paint = Paint()
       ..color = isBold ? Colors.white : Colors.grey
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.5;
+      ..strokeWidth = 3;
 
-    canvas.drawRect(
-        Rect.fromCenter(
-            center: Offset(size.width / 2, size.height / 2),
-            width: size.width,
-            height: size.height),
-        Paint()..color = Colors.green);
+    // canvas.drawRect(
+    //     Rect.fromCenter(
+    //         center: Offset(size.width / 2, size.height / 2),
+    //         width: size.width,
+    //         height: size.height),
+    //     Paint()..color = Colors.green);
 
     canvas.drawPath(
         Path()

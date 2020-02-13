@@ -1,4 +1,6 @@
 import 'package:Anifrag/config/app_color.dart';
+import 'package:Anifrag/ui/widget/custom_shadow_wrap.dart';
+import 'package:Anifrag/ui/widget/small_arrow_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
@@ -18,8 +20,6 @@ class TestDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final seasonCount = math.Random().nextInt(20);
-    final defaultSeason = math.Random().nextInt(seasonCount);
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -38,6 +38,10 @@ class TestDropDown extends StatelessWidget {
               );
             },
             itemBuilder: (context, position) {
+              final min = 1;
+              final seasonCount = min + math.Random().nextInt(20 - min);
+              final defaultSeason =
+                  min + math.Random().nextInt(seasonCount - min);
               return Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Align(
@@ -81,7 +85,10 @@ class VirgilAaronDropDown extends StatefulWidget {
 Widget _item(double width, double height, String showSeason) => Container(
       width: width,
       height: height,
-      color: Color.fromARGB(255, 37, 38, 54),
+      // color: Color.fromARGB(255, 37, 38, 54),
+      color: Color(0xff51515e),
+      // decoration:
+      //     BoxDecoration(border: Border.all(color: Colors.red, width: 2)),
       child: Padding(
         padding: EdgeInsets.only(left: 20),
         child: Align(
@@ -119,6 +126,9 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown> {
               RouteVirgilAaronDropDown(
                   isBottomNotch: widget.isBottomNotch,
                   isTopNotch: widget.isTopNotch,
+                  defaultSeason: _showSeason,
+                  width: widget.width,
+                  height: widget.height,
                   coordinateRect: _findRenderBox,
                   seasonCout: widget.seasonCount));
         },
@@ -133,18 +143,26 @@ class RouteVirgilAaronDropDown extends PopupRoute {
   final Rect coordinateRect;
   final int seasonCout;
   final bool isBottomNotch;
+  final double width;
+  final double height;
+  final int defaultSeason;
   final bool isTopNotch;
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController;
   bool _isCompleteAutoFix = true;
 
   RouteVirgilAaronDropDown(
       {@required this.coordinateRect,
       this.seasonCout,
+      this.width,
+      this.height,
       this.isBottomNotch = false,
-      this.isTopNotch = false});
+      this.defaultSeason,
+      this.isTopNotch = false})
+      : _scrollController = ScrollController(
+            initialScrollOffset: _goToDefault(defaultSeason, height));
 
   @override
-  Color get barrierColor => AppColor.backgroundColor.withOpacity(0.9);
+  Color get barrierColor => null;
 
   @override
   bool get barrierDismissible => true;
@@ -154,8 +172,28 @@ class RouteVirgilAaronDropDown extends PopupRoute {
 
   Iterable<Widget> _generateItem(
       int seasonCout, double width, double height) sync* {
-    for (int c = 0; c < seasonCout; c++)
+    final borderRadius = 10.0;
+    yield ClipRRect(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(borderRadius),
+            topRight: Radius.circular(borderRadius)),
+        child: _item(width, height, "1"));
+
+    for (int c = 1; c < seasonCout - 1; c++) {
       yield _item(width, height, (c + 1).toString());
+    }
+
+    yield ClipRRect(
+      borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(borderRadius),
+          bottomRight: Radius.circular(borderRadius)),
+      child: _item(width, height, seasonCout.toString()),
+    );
+  }
+
+  static double _goToDefault(int defaultSeason, double height) {
+    final result = ((defaultSeason - 1) * height) - 1;
+    return result < 0 ? 0 : result;
   }
 
   double _goTo(double pixels, double baseHeight) {
@@ -166,21 +204,26 @@ class RouteVirgilAaronDropDown extends PopupRoute {
   bool _scrollNotification(UserScrollNotification notification) {
     final position = _scrollController.position;
 
-    if (notification.direction == ScrollDirection.idle &&
-        _isCompleteAutoFix &&
-        position.pixels > 0 &&
-        position.pixels <= position.maxScrollExtent) {
-      final goTo = _goTo(position.pixels, coordinateRect.height);
-      _isCompleteAutoFix = false;
-      _scrollController
-          .animateTo(goTo,
-              duration: Duration(milliseconds: 100), curve: Curves.decelerate)
-          .whenComplete(() {
-        _isCompleteAutoFix = true;
-      });
-    }
+    // if (notification.direction == ScrollDirection.idle &&
+    //     _isCompleteAutoFix &&
+    //     position.pixels > 0 &&
+    //     position.pixels <= position.maxScrollExtent) {
+    //   final goTo = _goTo(position.pixels, coordinateRect.height);
+    //   _isCompleteAutoFix = false;
+    //   _scrollController
+    //       .animateTo(goTo,
+    //           duration: Duration(milliseconds: 100), curve: Curves.decelerate)
+    //       .whenComplete(() {
+    //     _isCompleteAutoFix = true;
+    //   });
+    // }
 
     return false;
+  }
+
+  @override
+  TickerFuture didPush() {
+    return super.didPush();
   }
 
   @override
@@ -199,50 +242,63 @@ class RouteVirgilAaronDropDown extends PopupRoute {
       child: SafeArea(
         bottom: isBottomNotch,
         top: isTopNotch,
-        child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Container(
-                width: coordinateRect.width,
-                height: double.infinity,
-                color: Colors.green.withOpacity(0.5),
-                margin: EdgeInsets.only(left: coordinateRect.left),
-                child: NotificationListener<UserScrollNotification>(
-                  onNotification: _scrollNotification,
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          color: Colors.yellow.withOpacity(0.5),
-                          constraints: BoxConstraints.expand(
-                              height:
-                                  (coordinateRect.top - coordinateRect.height)
-                                          .abs() +
-                                      (isTopNotch
-                                          ? 0
-                                          : MediaQuery.of(context)
-                                              .viewPadding
-                                              .top)),
-                        ),
-                        ..._generateItem(seasonCout, coordinateRect.width,
-                            coordinateRect.height),
-                        Container(
-                          color: Colors.yellow.withOpacity(0.5),
-                          constraints: BoxConstraints.expand(
-                              height: MediaQuery.of(context).size.height -
-                                  (coordinateRect.top +
-                                          coordinateRect.height +
-                                          (isBottomNotch
-                                              ? MediaQuery.of(context)
-                                                  .viewPadding
-                                                  .bottom
-                                              : 0))
-                                      .abs()),
-                        )
-                      ],
+        child: Stack(children: [
+          Scaffold(
+              backgroundColor: Color.fromARGB(255, 37, 38, 54),
+              body: Container(
+                  width: coordinateRect.width,
+                  height: double.infinity,
+                  margin: EdgeInsets.only(left: coordinateRect.left),
+                  child: NotificationListener<UserScrollNotification>(
+                    onNotification: _scrollNotification,
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            color: Colors.transparent,
+                            constraints: BoxConstraints.expand(
+                                height:
+                                    (coordinateRect.top - coordinateRect.height)
+                                            .abs() +
+                                        (isTopNotch
+                                            ? 0
+                                            : MediaQuery.of(context)
+                                                .viewPadding
+                                                .top)),
+                          ),
+                          ..._generateItem(seasonCout, coordinateRect.width,
+                              coordinateRect.height),
+                          Container(
+                            constraints: BoxConstraints.expand(
+                                height: MediaQuery.of(context).size.height -
+                                    (coordinateRect.top +
+                                            coordinateRect.height +
+                                            (isBottomNotch
+                                                ? MediaQuery.of(context)
+                                                    .viewPadding
+                                                    .bottom
+                                                : 0))
+                                        .abs()),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ))),
+                  ))),
+          Positioned.fill(
+              child: IgnorePointer(
+            child: MaskWithHole(
+              color: Colors.black.withOpacity(0.5),
+              height: double.infinity,
+              width: double.infinity,
+              coordinateRect: Rect.fromLTWH(
+                  coordinateRect.left,
+                  coordinateRect.top - coordinateRect.height,
+                  coordinateRect.width,
+                  coordinateRect.height),
+            ),
+          ))
+        ]),
       ),
     );
   }
