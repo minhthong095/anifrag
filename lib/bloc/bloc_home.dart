@@ -48,13 +48,13 @@ class BlocHome with DisposeBag, PrefixUrlImgMixin {
     final result = Map<String, List<ResponseThumbnailMovie>>();
     int pivot = _indexForListCarousel + 1;
     int lastEnd = _maxNumEachPage;
+
     while (pivot < _liveStore.getCategories.length) {
       final start = lastEnd;
       final end = start + _maxNumEachPage;
       lastEnd = end;
       result[_liveStore.getCategories[pivot]] =
           _liveStore.getHomePageData.sublist(start, end);
-      // print("START $start END $end");
       pivot++;
     }
     return result;

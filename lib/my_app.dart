@@ -1,5 +1,6 @@
 import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
+import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:Anifrag/ui/screen/test_dropdown.dart';
@@ -28,10 +29,10 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp(
-      // home: InitialSplashScreen(),
+      home: InitialSplashScreen(),
       // home: TestDropDown(),
       // home: TestScrollWheelDropdown(),
-      home: TestDropDown(),
+      // home: TestDropDown(),
       // home: TestCustomShadowWrap(),
       // home: SearchDetail(
       //   onTap: () {},

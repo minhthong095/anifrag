@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lottie/flutter_lottie.dart';
 
+// If this route dont have to return data back, considering use Overlay widget
 class LoadingRoute extends PopupRoute {
   static const String nameRoute = '/loading';
   static bool isWillPop = false;

@@ -100,7 +100,9 @@ class _SearchDetailState extends State<SearchDetail> {
                       },
                       originalTitle: detailStateData.value2.title,
                       imageProvider: detailStateData.value3,
-                      child: ContentSearchDetail(),
+                      child: ContentSearchDetail(
+                        responseMovie: detailStateData.value2,
+                      ),
                     );
                 }
               },

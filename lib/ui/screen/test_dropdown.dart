@@ -172,11 +172,6 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
 
   @override
   Widget build(BuildContext context) {
-    // return ClipRRect(
-    //   borderRadius: BorderRadius.all(Radius.circular(10)),
-    //   child: _item(widget.width, widget.height, _showSeason.toString(),
-    //       onTap: _onClick),
-    // );
     return AnimatedBuilder(
       animation: _animation,
       builder: (_, widget) {

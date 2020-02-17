@@ -56,7 +56,7 @@ class BlocInitialSplash {
     var homePageData;
     try {
       configureAndCategory = await _api.getBothConfigureAndCategory();
-      homePageData = await _api
+      homePageData = await _api // Categories length equal page count.
           .getHomePageList((configureAndCategory[1] as List<String>).length);
     } catch (e) {
       print("Exception API " + e.toString());

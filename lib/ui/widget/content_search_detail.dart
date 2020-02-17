@@ -1,11 +1,16 @@
 import 'package:Anifrag/config/app_color.dart';
+import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/ui/widget/skuru_panel.dart';
 import 'package:Anifrag/ui/widget/text_more.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ContentSearchDetail extends StatelessWidget {
+  final ResponseMovie responseMovie;
+
   static const _paddingContent = EdgeInsets.all(23);
+
+  ContentSearchDetail({@required this.responseMovie});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +20,9 @@ class ContentSearchDetail extends StatelessWidget {
           backgroundColor: AppColor.backgroundColor,
           titleColor: Colors.white,
           height: 80,
+          percentPoint: responseMovie?.voteAverage,
           paddingLeftTitle: _paddingContent.left,
-          title: 'Breaking Bad',
+          title: responseMovie?.title,
         ),
         Container(
           color: AppColor.backgroundColor,
@@ -38,11 +44,9 @@ class ContentSearchDetail extends StatelessWidget {
                 ),
               ),
               TextMoreOneWay(
-                tapReadMore: () {},
-                readMoreText: '   Read more',
-                text:
-                    '''Walter H. White is a chemistry genius, but works as a chemistry teacher in an Albequerque, New Mexico high school. w Mexico high school. Walter H. White is a chemistry genius, but works as a chemistry teacher in an Albequerque, New Mexico high school. w Mexico high school. Walter H. White is a chemistry genius, but works as a chemistry teacher in an Albequerque, New Mexico high school. w Mexico high school.''',
-              ),
+                  tapReadMore: () {},
+                  readMoreText: '   Read more',
+                  text: responseMovie?.overview),
               // CastsRow(),
               SizedBox(
                 height: 100,

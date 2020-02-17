@@ -44,7 +44,8 @@ class _ParallaxState extends State<Parallax> {
 
   void _initHeightImage() {
     _heightImage = Utils.heightInRatio(
-        MediaQuery.of(context).size.width, LiveStore.ratioImgApi);
+            MediaQuery.of(context).size.width, LiveStore.ratioImgApi) -
+        100; //TODO: HARDCODE
   }
 
   void _initScrollControllerListener() {
