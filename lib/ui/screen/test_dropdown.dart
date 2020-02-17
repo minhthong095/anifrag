@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/ui/widget/custom_shadow_wrap.dart';
+import 'package:Anifrag/ui/widget/small_arrow_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
@@ -121,12 +124,27 @@ Widget _item(double width, double height, String showSeason,
       ));
 }
 
-class _VirgilAaronDropDownState extends State<VirgilAaronDropDown> {
+class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
+    with SingleTickerProviderStateMixin {
   int _showSeason;
+  AnimationController _animationController;
+  Animation<double> _animation;
+  static const start = 1.0;
+  static const end = 0.92;
 
   @override
   void initState() {
     _initShowSeason();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
+    _animation = TweenSequence<double>([
+      TweenSequenceItem(
+          weight: 50, tween: Tween<double>(begin: start, end: end)),
+      TweenSequenceItem(
+          weight: 50, tween: Tween<double>(begin: end, end: start))
+    ]).animate(_animationController);
     super.initState();
   }
 
@@ -147,32 +165,51 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown> {
         Size(widget.width, widget.height);
   }
 
+  void _onClick() {
+    _animationController.reset();
+    _animationController.forward().then((f) {
+      Navigator.push(
+              context,
+              RouteVirgilAaronDropDown(
+                  isBottomNotch: widget.isBottomNotch,
+                  isTopNotch: widget.isTopNotch,
+                  defaultSeason: _showSeason,
+                  width: widget.width,
+                  height: widget.height,
+                  offset: widget.offset,
+                  coordinateRect: _findRenderBox,
+                  seasonCout: widget.seasonCount))
+          .then<int>((onValue) {
+        if (onValue != null) {
+          setState(() {
+            _showSeason = onValue;
+          });
+        }
+        return onValue;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-      child:
-          _item(widget.width, widget.height, _showSeason.toString(), onTap: () {
-        Navigator.push(
-                context,
-                RouteVirgilAaronDropDown(
-                    isBottomNotch: widget.isBottomNotch,
-                    isTopNotch: widget.isTopNotch,
-                    defaultSeason: _showSeason,
-                    width: widget.width,
-                    height: widget.height,
-                    offset: widget.offset,
-                    coordinateRect: _findRenderBox,
-                    seasonCout: widget.seasonCount))
-            .then<int>((onValue) {
-          if (onValue != null) {
-            setState(() {
-              _showSeason = onValue;
-            });
-          }
-          return onValue;
-        });
-      }),
+    // return ClipRRect(
+    //   borderRadius: BorderRadius.all(Radius.circular(10)),
+    //   child: _item(widget.width, widget.height, _showSeason.toString(),
+    //       onTap: _onClick),
+    // );
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (_, widget) {
+        return Transform.scale(
+          scale: _animation.value,
+          child: widget,
+        );
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        child: _item(widget.width, widget.height, _showSeason.toString(),
+            onTap: _onClick),
+      ),
     );
   }
 }
@@ -188,6 +225,8 @@ class RouteVirgilAaronDropDown extends PopupRoute {
   final bool isTopNotch;
   final FixedExtentScrollController _scrollController;
   BuildContext _context;
+  StreamController<ScrollDirection> _streamScrollNotification =
+      StreamController();
 
   RouteVirgilAaronDropDown(
       {@required this.coordinateRect,
@@ -245,11 +284,16 @@ class RouteVirgilAaronDropDown extends PopupRoute {
 
   double _calHeightScroll(
       BuildContext context, bool isTopNotch, bool isBottomNotch) {
-    final a = MediaQuery.of(context).viewPadding.top;
-    final b = MediaQuery.of(context).viewPadding.bottom;
+    // final a = MediaQuery.of(context).viewPadding.top;
+    // final b = MediaQuery.of(context).viewPadding.bottom;
     return MediaQuery.of(context).size.height * 2 -
         (isTopNotch ? MediaQuery.of(context).viewPadding.top : 0) -
         (isBottomNotch ? MediaQuery.of(context).viewPadding.bottom : 0);
+  }
+
+  bool _scrollNotification(UserScrollNotification notification) {
+    _streamScrollNotification.sink.add(notification.direction);
+    return false;
   }
 
   @override
@@ -258,6 +302,9 @@ class RouteVirgilAaronDropDown extends PopupRoute {
     _context = context;
     final heightScroll = _calHeightScroll(context, isTopNotch, isBottomNotch);
     final offsetTop = ((heightScroll / 2 - coordinateRect.top) + offset);
+    final topCoordinateRect = coordinateRect.top -
+        (isTopNotch ? MediaQuery.of(context).viewPadding.top : 0);
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop(defaultSeason);
@@ -278,15 +325,18 @@ class RouteVirgilAaronDropDown extends PopupRoute {
                     height: heightScroll,
                     child: Container(
                       color: Colors.green.withOpacity(0.5),
-                      child: ListWheelScrollView(
-                        diameterRatio: 99,
-                        itemExtent: coordinateRect.height,
-                        physics: FixedExtentScrollPhysics(),
-                        controller: _scrollController,
-                        children: <Widget>[
-                          ..._generateItem(seasonCout, coordinateRect.width,
-                              coordinateRect.height, context),
-                        ],
+                      child: NotificationListener<UserScrollNotification>(
+                        onNotification: _scrollNotification,
+                        child: ListWheelScrollView(
+                          diameterRatio: 99,
+                          itemExtent: coordinateRect.height,
+                          physics: FixedExtentScrollPhysics(),
+                          controller: _scrollController,
+                          children: <Widget>[
+                            ..._generateItem(seasonCout, coordinateRect.width,
+                                coordinateRect.height, context),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -299,18 +349,56 @@ class RouteVirgilAaronDropDown extends PopupRoute {
                     width: double.infinity,
                     coordinateRect: Rect.fromLTWH(
                         coordinateRect.left,
-                        coordinateRect.top -
-                            (isTopNotch
-                                ? MediaQuery.of(context).viewPadding.top
-                                : 0),
+                        topCoordinateRect,
                         coordinateRect.width,
                         coordinateRect.height),
                   ),
-                ))
+                )),
+                StreamBuilder<ScrollDirection>(
+                  stream: _streamScrollNotification.stream.distinct(),
+                  initialData: ScrollDirection.idle,
+                  builder: (_, snapshot) {
+                    return Positioned(
+                      top: topCoordinateRect,
+                      left: coordinateRect.left,
+                      width: coordinateRect.width,
+                      height: coordinateRect.height,
+                      child: Container(
+                        // color: Colors.orange.withOpacity(0.5),
+                        constraints: BoxConstraints.expand(),
+                        padding: EdgeInsets.only(right: 7),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            SmallArrowDropDown(
+                              isBold: snapshot.data == ScrollDirection.forward,
+                              smallArrowType: SmallArrowType.up,
+                            ),
+                            SizedBox.fromSize(
+                              size: Size(0, 6),
+                            ),
+                            SmallArrowDropDown(
+                              isBold: snapshot.data == ScrollDirection.reverse,
+                              smallArrowType: SmallArrowType.down,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                )
               ],
             )),
       ),
     );
+  }
+
+  @override
+  bool didPop(result) {
+    _streamScrollNotification.close();
+    _scrollController.dispose();
+    return super.didPop(result);
   }
 
   @override

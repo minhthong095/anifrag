@@ -36,8 +36,8 @@ class SmallArrowDropDown extends StatelessWidget {
 
   SmallArrowDropDown(
       {this.smallArrowType = SmallArrowType.up,
-      this.width = 10,
-      this.height = 5,
+      this.width = 9,
+      this.height = 4,
       this.isBold = false});
 
   @override
