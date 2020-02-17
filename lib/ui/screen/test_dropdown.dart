@@ -57,8 +57,6 @@ class TestDropDown extends StatelessWidget {
                 padding: EdgeInsets.only(left: 20),
                 child: Align(
                   child: VirgilAaronDropDown(
-                    isBottomNotch: true,
-                    isTopNotch: true,
                     defaultSeason: defaultSeason,
                     seasonCount: seasonCount,
                   ),
@@ -79,49 +77,34 @@ class VirgilAaronDropDown extends StatefulWidget {
   final int defaultSeason;
   final double width;
   final double height;
-  final bool isTopNotch;
-  final bool isBottomNotch;
-  final double offset;
 
   VirgilAaronDropDown(
       {this.seasonCount = 1,
-      this.width = 130,
+      this.width = 140,
       this.height = 50,
-      this.offset = 19, // adjust up and down little bit
-      this.isBottomNotch = false,
-      this.isTopNotch = false,
       this.defaultSeason = 1});
   @override
   _VirgilAaronDropDownState createState() => _VirgilAaronDropDownState();
 }
 
-Widget _item(double width, double height, String showSeason,
-    {void Function() onTap}) {
-  return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      // onTap: onTap,
-      onTap: () {
-        print("haha");
-        if (onTap != null) onTap();
-      },
-      child: Container(
-        width: width,
-        height: height,
-        // color: Color.fromARGB(255, 37, 38, 54),
-        color: Color(0xff51515e).withOpacity(0.2),
-        // decoration: BoxDecoration(
-        //     border: Border.all(color: Colors.red.withOpacity(0.5), width: 2)),
-        child: Padding(
-          padding: EdgeInsets.only(left: 20),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Season ' + showSeason,
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
-          ),
+Widget _item(double width, double height, String showSeason) {
+  return Container(
+    width: width,
+    height: height,
+    color: Color(0xff51515e),
+    // decoration: BoxDecoration( // test
+    //     border: Border.all(color: Colors.red.withOpacity(0.5), width: 2)),
+    child: Padding(
+      padding: EdgeInsets.only(left: 20),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          'Season ' + showSeason,
+          style: TextStyle(fontSize: 20, color: Colors.white),
         ),
-      ));
+      ),
+    ),
+  );
 }
 
 class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
@@ -171,12 +154,9 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
       Navigator.push(
               context,
               RouteVirgilAaronDropDown(
-                  isBottomNotch: widget.isBottomNotch,
-                  isTopNotch: widget.isTopNotch,
                   defaultSeason: _showSeason,
                   width: widget.width,
                   height: widget.height,
-                  offset: widget.offset,
                   coordinateRect: _findRenderBox,
                   seasonCout: widget.seasonCount))
           .then<int>((onValue) {
@@ -205,10 +185,11 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
           child: widget,
         );
       },
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        child: _item(widget.width, widget.height, _showSeason.toString(),
-            onTap: _onClick),
+      child: GestureDetector(
+        onTap: _onClick,
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            child: _item(widget.width, widget.height, _showSeason.toString())),
       ),
     );
   }
@@ -217,31 +198,25 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
 class RouteVirgilAaronDropDown extends PopupRoute {
   final Rect coordinateRect;
   final int seasonCout;
-  final bool isBottomNotch;
-  final double offset;
   final double width;
   final double height;
   final int defaultSeason;
-  final bool isTopNotch;
   final FixedExtentScrollController _scrollController;
   BuildContext _context;
   StreamController<ScrollDirection> _streamScrollNotification =
       StreamController();
 
-  RouteVirgilAaronDropDown(
-      {@required this.coordinateRect,
-      this.seasonCout,
-      this.width,
-      this.height,
-      this.offset,
-      this.isBottomNotch = false,
-      this.defaultSeason,
-      this.isTopNotch = false})
-      : _scrollController =
+  RouteVirgilAaronDropDown({
+    @required this.coordinateRect,
+    this.seasonCout,
+    this.width,
+    this.height,
+    this.defaultSeason,
+  }) : _scrollController =
             FixedExtentScrollController(initialItem: defaultSeason - 1);
 
   @override
-  Color get barrierColor => Colors.white.withOpacity(0.5);
+  Color get barrierColor => null;
 
   @override
   bool get barrierDismissible => true;
@@ -256,15 +231,11 @@ class RouteVirgilAaronDropDown extends PopupRoute {
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(borderRadius),
             topRight: Radius.circular(borderRadius)),
-        child: _item(width, height, "1", onTap: () {
-          _onItemTap(1);
-        }));
+        child: _item(width, height, "1"));
 
     if (seasonCout - 2 > 0)
       for (int c = 1; c < seasonCout - 1; c++) {
-        yield _item(width, height, (c + 1).toString(), onTap: () {
-          _onItemTap(c + 1);
-        });
+        yield _item(width, height, (c + 1).toString());
       }
 
     if (seasonCout > 1)
@@ -272,23 +243,18 @@ class RouteVirgilAaronDropDown extends PopupRoute {
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(borderRadius),
             bottomRight: Radius.circular(borderRadius)),
-        child: _item(width, height, seasonCout.toString(), onTap: () {
-          _onItemTap(seasonCout);
-        }),
+        child: _item(width, height, seasonCout.toString()),
       );
   }
 
-  void _onItemTap(int selectSeason) {
-    Navigator.of(_context).pop(selectSeason);
+  void _onSelectItemTap() {
+    Navigator.of(_context).pop(_scrollController.selectedItem + 1);
   }
 
-  double _calHeightScroll(
-      BuildContext context, bool isTopNotch, bool isBottomNotch) {
+  double _calHeightScroll(BuildContext context) {
     // final a = MediaQuery.of(context).viewPadding.top;
     // final b = MediaQuery.of(context).viewPadding.bottom;
-    return MediaQuery.of(context).size.height * 2 -
-        (isTopNotch ? MediaQuery.of(context).viewPadding.top : 0) -
-        (isBottomNotch ? MediaQuery.of(context).viewPadding.bottom : 0);
+    return MediaQuery.of(context).size.height * 2;
   }
 
   bool _scrollNotification(UserScrollNotification notification) {
@@ -300,34 +266,36 @@ class RouteVirgilAaronDropDown extends PopupRoute {
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
     _context = context;
-    final heightScroll = _calHeightScroll(context, isTopNotch, isBottomNotch);
-    final offsetTop = ((heightScroll / 2 - coordinateRect.top) + offset);
-    final topCoordinateRect = coordinateRect.top -
-        (isTopNotch ? MediaQuery.of(context).viewPadding.top : 0);
+    final heightScroll = _calHeightScroll(context);
+    final offsetTop = (heightScroll / 2) -
+        coordinateRect.top +
+        coordinateRect.height / 2 -
+        coordinateRect.height;
+    final topCoordinateRect = coordinateRect.top;
 
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop(defaultSeason);
       },
-      child: SafeArea(
-        bottom: isBottomNotch,
-        top: isBottomNotch,
-        child: Scaffold(
-            // backgroundColor: Color.fromARGB(255, 37, 38, 54),
-            backgroundColor: Colors.red.withOpacity(0.5),
-            body: Stack(
-              children: <Widget>[
-                Positioned(
-                  top: -offsetTop,
-                  left: coordinateRect.left,
-                  child: SizedBox(
-                    width: coordinateRect.width,
-                    height: heightScroll,
-                    child: Container(
-                      color: Colors.green.withOpacity(0.5),
-                      child: NotificationListener<UserScrollNotification>(
-                        onNotification: _scrollNotification,
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          // backgroundColor: Color.fromARGB(255, 37, 38, 54),
+          // backgroundColor: Colors.red.withOpacity(0.5),
+          body: Stack(
+            children: <Widget>[
+              Positioned(
+                top: -offsetTop,
+                left: coordinateRect.left,
+                child: SizedBox(
+                  width: coordinateRect.width,
+                  height: heightScroll,
+                  child: Container(
+                    child: NotificationListener<UserScrollNotification>(
+                      onNotification: _scrollNotification,
+                      child: GestureDetector(
+                        onTap: _onSelectItemTap,
                         child: ListWheelScrollView(
+                          // onItemClick in children still has an open issue
                           diameterRatio: 99,
                           itemExtent: coordinateRect.height,
                           physics: FixedExtentScrollPhysics(),
@@ -341,56 +309,56 @@ class RouteVirgilAaronDropDown extends PopupRoute {
                     ),
                   ),
                 ),
-                Positioned.fill(
-                    child: IgnorePointer(
-                  child: MaskWithHole(
-                    color: Colors.black.withOpacity(0.5),
-                    height: double.infinity,
-                    width: double.infinity,
-                    coordinateRect: Rect.fromLTWH(
-                        coordinateRect.left,
-                        topCoordinateRect,
-                        coordinateRect.width,
-                        coordinateRect.height),
-                  ),
-                )),
-                StreamBuilder<ScrollDirection>(
-                  stream: _streamScrollNotification.stream.distinct(),
-                  initialData: ScrollDirection.idle,
-                  builder: (_, snapshot) {
-                    return Positioned(
-                      top: topCoordinateRect,
-                      left: coordinateRect.left,
-                      width: coordinateRect.width,
-                      height: coordinateRect.height,
-                      child: Container(
-                        // color: Colors.orange.withOpacity(0.5),
-                        constraints: BoxConstraints.expand(),
-                        padding: EdgeInsets.only(right: 7),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            SmallArrowDropDown(
-                              isBold: snapshot.data == ScrollDirection.forward,
-                              smallArrowType: SmallArrowType.up,
-                            ),
-                            SizedBox.fromSize(
-                              size: Size(0, 6),
-                            ),
-                            SmallArrowDropDown(
-                              isBold: snapshot.data == ScrollDirection.reverse,
-                              smallArrowType: SmallArrowType.down,
-                            ),
-                          ],
-                        ),
+              ),
+              Positioned.fill(
+                  child: IgnorePointer(
+                child: MaskWithHole(
+                  color: Colors.black.withOpacity(0.5),
+                  height: double.infinity,
+                  width: double.infinity,
+                  coordinateRect: Rect.fromLTWH(
+                      coordinateRect.left,
+                      topCoordinateRect,
+                      coordinateRect.width,
+                      coordinateRect.height),
+                ),
+              )),
+              StreamBuilder<ScrollDirection>(
+                stream: _streamScrollNotification.stream.distinct(),
+                initialData: ScrollDirection.idle,
+                builder: (_, snapshot) {
+                  return Positioned(
+                    top: topCoordinateRect,
+                    left: coordinateRect.left,
+                    width: coordinateRect.width,
+                    height: coordinateRect.height,
+                    child: Container(
+                      // color: Colors.orange.withOpacity(0.5),
+                      constraints: BoxConstraints.expand(),
+                      padding: EdgeInsets.only(right: 7),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          SmallArrowDropDown(
+                            isBold: snapshot.data == ScrollDirection.forward,
+                            smallArrowType: SmallArrowType.up,
+                          ),
+                          SizedBox.fromSize(
+                            size: Size(0, 6),
+                          ),
+                          SmallArrowDropDown(
+                            isBold: snapshot.data == ScrollDirection.reverse,
+                            smallArrowType: SmallArrowType.down,
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                )
-              ],
-            )),
-      ),
+                    ),
+                  );
+                },
+              )
+            ],
+          )),
     );
   }
 
