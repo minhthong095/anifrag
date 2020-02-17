@@ -106,8 +106,8 @@ Widget _item(double width, double height, String showSeason,
         height: height,
         // color: Color.fromARGB(255, 37, 38, 54),
         color: Color(0xff51515e).withOpacity(0.2),
-        // decoration:
-        //     BoxDecoration(border: Border.all(color: Colors.red, width: 2)),
+        // decoration: BoxDecoration(
+        //     border: Border.all(color: Colors.red.withOpacity(0.5), width: 2)),
         child: Padding(
           padding: EdgeInsets.only(left: 20),
           child: Align(
@@ -245,6 +245,8 @@ class RouteVirgilAaronDropDown extends PopupRoute {
 
   double _calHeightScroll(
       BuildContext context, bool isTopNotch, bool isBottomNotch) {
+    final a = MediaQuery.of(context).viewPadding.top;
+    final b = MediaQuery.of(context).viewPadding.bottom;
     return MediaQuery.of(context).size.height * 2 -
         (isTopNotch ? MediaQuery.of(context).viewPadding.top : 0) -
         (isBottomNotch ? MediaQuery.of(context).viewPadding.bottom : 0);
@@ -262,7 +264,7 @@ class RouteVirgilAaronDropDown extends PopupRoute {
       },
       child: SafeArea(
         bottom: isBottomNotch,
-        top: isTopNotch,
+        top: isBottomNotch,
         child: Scaffold(
             // backgroundColor: Color.fromARGB(255, 37, 38, 54),
             backgroundColor: Colors.red.withOpacity(0.5),
@@ -288,7 +290,23 @@ class RouteVirgilAaronDropDown extends PopupRoute {
                       ),
                     ),
                   ),
-                )
+                ),
+                Positioned.fill(
+                    child: IgnorePointer(
+                  child: MaskWithHole(
+                    color: Colors.black.withOpacity(0.5),
+                    height: double.infinity,
+                    width: double.infinity,
+                    coordinateRect: Rect.fromLTWH(
+                        coordinateRect.left,
+                        coordinateRect.top -
+                            (isTopNotch
+                                ? MediaQuery.of(context).viewPadding.top
+                                : 0),
+                        coordinateRect.width,
+                        coordinateRect.height),
+                  ),
+                ))
               ],
             )),
       ),

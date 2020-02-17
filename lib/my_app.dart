@@ -3,7 +3,6 @@ import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:Anifrag/ui/screen/test_dropdown.dart';
-import 'package:Anifrag/ui/screen/test_scroll_wheel_dropdown.dart';
 import 'package:Anifrag/ui/widget/custom_shadow_wrap.dart';
 import 'package:Anifrag/ui/widget/loading_route.dart';
 import 'package:Anifrag/ui/widget/small_arrow_dropdown.dart';
