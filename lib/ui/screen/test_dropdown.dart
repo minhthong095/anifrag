@@ -1,6 +1,5 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/ui/widget/custom_shadow_wrap.dart';
-import 'package:Anifrag/ui/widget/small_arrow_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
@@ -38,11 +37,19 @@ class TestDropDown extends StatelessWidget {
               );
             },
             itemBuilder: (context, position) {
-              final min = 1;
-              final seasonCount = min + math.Random().nextInt(20 - min);
-              final defaultSeason = min +
-                  math.Random().nextInt(
-                      seasonCount - min > min ? seasonCount - min : min);
+              final minSeason = 1;
+              final maxSeason = 20;
+              final seasonCount =
+                  minSeason + math.Random().nextInt(maxSeason - minSeason);
+              final maxDefaultSeason = seasonCount;
+              final defaultSeason = seasonCount == 1
+                  ? 1
+                  : minSeason +
+                      math.Random().nextInt(maxDefaultSeason - minSeason);
+
+              print("defaultSeason: $defaultSeason");
+              print("seasonCount: $seasonCount");
+
               return Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Align(
@@ -71,11 +78,13 @@ class VirgilAaronDropDown extends StatefulWidget {
   final double height;
   final bool isTopNotch;
   final bool isBottomNotch;
+  final double offset;
 
   VirgilAaronDropDown(
       {this.seasonCount = 1,
       this.width = 130,
       this.height = 50,
+      this.offset = 19, // adjust up and down little bit
       this.isBottomNotch = false,
       this.isTopNotch = false,
       this.defaultSeason = 1});
@@ -96,7 +105,7 @@ Widget _item(double width, double height, String showSeason,
         width: width,
         height: height,
         // color: Color.fromARGB(255, 37, 38, 54),
-        color: Color(0xff51515e),
+        color: Color(0xff51515e).withOpacity(0.2),
         // decoration:
         //     BoxDecoration(border: Border.all(color: Colors.red, width: 2)),
         child: Padding(
@@ -117,8 +126,18 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown> {
 
   @override
   void initState() {
-    _showSeason = widget.defaultSeason;
+    _initShowSeason();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(VirgilAaronDropDown oldWidget) {
+    _initShowSeason();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _initShowSeason() {
+    _showSeason = widget.defaultSeason;
   }
 
   Rect get _findRenderBox {
@@ -142,6 +161,7 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown> {
                     defaultSeason: _showSeason,
                     width: widget.width,
                     height: widget.height,
+                    offset: widget.offset,
                     coordinateRect: _findRenderBox,
                     seasonCout: widget.seasonCount))
             .then<int>((onValue) {
@@ -161,22 +181,28 @@ class RouteVirgilAaronDropDown extends PopupRoute {
   final Rect coordinateRect;
   final int seasonCout;
   final bool isBottomNotch;
+  final double offset;
   final double width;
   final double height;
   final int defaultSeason;
   final bool isTopNotch;
+  final FixedExtentScrollController _scrollController;
+  BuildContext _context;
 
   RouteVirgilAaronDropDown(
       {@required this.coordinateRect,
       this.seasonCout,
       this.width,
       this.height,
+      this.offset,
       this.isBottomNotch = false,
       this.defaultSeason,
-      this.isTopNotch = false});
+      this.isTopNotch = false})
+      : _scrollController =
+            FixedExtentScrollController(initialItem: defaultSeason - 1);
 
   @override
-  Color get barrierColor => null;
+  Color get barrierColor => Colors.white.withOpacity(0.5);
 
   @override
   bool get barrierDismissible => true;
@@ -184,54 +210,6 @@ class RouteVirgilAaronDropDown extends PopupRoute {
   @override
   String get barrierLabel => null;
 
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    return _DropWrapStateful(
-        isBottomNotch: isBottomNotch,
-        isTopNotch: isTopNotch,
-        defaultSeason: defaultSeason,
-        width: width,
-        height: height,
-        coordinateRect: coordinateRect,
-        seasonCout: seasonCout);
-  }
-
-  @override
-  Duration get transitionDuration => Duration(milliseconds: 600);
-}
-
-class _DropWrapStateful extends StatefulWidget {
-  final Rect coordinateRect;
-  final int seasonCout;
-  final bool isBottomNotch;
-  final double width;
-  final double height;
-  final int defaultSeason;
-  final bool isTopNotch;
-  final ScrollController _scrollController;
-
-  _DropWrapStateful(
-      {@required this.coordinateRect,
-      this.seasonCout,
-      this.width,
-      this.height,
-      this.isBottomNotch = false,
-      this.defaultSeason,
-      this.isTopNotch = false})
-      : _scrollController = ScrollController(
-            initialScrollOffset: _goToDefault(defaultSeason, height));
-
-  static double _goToDefault(int defaultSeason, double height) {
-    final result = ((defaultSeason - 1) * height) - 1;
-    return result < 0 ? 0 : result;
-  }
-
-  @override
-  _DropWrapStatefulState createState() => _DropWrapStatefulState();
-}
-
-class _DropWrapStatefulState extends State<_DropWrapStateful> {
   Iterable<Widget> _generateItem(
       int seasonCout, double width, double height, BuildContext context) sync* {
     final borderRadius = 10.0;
@@ -243,13 +221,14 @@ class _DropWrapStatefulState extends State<_DropWrapStateful> {
           _onItemTap(1);
         }));
 
-    for (int c = 1; c < seasonCout - 1; c++) {
-      yield _item(width, height, (c + 1).toString(), onTap: () {
-        _onItemTap(c + 1);
-      });
-    }
+    if (seasonCout - 2 > 0)
+      for (int c = 1; c < seasonCout - 1; c++) {
+        yield _item(width, height, (c + 1).toString(), onTap: () {
+          _onItemTap(c + 1);
+        });
+      }
 
-    if (seasonCout != widget.defaultSeason)
+    if (seasonCout > 1)
       yield ClipRRect(
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(borderRadius),
@@ -260,116 +239,62 @@ class _DropWrapStatefulState extends State<_DropWrapStateful> {
       );
   }
 
-  double _goTo(double pixels, double baseHeight) {
-    final result = ((((pixels + 1) / baseHeight).round()) * baseHeight) - 1;
-    return result < 0 ? 0 : result;
-  }
-
-  bool _isIdle = true;
-
-  bool _scrollNotification(UserScrollNotification notification) {
-    final position = widget._scrollController.position;
-    print(notification.direction);
-    if (notification.direction == ScrollDirection.idle &&
-        position.pixels > 0 &&
-        _isIdle &&
-        position.pixels <= position.maxScrollExtent) {
-      // Temporary hard code when user drag so dam hard
-      setState(() {
-        _isIdle = false;
-      });
-      final goTo = _goTo(position.pixels, widget.coordinateRect.height);
-      widget._scrollController
-          .animateTo(goTo,
-              duration: Duration(milliseconds: 100), curve: Curves.decelerate)
-          .then((o) {
-        // Temporary hard code when user drag so dam hard
-        setState(() {
-          _isIdle = true;
-        });
-      });
-    }
-
-    return false;
-  }
-
   void _onItemTap(int selectSeason) {
-    Navigator.of(context).pop(selectSeason);
+    Navigator.of(_context).pop(selectSeason);
+  }
+
+  double _calHeightScroll(
+      BuildContext context, bool isTopNotch, bool isBottomNotch) {
+    return MediaQuery.of(context).size.height * 2 -
+        (isTopNotch ? MediaQuery.of(context).viewPadding.top : 0) -
+        (isBottomNotch ? MediaQuery.of(context).viewPadding.bottom : 0);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
+    _context = context;
+    final heightScroll = _calHeightScroll(context, isTopNotch, isBottomNotch);
+    final offsetTop = ((heightScroll / 2 - coordinateRect.top) + offset);
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pop(widget.defaultSeason);
+        Navigator.of(context).pop(defaultSeason);
       },
       child: SafeArea(
-        bottom: widget.isBottomNotch,
-        top: widget.isTopNotch,
-        child: Stack(children: [
-          Scaffold(
-              backgroundColor: Color.fromARGB(255, 37, 38, 54),
-              body: Container(
-                  width: widget.coordinateRect.width,
-                  height: double.infinity,
-                  margin: EdgeInsets.only(left: widget.coordinateRect.left),
-                  child: NotificationListener<UserScrollNotification>(
-                    onNotification: _scrollNotification,
-                    child: SingleChildScrollView(
-                      physics: _isIdle
-                          ? ClampingScrollPhysics()
-                          : NeverScrollableScrollPhysics(),
-                      controller: widget._scrollController,
-                      child: Column(
+        bottom: isBottomNotch,
+        top: isTopNotch,
+        child: Scaffold(
+            // backgroundColor: Color.fromARGB(255, 37, 38, 54),
+            backgroundColor: Colors.red.withOpacity(0.5),
+            body: Stack(
+              children: <Widget>[
+                Positioned(
+                  top: -offsetTop,
+                  left: coordinateRect.left,
+                  child: SizedBox(
+                    width: coordinateRect.width,
+                    height: heightScroll,
+                    child: Container(
+                      color: Colors.green.withOpacity(0.5),
+                      child: ListWheelScrollView(
+                        diameterRatio: 99,
+                        itemExtent: coordinateRect.height,
+                        physics: FixedExtentScrollPhysics(),
+                        controller: _scrollController,
                         children: <Widget>[
-                          Container(
-                            color: Colors.transparent,
-                            constraints: BoxConstraints.expand(
-                                height: (widget.coordinateRect.top -
-                                            widget.coordinateRect.height)
-                                        .abs() +
-                                    (widget.isTopNotch
-                                        ? 0
-                                        : MediaQuery.of(context)
-                                            .viewPadding
-                                            .top)),
-                          ),
-                          ..._generateItem(
-                              widget.seasonCout,
-                              widget.coordinateRect.width,
-                              widget.coordinateRect.height,
-                              context),
-                          Container(
-                            constraints: BoxConstraints.expand(
-                                height: MediaQuery.of(context).size.height -
-                                    (widget.coordinateRect.top +
-                                            widget.coordinateRect.height +
-                                            (widget.isBottomNotch
-                                                ? MediaQuery.of(context)
-                                                    .viewPadding
-                                                    .bottom
-                                                : 0))
-                                        .abs()),
-                          )
+                          ..._generateItem(seasonCout, coordinateRect.width,
+                              coordinateRect.height, context),
                         ],
                       ),
                     ),
-                  ))),
-          Positioned.fill(
-              child: IgnorePointer(
-            child: MaskWithHole(
-              color: Colors.black.withOpacity(0.5),
-              height: double.infinity,
-              width: double.infinity,
-              coordinateRect: Rect.fromLTWH(
-                  widget.coordinateRect.left,
-                  widget.coordinateRect.top - widget.coordinateRect.height,
-                  widget.coordinateRect.width,
-                  widget.coordinateRect.height),
-            ),
-          ))
-        ]),
+                  ),
+                )
+              ],
+            )),
       ),
     );
   }
+
+  @override
+  Duration get transitionDuration => Duration(milliseconds: 1);
 }
