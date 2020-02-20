@@ -13,7 +13,6 @@ import 'package:sqflite/sqflite.dart';
 
 @provide
 class BlocInitialSplash {
-  // inject IAPIs ( with include Requesting in there )
   final API _api;
   final AppDb _appDb;
   final OfflineCategory _offCategory;

@@ -24,10 +24,6 @@ class ModuleStore {
   String url(LiveStore liveStore) => liveStore.baseUrlImage;
 
   @provide
-  OfflineConfigurationImage offConfIma(AppDb db) =>
-      ImplOfflineConfigurationImage(db);
-
-  @provide
   OfflineCategory offCategory(AppDb db) => ImplOfflineCategory(db);
 
   @provide

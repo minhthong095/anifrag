@@ -30,7 +30,6 @@ class BlocHome with DisposeBag {
   final OfflineCast _offCast;
   final AppDb _appDb;
   final String baseUrlImage;
-
   final BlocMainTabbar _blocMainTabbar;
   BlocMainTabbar get blocMainTabbar => _blocMainTabbar;
 

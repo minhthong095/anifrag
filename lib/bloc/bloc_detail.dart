@@ -20,6 +20,10 @@ import 'package:rxdart/subjects.dart';
 @provide
 class BlocDetail with DisposeBag {
   final String baseUrlImage;
+  // final OfflineMovie _offlineMovie;
+  final LiveStore _liveStore;
+  final API _api;
+  bool _isRunFirstTime = true;
 
   BlocDetail(this._liveStore, this._api, @baseUrlImg this.baseUrlImage) {
     dropStream(_subjectCallFinishTransition);
@@ -32,11 +36,6 @@ class BlocDetail with DisposeBag {
         ..setMovie = argument.movie
         .._tagPrefix = argument.tagPrefix
         ..setCasts = argument.casts;
-
-  // final OfflineMovie _offlineMovie;
-  final LiveStore _liveStore;
-  final API _api;
-  bool _isRunFirstTime = true;
 
   ResponseMovie _movie;
   ResponseMovie get getMovie => _movie;

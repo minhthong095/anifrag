@@ -10,6 +10,7 @@ import 'package:Anifrag/di/module/module_bloc.dart';
 import 'package:Anifrag/di/module/module_network.dart';
 import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/my_app.dart';
+import 'package:Anifrag/network/url.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
@@ -17,18 +18,14 @@ import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:inject/inject.dart';
 import 'component.inject.dart' as g;
 
-/// Temporary use instance to inject like service locator.
 /// This package still not supported like Dagger2 with inject annotation.
 
 @Injector(const [ModuleNetwork, ModuleStore])
 abstract class ComponentInjector {
-  @provide
   MainTabBarScreen get mainTabBarScreen;
 
-  @provide
   DetailScreen get detailScreen;
 
-  @provide
   InitialSplashScreen get initialSplashScreen;
 
   static Future<ComponentInjector> create() {

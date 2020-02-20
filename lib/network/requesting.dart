@@ -40,9 +40,7 @@ class RequestingMovieImplement extends RequestingMovie {
   }
 }
 
-@provide
 class RequestingAbiaryImplement extends RequestingAbiary {
-  @provide
   RequestingAbiaryImplement(Dio dio) : super(dio);
 
   @override
