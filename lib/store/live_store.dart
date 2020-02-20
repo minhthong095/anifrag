@@ -5,7 +5,10 @@ import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:inject/inject.dart';
 
+@provide
+@singleton
 class LiveStore {
   ResponseConfiguration _responseConfiguration;
   ResponseConfiguration get getResponseConfiguration => _responseConfiguration;

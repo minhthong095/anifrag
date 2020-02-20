@@ -12,17 +12,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lottie/flutter_lottie.dart';
 
-class SearchDetail extends StatefulWidget {
+class SearchDetailView extends StatefulWidget {
   final Function onGoBack;
   final BlocSearchDetail blocSearchDetail;
 
-  SearchDetail({@required this.onGoBack, @required this.blocSearchDetail});
+  SearchDetailView({@required this.onGoBack, @required this.blocSearchDetail});
 
   @override
-  _SearchDetailState createState() => _SearchDetailState();
+  _SearchDetailViewState createState() => _SearchDetailViewState();
 }
 
-class _SearchDetailState extends State<SearchDetail> {
+class _SearchDetailViewState extends State<SearchDetailView> {
   // final responseSearch = ResponseSearch(
   //   id: 1,
   //   originalTitle: 'Angel has fallen',

@@ -1,5 +1,6 @@
 import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
+import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/config/utils.dart';
@@ -16,22 +17,34 @@ import 'package:Anifrag/ui/widget/text_percent.dart';
 import 'package:Anifrag/ui/widget/text_star.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:inject/inject.dart';
 import 'package:provider/provider.dart';
 
+@provide
 class DetailScreen extends StatelessWidget {
-  final DetailScreenArgument argument;
+  DetailScreenArgument _argument;
   static const String nameRoute = '/detail';
-  static const Duration durationTransition = const Duration(milliseconds: 350);
+  static const Duration durationTransition = const Duration(milliseconds: 450);
 
-  DetailScreen({@required this.argument});
+  final BlocHome blocHome;
+  final BlocDetail blocDetail;
+
+  DetailScreen(this.blocHome, this.blocDetail);
+
+  static DetailScreen argument(
+      {@required DetailScreen detailScreenModule,
+      @required DetailScreenArgument argument}) {
+    return detailScreenModule.._argument = argument;
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<BlocHome>.value(value: ComponentInjector.I.blocHome),
+        Provider<BlocHome>.value(value: blocHome),
         Provider<BlocDetail>(
-          create: (ctx) => BlocDetail.initWithData(argument: argument),
+          create: (ctx) => BlocDetail.initWithData(
+              blocDetailModule: blocDetail, argument: _argument),
           dispose: (_, bloc) {
             bloc.dispose();
           },

@@ -12,9 +12,9 @@ mixin MoveDetailMixin {
             dartz.Tuple4<ResponseMovie, List<ResponseCast>, bool, String>>
         moveDetailState) {
       moveDetailState.fold((ifLeft) {
-        return LoadingRoute.raise(context);
+        return LoadingRoute2.raise(context);
       }, (ifRight) {
-        LoadingRoute.fall(context);
+        LoadingRoute2.fall();
         if (ifRight.value3) {
           Navigator.of(context).pushNamed(DetailScreen.nameRoute,
               arguments: DetailScreenArgument(

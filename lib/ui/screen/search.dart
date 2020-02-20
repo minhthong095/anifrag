@@ -1,4 +1,5 @@
 import 'package:Anifrag/bloc/bloc_search_detail.dart';
+import 'package:Anifrag/bloc/bloc_search_view.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/path.dart';
@@ -15,9 +16,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:inject/inject.dart';
 import 'package:provider/provider.dart';
 
+@provide
 class SearchScreen extends StatefulWidget {
+  final BlocSearchDetail blocSearchDetail;
+  final BlocSearchView blocSearchView;
+
+  SearchScreen(this.blocSearchDetail, this.blocSearchView);
+
   @override
   _SearchState createState() => _SearchState();
 }
@@ -27,10 +35,9 @@ class _SearchState extends State<SearchScreen>
         SingleTickerProviderStateMixin,
         AutomaticKeepAliveClientMixin<SearchScreen> {
   bool _isShowDetail = false;
-  BlocSearchDetail _blocSearchDetail;
 
   void _showDetail(int idMovie) {
-    if (_isShowDetail == false) _blocSearchDetail.callGetDetail(idMovie);
+    if (_isShowDetail == false) widget.blocSearchDetail.callGetDetail(idMovie);
     setState(() {
       _isShowDetail = true;
     });
@@ -44,13 +51,12 @@ class _SearchState extends State<SearchScreen>
 
   @override
   void initState() {
-    _blocSearchDetail = ComponentInjector.I.blocSearchDetail;
     super.initState();
   }
 
   @override
   void dispose() {
-    _blocSearchDetail.dispose();
+    widget.blocSearchDetail.dispose();
     super.dispose();
   }
 
@@ -73,13 +79,14 @@ class _SearchState extends State<SearchScreen>
               : CrossFadeState.showFirst,
           firstCurve: Interval(0.0, 0.5),
           firstChild: SearchView(
+            blocSearchView: widget.blocSearchView,
             onItemClick: (idMovie) {
               _showDetail(idMovie);
             },
           ),
           secondCurve: Interval(0.5, 1),
-          secondChild: SearchDetail(
-            blocSearchDetail: _blocSearchDetail,
+          secondChild: SearchDetailView(
+            blocSearchDetail: widget.blocSearchDetail,
             onGoBack: () {
               _showSearch();
             },

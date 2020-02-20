@@ -3,47 +3,58 @@ import 'dart:ffi';
 import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
 import 'package:Anifrag/di/component.dart';
+import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
+import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/store/offline/offline_movie.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
+import 'package:flutter/material.dart';
+import 'package:inject/inject.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
-class BlocDetail with DisposeBag, PrefixUrlImgMixin {
-  static BlocDetail initWithData({DetailScreenArgument argument}) =>
-      ComponentInjector.I.blocDetail
-        ..setMovie(argument.movie)
-        ..setTagPrefix(argument.tagPrefix)
-        ..setCasts(argument.casts);
+@provide
+class BlocDetail with DisposeBag {
+  final String baseUrlImage;
 
-  final OfflineMovie _offlineMovie;
+  BlocDetail(this._liveStore, this._api, @baseUrlImg this.baseUrlImage) {
+    dropStream(_subjectCallFinishTransition);
+  }
+
+  static BlocDetail initWithData(
+          {@required BlocDetail blocDetailModule,
+          DetailScreenArgument argument}) =>
+      blocDetailModule
+        ..setMovie = argument.movie
+        .._tagPrefix = argument.tagPrefix
+        ..setCasts = argument.casts;
+
+  // final OfflineMovie _offlineMovie;
   final LiveStore _liveStore;
   final API _api;
   bool _isRunFirstTime = true;
 
   ResponseMovie _movie;
-  void setMovie(movie) => _movie = movie;
-  get getMovie => _movie;
-
+  ResponseMovie get getMovie => _movie;
+  set setMovie(ResponseMovie movie) => _movie = movie;
   List<ResponseCast> _casts;
-  void setCasts(casts) => _casts = casts;
-  get getCasts => _casts;
-
+  List<ResponseCast> get getCasts => _casts;
+  set setCasts(List<ResponseCast> value) => _casts = value;
   String _tagPrefix;
-  void setTagPrefix(tagPrefix) => _tagPrefix = tagPrefix;
 
   String get tagImg {
     return _tagPrefix + _movie.posterPath;
   }
 
   String get pathImg {
-    return baseUrlImage + _movie.posterPath;
+    return _liveStore.baseUrlImage + _movie.posterPath;
   }
 
+  // ignore: close_sinks
   BehaviorSubject<bool> _subjectCallFinishTransition =
       BehaviorSubject.seeded(false);
 
@@ -51,10 +62,6 @@ class BlocDetail with DisposeBag, PrefixUrlImgMixin {
   set setCallbackDoneMoreLikeThis(
       void Function(List<ResponseThumbnailMovie> moreLikeThis) callback) {
     _callbackDoneMoreLikeThis = callback;
-  }
-
-  BlocDetail(this._offlineMovie, this._liveStore, this._api) {
-    dropStream(_subjectCallFinishTransition);
   }
 
   String get currentPosterPath =>
@@ -83,7 +90,7 @@ class BlocDetail with DisposeBag, PrefixUrlImgMixin {
 
   // PublishSubject subjectMoreLikeThis =
   //     PublishSubject<List<ResponseThumbnailMovie>>();
-  //  _api.getMoreLikeThis(_movie.id).then((onValue) {
+  //  _api.getMoreLikeThis(__movie.id).then((onValue) {
   //       subjectMoreLikeThis.sink.add(onValue);
   //     });
 }

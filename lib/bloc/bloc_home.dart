@@ -1,6 +1,7 @@
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
+import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
@@ -13,6 +14,7 @@ import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/widget/loading_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:inject/inject.dart';
 import 'package:rxdart/subjects.dart';
 
 enum MoveDetailState { loading, finish }
@@ -20,12 +22,14 @@ enum MoveDetailState { loading, finish }
 const int _indexForListCarousel = 0;
 const int _maxNumEachPage = 20;
 
-class BlocHome with DisposeBag, PrefixUrlImgMixin {
+@provide
+class BlocHome with DisposeBag {
   final LiveStore _liveStore;
   final API _api;
   final OfflineMovie _offMovie;
   final OfflineCast _offCast;
   final AppDb _appDb;
+  final String baseUrlImage;
 
   final BlocMainTabbar _blocMainTabbar;
   BlocMainTabbar get blocMainTabbar => _blocMainTabbar;
@@ -34,7 +38,7 @@ class BlocHome with DisposeBag, PrefixUrlImgMixin {
       Either<Null, Tuple4<ResponseMovie, List<ResponseCast>, bool, String>>>();
 
   BlocHome(this._liveStore, this._api, this._offMovie, this._offCast,
-      this._appDb, this._blocMainTabbar) {
+      this._appDb, this._blocMainTabbar, @baseUrlImg this.baseUrlImage) {
     dropStream(subjectMoveDetailState);
   }
 

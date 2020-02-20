@@ -1,4 +1,5 @@
 import 'package:Anifrag/store/database_config.dart';
+import 'package:inject/inject.dart';
 
 import '../app_db.dart';
 

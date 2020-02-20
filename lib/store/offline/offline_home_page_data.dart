@@ -1,7 +1,9 @@
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/store/app_db.dart';
 import 'package:Anifrag/store/database_config.dart';
+import 'package:inject/inject.dart';
 
+@provide
 abstract class OfflineHomePageData {
   Future insertData(List<ResponseThumbnailMovie> homePageData);
   List<String> queryInsertThumbnail(List<ResponseThumbnailMovie> homePageData);

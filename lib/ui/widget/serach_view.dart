@@ -17,12 +17,14 @@ import 'indicator.dart';
 
 class SearchView extends StatelessWidget {
   final Function(int) onItemClick;
-  SearchView({@required this.onItemClick});
+  final BlocSearchView blocSearchView;
+
+  SearchView({@required this.onItemClick, @required this.blocSearchView});
 
   @override
   Widget build(BuildContext context) {
     return Provider(
-      create: (ctx) => ComponentInjector.I.blocSearchView,
+      create: (ctx) => blocSearchView,
       child: _SearchView(
         onItemClick: onItemClick,
       ),

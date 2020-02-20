@@ -12,7 +12,7 @@ const baseUrlApiary = const Qualifier(#baseUrlApiary);
 class ModuleNetwork {
   @provide
   @singleton
-  ImplUrl url() => ImplUrl();
+  Url url() => ImplUrl();
 
   @provide
   @singleton
@@ -34,7 +34,7 @@ class ModuleNetwork {
       RequestingAbiaryImplement(dioApiary);
 
   @provide
-  API api(RequestingMovie requesting, ImplUrl url,
+  API api(RequestingMovie requesting, Url url,
           RequestingAbiary requestingAbiary) =>
       Api(requesting, url, requestingAbiary);
 }

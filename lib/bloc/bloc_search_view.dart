@@ -2,19 +2,23 @@ import 'dart:collection';
 
 import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
+import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:inject/inject.dart';
 import 'package:rxdart/rxdart.dart';
 
 enum SearchState { fulfill, empty, kickoff }
 
-class BlocSearchView with DisposeBag, PrefixUrlImgMixin {
+@provide
+class BlocSearchView with DisposeBag {
   final API _api;
   final LiveStore _liveStore;
+  final String baseUrlImage;
   final observable = PublishSubject<String>();
   final ValueNotifier<bool> valueNotifyIsLoading = ValueNotifier(false);
 
@@ -23,7 +27,7 @@ class BlocSearchView with DisposeBag, PrefixUrlImgMixin {
 
   String latestKeyword = '';
 
-  BlocSearchView(this._api, this._liveStore) {
+  BlocSearchView(this._api, this._liveStore, @baseUrlImg this.baseUrlImage) {
     dropSubscription(observable
         .where((String keyword) => keyword != '')
         .map((String keywrod) => keywrod.trim().replaceAll(RegExp(' +'), ' '))

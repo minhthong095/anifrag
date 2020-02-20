@@ -1,5 +1,6 @@
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
+import 'package:Anifrag/bloc/bloc_search_detail.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/di/component.dart';
@@ -10,14 +11,21 @@ import 'package:Anifrag/ui/widget/no_splash_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inject/inject.dart';
 import 'package:provider/provider.dart';
 
+@provide
 class MainTabBarScreen extends StatelessWidget {
   static const String nameRoute = '/mainTabBar';
+
+  final BlocHome blocHome;
+  final BlocMainTabbar blocMainTabbar;
+  final SearchScreen searchScreen;
+
+  MainTabBarScreen(this.blocHome, this.blocMainTabbar, this.searchScreen);
+
   @override
   Widget build(BuildContext context) {
-    final blocHome = ComponentInjector.I.blocHome;
-    final blocMainTabbar = blocHome.blocMainTabbar;
     return MultiProvider(
       providers: [
         Provider<BlocHome>.value(value: blocHome),
@@ -26,12 +34,16 @@ class MainTabBarScreen extends StatelessWidget {
           dispose: (_, bloc) => bloc.dispose(),
         )
       ],
-      child: _MainTabBarScreen(),
+      child: _MainTabBarScreen(searchScreen: searchScreen),
     );
   }
 }
 
 class _MainTabBarScreen extends StatefulWidget {
+  final SearchScreen searchScreen;
+
+  _MainTabBarScreen({this.searchScreen});
+
   @override
   _MainTabBarScreenState createState() => _MainTabBarScreenState();
 }
@@ -51,28 +63,14 @@ class _MainTabBarScreenState extends State<_MainTabBarScreen>
   Widget build(BuildContext context) => Scaffold(
         body: NoAnimationTabBarView(
           tabController: _tabController,
-          children: <Widget>[Home(), SearchScreen()],
+          children: <Widget>[Home(), widget.searchScreen],
         ),
-        // body: TabBarView(
-        //   controller: _tabController,
-        //   children: <Widget>[Home(), SearchScreen()],
-        // ),
         bottomNavigationBar: TabBarSvg(
           tabController: _tabController,
           onTap: (newIndex) {},
           children: <String>[PathSvg.home, PathSvg.find],
         ),
       );
-
-  //  Padding(
-  //   padding:
-  //       EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
-  //   child: TabBarSvg(
-  //     tabController: _tabController,
-  //     onTap: (newIndex) {},
-  //     children: <String>[PathSvg.home, PathSvg.find],
-  //   ),
-  // ))
 }
 
 class TabBarSvg extends StatefulWidget {

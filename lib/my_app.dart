@@ -1,3 +1,8 @@
+import 'package:Anifrag/bloc/bloc_home.dart';
+import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
+import 'package:Anifrag/bloc/bloc_search_detail.dart';
+import 'package:Anifrag/bloc/bloc_search_view.dart';
+import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
@@ -10,26 +15,34 @@ import 'package:Anifrag/ui/widget/small_arrow_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:inject/inject.dart';
 
 class MyApp extends StatelessWidget {
+  // final MainTabBarScreen mainTabBarScreen;
+  // final DetailScreen detailScreen;
+  // final InitialSplashScreen initialSplashScreen;
+
+  final ComponentInjector componentInjector;
+
+  MyApp(this.componentInjector);
+
   // This widget is the root of your application.
   // All PageRoute in onGenerateRout must be declare RouteSetting.
   // All routes must be declare in onGeneratRoute also.
-  // settings parameter must be implement.
   @override
   Widget build(BuildContext context) {
-    final responseSearch = ResponseSearch(
-      id: 1,
-      originalTitle: 'Angel has fallen',
-      popularity: 12,
-      posterPath:
-          'https://image.tmdb.org/t/p/w500/fapXd3v9qTcNBTm39ZC4KUVQDNf.jpg',
-      releaseDate: DateTime.now(),
-      runtime: 123,
-    );
+    // final responseSearch = ResponseSearch(
+    //   id: 1,
+    //   originalTitle: 'Angel has fallen',
+    //   popularity: 12,
+    //   posterPath:
+    //       'https://image.tmdb.org/t/p/w500/fapXd3v9qTcNBTm39ZC4KUVQDNf.jpg',
+    //   releaseDate: DateTime.now(),
+    //   runtime: 123,
+    // );
 
     return MaterialApp(
-      home: InitialSplashScreen(),
+      home: componentInjector.initialSplashScreen,
       // home: TestDropDown(),
       // home: TestScrollWheelDropdown(),
       // home: TestDropDown(),
@@ -39,37 +52,20 @@ class MyApp extends StatelessWidget {
       // ),
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          // case InitialSplashScreen.nameRoute:
-          //   return PageRouteBuilder(
-          //       transitionDuration: const Duration(milliseconds: 0),
-          //       settings: _addName(settings, InitialSplashScreen.nameRoute),
-          //       pageBuilder: (context, ani, secondAni) =>
-          //           InitialSplashScreen());
 
           ///
           case MainTabBarScreen.nameRoute:
             return CupertinoPageRoute(
-                settings: _addName(settings, MainTabBarScreen.nameRoute),
-                builder: (context) => MainTabBarScreen());
-
-          ///
-          case Login.nameRoute:
-            return PageRouteBuilder(
-                settings: _addName(settings, Login.nameRoute),
-                pageBuilder: (context, animation, secondAnimation) => Login());
+                builder: (context) => componentInjector.mainTabBarScreen);
 
           ///
           case DetailScreen.nameRoute:
             return PageRouteBuilder(
                 transitionDuration: DetailScreen.durationTransition,
-                settings: _addName(settings, DetailScreen.nameRoute),
-                pageBuilder: (_, __, ___) => DetailScreen(
+                pageBuilder: (_, __, ___) => DetailScreen.argument(
+                      detailScreenModule: componentInjector.detailScreen,
                       argument: settings.arguments,
                     ));
-
-          ///
-          case LoadingRoute.nameRoute:
-            return LoadingRoute();
         }
 
         return MaterialPageRoute(
@@ -84,7 +80,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  RouteSettings _addName(RouteSettings args, String name) {
-    return RouteSettings(arguments: args.arguments, name: name);
-  }
+  // RouteSettings _addName(RouteSettings args, String name) {
+  //   return RouteSettings(arguments: args.arguments, name: name);
+  // }
 }

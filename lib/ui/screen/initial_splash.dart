@@ -7,6 +7,7 @@ import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/network/requesting.dart';
 import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:inject/inject.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -14,12 +15,17 @@ import '../../store/live_store.dart';
 import 'login.dart';
 import 'no_wifi.dart';
 
+@provide
 class InitialSplashScreen extends StatelessWidget {
+  final BlocInitialSplash blocSplash;
+
+  InitialSplashScreen(this.blocSplash);
+
   static const String nameRoute = '/';
   @override
   Widget build(BuildContext context) {
     return Provider<BlocInitialSplash>(
-      create: (ctx) => ComponentInjector.I.blocSplash,
+      create: (ctx) => blocSplash,
       child: _InitialSplash(),
     );
   }

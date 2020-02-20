@@ -12,14 +12,17 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:inject/inject.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'mixin/prefix_url_mixin.dart';
 
 enum SearchDetailState { standby, error, done }
 
+@provide
 class BlocSearchDetail with DisposeBag {
   final API _api;
+  final LiveStore _liveStore;
   final streamTriggerImgDone = StreamController<ResponseMovie>();
 
   int _idMovie;
@@ -29,10 +32,9 @@ class BlocSearchDetail with DisposeBag {
       ValueNotifier(Tuple3(SearchDetailState.standby, null, null));
   final ValueNotifier<bool> notifyIsLoading = ValueNotifier(false);
 
-  String get baseUrlImage =>
-      ComponentInjector.I.liveStore.baseUrlImageWithWidth('/w500');
+  String get baseUrlImage => _liveStore.baseUrlImageWithWidth('/w500');
 
-  BlocSearchDetail(this._api) {
+  BlocSearchDetail(this._api, this._liveStore) {
     dropNotifier(notifyIsLoading);
   }
 

@@ -5,6 +5,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lottie/flutter_lottie.dart';
 
+class LoadingRoute2 {
+  static OverlayEntry _entry;
+
+  static final LoadingRoute2 I = LoadingRoute2._();
+  LoadingRoute2._();
+
+  static void raise(BuildContext context) {
+    if (_entry == null) {
+      _entry = OverlayEntry(
+          builder: (context) => Positioned.fill(child: _AnimateLoading()));
+      Overlay.of(context).insert(_entry);
+    }
+  }
+
+  static void fall() {
+    if (_entry != null) {
+      _entry.remove();
+      _entry = null;
+    }
+  }
+}
+
 // If this route dont have to return data back, considering use Overlay widget
 class LoadingRoute extends PopupRoute {
   static const String nameRoute = '/loading';

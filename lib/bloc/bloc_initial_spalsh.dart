@@ -8,21 +8,22 @@ import 'package:Anifrag/store/offline/offline_category.dart';
 import 'package:Anifrag/store/offline/offline_configuration_image.dart';
 import 'package:Anifrag/store/offline/offline_home_page_data.dart';
 import 'package:dio/dio.dart';
+import 'package:inject/inject.dart';
 import 'package:sqflite/sqflite.dart';
 
+@provide
 class BlocInitialSplash {
   // inject IAPIs ( with include Requesting in there )
   final API _api;
   final AppDb _appDb;
-  final OfflineConfigurationImage _offConfigurationImage;
   final OfflineCategory _offCategory;
   final OfflineHomePageData _offHomePageData;
   final LiveStore _liveStore;
 
   // SharedPreferences _prefs;
 
-  BlocInitialSplash(this._api, this._appDb, this._offConfigurationImage,
-      this._liveStore, this._offCategory, this._offHomePageData);
+  BlocInitialSplash(this._api, this._appDb, this._liveStore, this._offCategory,
+      this._offHomePageData);
 
   Future init(Function(bool) finish) async {
     String databasePath = await getDatabasesPath();
@@ -76,7 +77,6 @@ class BlocInitialSplash {
     _liveStore.setCategories = categories;
     _liveStore.setResponseConfiguration = configure;
     _liveStore.setHomePageData = homePageData;
-    final a = _liveStore.baseUrlImage;
     final db = await _appDb.db;
     await db.transaction((txn) async {
       final batch = txn.batch();

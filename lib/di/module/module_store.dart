@@ -10,6 +10,8 @@ import 'package:Anifrag/store/offline/offline_movie.dart';
 import 'package:inject/inject.dart';
 import 'package:sqflite/sqflite.dart';
 
+const baseUrlImg = const Qualifier(#baseUrlImg);
+
 @module
 class ModuleStore {
   @provide
@@ -18,7 +20,8 @@ class ModuleStore {
 
   @provide
   @singleton
-  LiveStore liveConfIma() => LiveStore();
+  @baseUrlImg
+  String url(LiveStore liveStore) => liveStore.baseUrlImage;
 
   @provide
   OfflineConfigurationImage offConfIma(AppDb db) =>
