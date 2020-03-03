@@ -6,7 +6,6 @@ import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/bloc/bloc_search_detail.dart';
 import 'package:Anifrag/bloc/bloc_search_view.dart';
-import 'package:Anifrag/di/module/module_bloc.dart';
 import 'package:Anifrag/di/module/module_network.dart';
 import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/my_app.dart';
