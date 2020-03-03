@@ -29,6 +29,10 @@ class BlocSearchView with DisposeBag {
 
   BlocSearchView(this._api, this._liveStore, @baseUrlImg this.baseUrlImage) {
     dropSubscription(observable
+        .doOnData((keyword) {
+          if (keyword == '')
+            subjectSearchState.sink.add(Tuple2(SearchState.kickoff, null));
+        })
         .where((String keyword) => keyword != '')
         .map((String keywrod) => keywrod.trim().replaceAll(RegExp(' +'), ' '))
         .doOnData((String keyword) {
@@ -53,7 +57,7 @@ class BlocSearchView with DisposeBag {
           if (latestKeyword == response.keys.first) {
             if (response.values.first == null ||
                 response.values.first.length == 0)
-              subjectSearchState.sink.add(Tuple2(SearchState.empty, []));
+              subjectSearchState.sink.add(Tuple2(SearchState.empty, null));
             else
               subjectSearchState.sink.add(Tuple2(SearchState.fulfill,
                   _liveStore.getSearchHistory[latestKeyword]));
