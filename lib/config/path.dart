@@ -1,4 +1,5 @@
 class PathImage {
+  PathImage._();
   static const String _baseUrl = 'asset/image/';
 
   static const String casablanca = _baseUrl + 'casablanca.jpg';
@@ -17,6 +18,7 @@ class PathImage {
 }
 
 class PathIcon {
+  PathIcon._();
   static const String _baseUrl = 'asset/icon/';
 
   static const String star = _baseUrl + 'star.png';
@@ -27,6 +29,7 @@ class PathIcon {
 }
 
 class PathSvg {
+  PathSvg._();
   static const String _baseUrl = 'asset/svg/';
 
   static const String home = _baseUrl + 'home.svg';
@@ -37,6 +40,7 @@ class PathSvg {
 }
 
 class PathLottie {
+  PathLottie._();
   static const String _baseUrl = 'asset/lottie/';
 
   static const String loading = _baseUrl + 'loading.json';

@@ -96,3 +96,6 @@ flutter:
     - family: AbrilFatface
       fonts:
       - asset: asset/fonts/AbrilFatface-Regular.ttf
+    - family: AppIcons
+      fonts:
+      - asset: asset/fonts/AppIcons.ttf

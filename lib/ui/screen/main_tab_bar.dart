@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/bloc/bloc_search_detail.dart';
 import 'package:Anifrag/config/app_color.dart';
+import 'package:Anifrag/config/app_icons_icons.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/ui/screen/home.dart';
@@ -50,27 +53,47 @@ class _MainTabBarScreen extends StatefulWidget {
 
 class _MainTabBarScreenState extends State<_MainTabBarScreen>
     with TickerProviderStateMixin {
-  TabController _tabController;
-  final List<String> _tabsSvg = <String>[PathSvg.home, PathSvg.find];
-
   @override
-  void initState() {
-    _tabController = TabController(vsync: this, length: _tabsSvg.length);
-    super.initState();
+  Widget build(BuildContext context) {
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        backgroundColor: AppColor.backgroundColor,
+        activeColor: AppColor.yellow,
+        inactiveColor: Colors.white70,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(
+            Icons.home,
+            size: 35,
+          )),
+          BottomNavigationBarItem(icon: Icon(AppIcon.search))
+        ],
+      ),
+      tabBuilder: (BuildContext context, int index) {
+        switch (index) {
+          case 0:
+            return Home();
+            break;
+          case 1:
+            return widget.searchScreen;
+            break;
+        }
+        return null;
+      },
+    );
+
+    // return Scaffold(
+    //   body: NoAnimationTabBarView(
+    //     tabController: _tabController,
+    //     children: <Widget>[Home(), widget.searchScreen],
+    //   ),
+    //   bottomNavigationBar: TabBarSvg(
+    //     tabController: _tabController,
+    //     onTap: (newIndex) {},
+    //     children: <String>[PathSvg.home, PathSvg.find],
+    //   ),
+    // );
   }
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        body: NoAnimationTabBarView(
-          tabController: _tabController,
-          children: <Widget>[Home(), widget.searchScreen],
-        ),
-        bottomNavigationBar: TabBarSvg(
-          tabController: _tabController,
-          onTap: (newIndex) {},
-          children: <String>[PathSvg.home, PathSvg.find],
-        ),
-      );
 }
 
 class TabBarSvg extends StatefulWidget {
