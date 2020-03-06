@@ -95,12 +95,9 @@ class _MainTabBarScreenState extends State<_MainTabBarScreen>
 }
 
 class MainTabBarScreenArgs {
-  final List<String> categories;
-  final List<ResponseThumbnailMovie> homePageData;
-  final Map<String, List<ResponseThumbnailMovie>> tvShowData;
+  final Map<String, List<ResponseThumbnailMovie>> homePageData;
 
-  const MainTabBarScreenArgs(
-      this.categories, this.homePageData, this.tvShowData);
+  const MainTabBarScreenArgs(this.homePageData);
 }
 
 class TabBarSvg extends StatefulWidget {

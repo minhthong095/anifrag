@@ -36,13 +36,11 @@ class _InitialSplashState extends State<_InitialSplash> {
   bool isVisibleNoWifi = false;
 
   void _initCallInitData() {
-    Provider.of<BlocInitialSplash>(context)
-        .init((isSuccess, categories, homepageData, tvShowData) {
+    Provider.of<BlocInitialSplash>(context).init((isSuccess, homepageData) {
       isSuccess
           ? Navigator.of(context).pushNamedAndRemoveUntil(
               MainTabBarScreen.nameRoute, (Route<dynamic> route) => false,
-              arguments:
-                  MainTabBarScreenArgs(categories, homepageData, tvShowData))
+              arguments: MainTabBarScreenArgs(homepageData))
           : _switchNoWifi();
     });
   }

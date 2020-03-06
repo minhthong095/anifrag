@@ -14,7 +14,7 @@ import 'package:dio/dio.dart';
 abstract class API {
   Future<ResponseConfiguration> getConfiguration();
   Future<List<String>> getCategories();
-  Future<List<ResponseThumbnailMovie>> getHomePageList(int categorySize);
+  Future<List<ResponseThumbnailMovie>> getMovieCinemaList(int categorySize);
   Future<ResponseMovie> getMovieDetail(int idMovie);
   Future<List<ResponseCast>> getCasts(int idMovie);
   Future<List<ResponseThumbnailMovie>> getMoreLikeThis(int idMovie);
@@ -103,7 +103,8 @@ class Api extends API {
   }
 
   @override
-  Future<List<ResponseThumbnailMovie>> getHomePageList(int categorySize) async {
+  Future<List<ResponseThumbnailMovie>> getMovieCinemaList(
+      int categorySize) async {
     final result3 = <ResponseThumbnailMovie>[];
 
     final setToCall2 = Iterable.generate(categorySize, (i) {

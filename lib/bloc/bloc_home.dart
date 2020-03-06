@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/di/module/module_store.dart';
@@ -20,9 +22,7 @@ const int _maxNumEachPage = 20;
 @provide
 class BlocHome with DisposeBag {
   // final LiveStore _liveStore;
-  List<ResponseThumbnailMovie> homePageData;
-  List<String> categories;
-  Map<String, List<ResponseThumbnailMovie>> tvShowData;
+  LinkedHashMap<String, List<ResponseThumbnailMovie>> homePageData;
   final API _api;
   final OfflineMovie _offMovie;
   final OfflineCast _offCast;
@@ -34,15 +34,9 @@ class BlocHome with DisposeBag {
   final subjectMoveDetailState = PublishSubject<
       Either<Null, Tuple4<ResponseMovie, List<ResponseCast>, bool, String>>>();
 
-  static BlocHome init(
-      BlocHome blocModule,
-      List<ResponseThumbnailMovie> homePageData,
-      List<String> categories,
-      Map<String, List<ResponseThumbnailMovie>> tvShowData) {
-    blocModule
-      ..homePageData = homePageData
-      ..categories = categories
-      ..tvShowData = tvShowData;
+  static BlocHome init(BlocHome blocModule,
+      Map<String, List<ResponseThumbnailMovie>> homePageData) {
+    blocModule..homePageData = homePageData;
     return blocModule;
   }
 
@@ -59,22 +53,13 @@ class BlocHome with DisposeBag {
 
   List<ResponseThumbnailMovie> getListCarousel() {
     // First 20 records is belong to carousel/
-    return homePageData.sublist(_indexForListCarousel, _maxNumEachPage);
+    return homePageData[homePageData.keys.first];
   }
 
   Map<String, List<ResponseThumbnailMovie>> getListRestMovies() {
-    final result = Map<String, List<ResponseThumbnailMovie>>();
-    int pivot = _indexForListCarousel + 1;
-    int lastEnd = _maxNumEachPage;
-
-    while (pivot < categories.length) {
-      final start = lastEnd;
-      final end = start + _maxNumEachPage;
-      lastEnd = end;
-      result[categories[pivot]] = homePageData.sublist(start, end);
-      pivot++;
-    }
-    return result;
+    final clone = homePageData;
+    clone.remove(homePageData.keys.first);
+    return clone;
   }
 
   void moveDetailProcess(int idMovie, String prefix) async {
@@ -138,5 +123,5 @@ class BlocHome with DisposeBag {
     }
   }
 
-  String get getMainCategory => categories[0];
+  String get getMainCategory => homePageData.keys.first;
 }

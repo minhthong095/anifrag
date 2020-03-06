@@ -23,10 +23,9 @@ class BlocInitialSplash {
 
   Future init(
       Function(
-              bool,
-              List<String> categories,
-              List<ResponseThumbnailMovie> homePageData,
-              Map<String, List<ResponseThumbnailMovie>> tvShowData)
+    bool,
+    Map<String, List<ResponseThumbnailMovie>> homePageData,
+  )
           finish) async {
     String databasePath = await getDatabasesPath();
     String path = databasePath + '/anifrag.db';
@@ -34,11 +33,10 @@ class BlocInitialSplash {
     print("PATH DATABASE " + path);
 
     final watch = Stopwatch()..start();
-    // _prefs = await SharedPreferences.getInstance();
 
     await _appDb.createDb();
 
-    final resultResponse = await _callPrerequisitesApi3();
+    final resultResponse = await _callPrerequisitesApi4();
 
     if (resultResponse.length > 0) {
       try {
@@ -50,24 +48,43 @@ class BlocInitialSplash {
       }
     }
 
-    finish(resultResponse.length > 0, resultResponse[1], resultResponse[2],
-        resultResponse[3]);
+    final categories = resultResponse[1] as List<String>;
+    final movieCinemas = resultResponse[2] as List<ResponseThumbnailMovie>;
+    final tvShows = resultResponse[3] as List<List<ResponseThumbnailMovie>>;
+
+    final homePageData = Map<String, List<ResponseThumbnailMovie>>();
+    final range = 20;
+    int startIndex = 0;
+    int endIndex = 0 + range;
+    int tvShowIndex = 0;
+    categories.forEach((category) {
+      if (category[0] == 'T' && category[1] == 'V') {
+        homePageData[category] = tvShows[tvShowIndex++];
+      } else {
+        homePageData[category] = movieCinemas.sublist(startIndex, endIndex);
+        startIndex += range;
+        endIndex += range;
+      }
+    });
+
+    finish(resultResponse.length > 0, homePageData);
 
     print("Bench " + watch.elapsed.toString());
   }
 
-  Future<List<dynamic>> _callPrerequisitesApi3() async {
+  Future<List<dynamic>> _callPrerequisitesApi4() async {
     var configureAndCategory;
-    var homePageData;
-    Map<String, List<ResponseThumbnailMovie>> tvshows;
+    var movieCinemas;
+    List<List<ResponseThumbnailMovie>> tvShows;
     try {
       configureAndCategory = await _api.getBothConfigureAndCategory();
 
-      tvshows = await _getTvShowsWithCondition(
+      tvShows = await _getTvShowsWithCondition(
           configureAndCategory[1] as List<String>);
 
-      homePageData = await _api // Categories length equal page count.
-          .getHomePageList((configureAndCategory[1] as List<String>).length);
+      movieCinemas = await _api // Categories length equal page count.
+          .getMovieCinemaList((configureAndCategory[1] as List<String>).length -
+              tvShows.length); // Remove tvshows item
     } catch (e) {
       print("Exception API " + e.toString());
       return [];
@@ -75,24 +92,19 @@ class BlocInitialSplash {
     return [
       configureAndCategory[0] as ResponseConfiguration,
       configureAndCategory[1] as List<String>,
-      homePageData,
-      tvshows
+      movieCinemas,
+      tvShows
     ];
   }
 
-  Future<Map<String, List<ResponseThumbnailMovie>>> _getTvShowsWithCondition(
+  Future<List<List<ResponseThumbnailMovie>>> _getTvShowsWithCondition(
       List<String> categories) async {
-    int countCategory = 0;
-    final result = Map<String, List<ResponseThumbnailMovie>>();
     final tvCategories = categories
         .where((value) => value[0] == 'T' && value[1] == 'V')
         .toList();
     final responseTvCategories =
         await _api.getPopularTvShows(tvCategories.length);
-    tvCategories.forEach((category) {
-      result[category] = responseTvCategories[countCategory++];
-    });
-    return result;
+    return responseTvCategories;
   }
 
   Future _saveLocalPrerequisiteData(
@@ -104,7 +116,7 @@ class BlocInitialSplash {
     _liveStore.setResponseConfiguration = configure;
     // _liveStore.setHomePageData = homePageData;
 
-    // TEMPORARY HIDE THIS
+    // TODO: Full offline flow for HomePage
     // NOT USE RIGHT NOW
     // final db = await _appDb.db;
     // await db.transaction((txn) async {

@@ -32,11 +32,8 @@ class MyApp extends StatelessWidget {
             final maintabArg = settings.arguments as MainTabBarScreenArgs;
             return CupertinoPageRoute(
                 builder: (context) => MainTabBarScreen(
-                    BlocHome.init(
-                        componentInjector.blocHomeComponent,
-                        maintabArg.homePageData,
-                        maintabArg.categories,
-                        maintabArg.tvShowData),
+                    BlocHome.init(componentInjector.blocHomeComponent,
+                        maintabArg.homePageData),
                     componentInjector.blocMainTabbarComponent,
                     componentInjector.blocSearchDetailComponent,
                     componentInjector.blocSearchViewComponent));
