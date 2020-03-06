@@ -1,15 +1,15 @@
 import 'dart:collection';
+import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_configuration.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
-import 'package:Anifrag/network/api_key.dart';
 import 'package:Anifrag/network/requesting.dart';
 import 'package:Anifrag/network/url.dart';
 import 'package:dio/dio.dart';
-import 'package:inject/inject.dart';
 
 abstract class API {
   Future<ResponseConfiguration> getConfiguration();
@@ -20,6 +20,7 @@ abstract class API {
   Future<List<ResponseThumbnailMovie>> getMoreLikeThis(int idMovie);
   Future<List<dynamic>> getBothConfigureAndCategory();
   Future<HashMap<String, List<ResponseSearch>>> searchMovies(String keyword);
+  Future<List<List<ResponseThumbnailMovie>>> getPopularTvShows(int lengthData);
 }
 
 class Api extends API {
@@ -28,6 +29,25 @@ class Api extends API {
   final Url _url;
 
   Api(this._requesting, this._url, this._requestingAbiary);
+
+  @override
+  Future<List<List<ResponseThumbnailMovie>>> getPopularTvShows(
+      int lengthData) async {
+    final array = Uint8List(lengthData);
+    for (int c = 0; c < lengthData; c++) {
+      array[c] = Random().nextInt(10);
+    }
+
+    final result = await Future.wait(array.map<Future>((page) =>
+        _requesting.sendGETv3(_url.popularTvShow, args: {"page": page})));
+
+    return result
+        .map<List<ResponseThumbnailMovie>>((tvshowResponse) =>
+            (tvshowResponse.data['results'] as List)
+                .map((data) => ResponseThumbnailMovie.fromJson(data))
+                .toList())
+        .toList();
+  }
 
   Future<HashMap<String, List<ResponseSearch>>> searchMovies(
       String keyword) async {

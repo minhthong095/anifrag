@@ -1,21 +1,12 @@
-import 'dart:math';
-
 import 'package:Anifrag/bloc/bloc_initial_spalsh.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/di/component.dart';
-import 'package:Anifrag/network/requesting.dart';
-import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:inject/inject.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite/sqflite.dart';
 
-import '../../store/live_store.dart';
-import 'login.dart';
+import 'main_tab_bar.dart';
 import 'no_wifi.dart';
 
-@provide
 class InitialSplashScreen extends StatelessWidget {
   final BlocInitialSplash blocSplash;
 
@@ -45,10 +36,13 @@ class _InitialSplashState extends State<_InitialSplash> {
   bool isVisibleNoWifi = false;
 
   void _initCallInitData() {
-    Provider.of<BlocInitialSplash>(context).init((isSuccess) {
+    Provider.of<BlocInitialSplash>(context)
+        .init((isSuccess, categories, homepageData, tvShowData) {
       isSuccess
           ? Navigator.of(context).pushNamedAndRemoveUntil(
-              MainTabBarScreen.nameRoute, (Route<dynamic> route) => false)
+              MainTabBarScreen.nameRoute, (Route<dynamic> route) => false,
+              arguments:
+                  MainTabBarScreenArgs(categories, homepageData, tvShowData))
           : _switchNoWifi();
     });
   }

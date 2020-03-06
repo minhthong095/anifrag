@@ -1,13 +1,8 @@
-import 'package:Anifrag/config/shared_prefs.dart';
 import 'package:Anifrag/model/responses/response_configuration.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/app_db.dart';
 import 'package:Anifrag/store/live_store.dart';
-import 'package:Anifrag/store/offline/offline_category.dart';
-import 'package:Anifrag/store/offline/offline_configuration_image.dart';
-import 'package:Anifrag/store/offline/offline_home_page_data.dart';
-import 'package:dio/dio.dart';
 import 'package:inject/inject.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -15,16 +10,24 @@ import 'package:sqflite/sqflite.dart';
 class BlocInitialSplash {
   final API _api;
   final AppDb _appDb;
-  final OfflineCategory _offCategory;
-  final OfflineHomePageData _offHomePageData;
+  // final OfflineCategory _offCategory;
+  // final OfflineHomePageData _offHomePageData;
   final LiveStore _liveStore;
 
   // SharedPreferences _prefs;
 
-  BlocInitialSplash(this._api, this._appDb, this._liveStore, this._offCategory,
-      this._offHomePageData);
+  BlocInitialSplash(this._api, this._appDb, this._liveStore
+      // , this._offCategory,
+      //     this._offHomePageData
+      );
 
-  Future init(Function(bool) finish) async {
+  Future init(
+      Function(
+              bool,
+              List<String> categories,
+              List<ResponseThumbnailMovie> homePageData,
+              Map<String, List<ResponseThumbnailMovie>> tvShowData)
+          finish) async {
     String databasePath = await getDatabasesPath();
     String path = databasePath + '/anifrag.db';
     // await deleteDatabase(path);
@@ -39,14 +42,16 @@ class BlocInitialSplash {
 
     if (resultResponse.length > 0) {
       try {
-        await _saveLocalPrerequisiteData(
-            resultResponse[0], resultResponse[1], resultResponse[2]);
+        await _saveLocalPrerequisiteData(resultResponse[0]
+            // , resultResponse[1], resultResponse[2]
+            );
       } catch (e) {} finally {
         await _appDb.closeDb();
       }
     }
 
-    finish(resultResponse.length > 0);
+    finish(resultResponse.length > 0, resultResponse[1], resultResponse[2],
+        resultResponse[3]);
 
     print("Bench " + watch.elapsed.toString());
   }
@@ -54,8 +59,13 @@ class BlocInitialSplash {
   Future<List<dynamic>> _callPrerequisitesApi3() async {
     var configureAndCategory;
     var homePageData;
+    Map<String, List<ResponseThumbnailMovie>> tvshows;
     try {
       configureAndCategory = await _api.getBothConfigureAndCategory();
+
+      tvshows = await _getTvShowsWithCondition(
+          configureAndCategory[1] as List<String>);
+
       homePageData = await _api // Categories length equal page count.
           .getHomePageList((configureAndCategory[1] as List<String>).length);
     } catch (e) {
@@ -65,34 +75,54 @@ class BlocInitialSplash {
     return [
       configureAndCategory[0] as ResponseConfiguration,
       configureAndCategory[1] as List<String>,
-      homePageData
+      homePageData,
+      tvshows
     ];
   }
 
-  Future _saveLocalPrerequisiteData(
-      ResponseConfiguration configure,
-      List<String> categories,
-      List<ResponseThumbnailMovie> homePageData) async {
-    _liveStore.setCategories = categories;
-    _liveStore.setResponseConfiguration = configure;
-    _liveStore.setHomePageData = homePageData;
-    final db = await _appDb.db;
-    await db.transaction((txn) async {
-      final batch = txn.batch();
-      batch.execute(_offCategory.queryDeleteAll());
-      batch.execute(_offHomePageData.queryDeleteAll());
-
-      _offCategory.queryCategories(categories).forEach((queryC) {
-        batch.execute(queryC);
-        // Step 1
-      });
-      _offHomePageData.queryInsertThumbnail(homePageData).forEach((queryH) {
-        batch.execute(queryH);
-        // Step 2
-      });
-      batch.commit();
-      // Step 3
+  Future<Map<String, List<ResponseThumbnailMovie>>> _getTvShowsWithCondition(
+      List<String> categories) async {
+    int countCategory = 0;
+    final result = Map<String, List<ResponseThumbnailMovie>>();
+    final tvCategories = categories
+        .where((value) => value[0] == 'T' && value[1] == 'V')
+        .toList();
+    final responseTvCategories =
+        await _api.getPopularTvShows(tvCategories.length);
+    tvCategories.forEach((category) {
+      result[category] = responseTvCategories[countCategory++];
     });
+    return result;
+  }
+
+  Future _saveLocalPrerequisiteData(
+    ResponseConfiguration configure,
+    // List<String> categories,
+    // List<ResponseThumbnailMovie> homePageData
+  ) async {
+    // _liveStore.setCategories = categories;
+    _liveStore.setResponseConfiguration = configure;
+    // _liveStore.setHomePageData = homePageData;
+
+    // TEMPORARY HIDE THIS
+    // NOT USE RIGHT NOW
+    // final db = await _appDb.db;
+    // await db.transaction((txn) async {
+    //   final batch = txn.batch();
+    //   batch.execute(_offCategory.queryDeleteAll());
+    //   batch.execute(_offHomePageData.queryDeleteAll());
+
+    //   _offCategory.queryCategories(categories).forEach((queryC) {
+    //     batch.execute(queryC);
+    //     // Step 1
+    //   });
+    //   _offHomePageData.queryInsertThumbnail(homePageData).forEach((queryH) {
+    //     batch.execute(queryH);
+    //     // Step 2
+    //   });
+    //   batch.commit();
+    //   // Step 3
+    // });
     // Step 4
     // These steps are present how the flow run
   }

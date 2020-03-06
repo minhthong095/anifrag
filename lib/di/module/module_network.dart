@@ -4,7 +4,6 @@ import 'package:Anifrag/network/requesting.dart';
 import 'package:Anifrag/network/url.dart';
 import 'package:dio/dio.dart';
 import 'package:inject/inject.dart';
-import 'package:sqflite/sqflite.dart';
 
 const baseUrlApiary = const Qualifier(#baseUrlApiary);
 

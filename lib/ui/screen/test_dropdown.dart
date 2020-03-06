@@ -1,13 +1,11 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/ui/widget/custom_shadow_wrap.dart';
 import 'package:Anifrag/ui/widget/small_arrow_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
-import 'dart:math' as math;
-
 import 'package:flutter/rendering.dart';
 
 class TestDropDown extends StatelessWidget {
@@ -267,7 +265,6 @@ class RouteVirgilAaronDropDown extends PopupRoute {
         coordinateRect.height / 2 -
         coordinateRect.height;
     final topCoordinateRect = coordinateRect.top;
-
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop(defaultSeason);

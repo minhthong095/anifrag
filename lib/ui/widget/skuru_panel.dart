@@ -1,9 +1,9 @@
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:Anifrag/config/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:ui' as ui;
 
 class SkuruPanel extends StatelessWidget {
   /// Hard code, this is a bug. Temporary have not solution yet.
@@ -135,24 +135,6 @@ class __SkyCustomPaintState extends State<_SkyCustomPaint>
                   backgroundColor: widget.backgroundColor,
                   offsetXCircle: _paddingRightTitle,
                   radiusAnimation: _animation.value),
-            );
-          },
-        );
-
-        return TweenAnimationBuilder<double>(
-          tween: Tween<double>(
-              begin: 0, end: (widget.percentPoint * pi) / 5), // 1 to 10
-          curve: Curves.easeInOutQuart,
-          duration: Duration(seconds: 2),
-          builder: (_, value, child) {
-            return CustomPaint(
-              size: constraint.biggest,
-              painter: _Sky(
-                  colorValue: widget.colorValue,
-                  percentPoint: widget.percentPoint,
-                  backgroundColor: widget.backgroundColor,
-                  offsetXCircle: _paddingRightTitle,
-                  radiusAnimation: value),
             );
           },
         );

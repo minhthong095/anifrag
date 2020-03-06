@@ -1,7 +1,5 @@
 import 'package:Anifrag/network/api_key.dart';
-import 'package:Anifrag/di/module/module_network.dart';
 import 'package:dio/dio.dart';
-import 'package:inject/inject.dart';
 
 abstract class Requesting {
   final Dio dio;

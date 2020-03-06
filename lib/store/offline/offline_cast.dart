@@ -1,8 +1,4 @@
 import 'package:Anifrag/model/responses/response_cast.dart';
-import 'package:Anifrag/model/responses/response_home_page_movie.dart';
-import 'package:Anifrag/store/app_db.dart';
-import 'package:Anifrag/store/offline/offline_movie.dart';
-import 'package:inject/inject.dart';
 
 import '../database_config.dart';
 

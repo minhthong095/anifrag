@@ -1,6 +1,5 @@
 import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
-import 'package:Anifrag/config/mock_data.dart';
 import 'package:Anifrag/config/utils.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/store/live_store.dart';

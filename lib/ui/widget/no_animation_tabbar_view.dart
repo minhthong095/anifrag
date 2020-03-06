@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
-import 'package:Anifrag/config/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -65,7 +64,7 @@ class _NoAnimationTabbarView extends State<NoAnimationTabBarView>
 
   void _initPopupSubscription() {
     _blocMainTabbar = Provider.of<BlocMainTabbar>(context, listen: false);
-    _blocMainTabbar.subjectPopup.stream
+    _blocMainTabbar.statePopup.stream
         .where(
             (duration) => _popupController.status == AnimationStatus.dismissed)
         .listen((duration) {

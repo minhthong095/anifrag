@@ -1,31 +1,28 @@
-import 'dart:async';
-
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/bloc/bloc_search_detail.dart';
+import 'package:Anifrag/bloc/bloc_search_view.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/app_icons_icons.dart';
-import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/di/component.dart';
+import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/ui/screen/home.dart';
 import 'package:Anifrag/ui/screen/search.dart';
-import 'package:Anifrag/ui/widget/no_animation_tabbar_view.dart';
 import 'package:Anifrag/ui/widget/no_splash_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:inject/inject.dart';
 import 'package:provider/provider.dart';
 
-@provide
 class MainTabBarScreen extends StatelessWidget {
   static const String nameRoute = '/mainTabBar';
 
   final BlocHome blocHome;
   final BlocMainTabbar blocMainTabbar;
-  final SearchScreen searchScreen;
+  final BlocSearchDetail blocSearchDetail;
+  final BlocSearchView blocSearchView;
 
-  MainTabBarScreen(this.blocHome, this.blocMainTabbar, this.searchScreen);
+  MainTabBarScreen(this.blocHome, this.blocMainTabbar, this.blocSearchDetail,
+      this.blocSearchView);
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +34,16 @@ class MainTabBarScreen extends StatelessWidget {
           dispose: (_, bloc) => bloc.dispose(),
         )
       ],
-      child: _MainTabBarScreen(searchScreen: searchScreen),
+      child: _MainTabBarScreen(this.blocSearchDetail, this.blocSearchView),
     );
   }
 }
 
 class _MainTabBarScreen extends StatefulWidget {
-  final SearchScreen searchScreen;
+  final BlocSearchDetail blocSearchDetail;
+  final BlocSearchView blocSearchView;
 
-  _MainTabBarScreen({this.searchScreen});
+  _MainTabBarScreen(this.blocSearchDetail, this.blocSearchView);
 
   @override
   _MainTabBarScreenState createState() => _MainTabBarScreenState();
@@ -75,7 +73,7 @@ class _MainTabBarScreenState extends State<_MainTabBarScreen>
             return Home();
             break;
           case 1:
-            return widget.searchScreen;
+            return SearchScreen(widget.blocSearchDetail, widget.blocSearchView);
             break;
         }
         return null;
@@ -94,6 +92,15 @@ class _MainTabBarScreenState extends State<_MainTabBarScreen>
     //   ),
     // );
   }
+}
+
+class MainTabBarScreenArgs {
+  final List<String> categories;
+  final List<ResponseThumbnailMovie> homePageData;
+  final Map<String, List<ResponseThumbnailMovie>> tvShowData;
+
+  const MainTabBarScreenArgs(
+      this.categories, this.homePageData, this.tvShowData);
 }
 
 class TabBarSvg extends StatefulWidget {
@@ -162,4 +169,11 @@ class _TestTab extends State<TabBarSvg> with TickerProviderStateMixin {
           ],
         ),
       );
+}
+
+class MainTabBarArg {
+  final List<String> categories;
+  final List<ResponseThumbnailMovie> homePageData;
+  final Map<String, List<ResponseThumbnailMovie>> tvShowData;
+  MainTabBarArg(this.categories, this.homePageData, this.tvShowData);
 }

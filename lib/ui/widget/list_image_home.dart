@@ -1,16 +1,9 @@
-import 'dart:math';
-
-import 'package:Anifrag/bloc/bloc_home.dart';
-import 'package:Anifrag/config/mock_data.dart';
-import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/config/utils.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/store/live_store.dart';
-import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/home.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ListImageHome extends StatefulWidget {
   final List<ResponseThumbnailMovie> listHomePageMovie;

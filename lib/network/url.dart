@@ -1,5 +1,3 @@
-import 'package:inject/inject.dart';
-
 abstract class Url {
   static const String baseUrl = "https://api.themoviedb.org/3";
   static const String baseUrlAbiary =
@@ -12,6 +10,7 @@ abstract class Url {
   String movieDetail(int idMovie);
   String movieCast(int idMovie);
   String moreLikeThis(int idMovie);
+  String popularTvShow;
 }
 
 class ImplUrl extends Url {
@@ -36,4 +35,7 @@ class ImplUrl extends Url {
   @override
   String moreLikeThis(int idMovie) =>
       "/movie/" + idMovie.toString() + "/similar";
+
+  @override
+  String get popularTvShow => "/tv/popular";
 }

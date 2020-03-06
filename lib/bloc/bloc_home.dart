@@ -1,19 +1,14 @@
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/bloc/dispose_bag.dart';
-import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
 import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/app_db.dart';
-import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/store/offline/offline_cast.dart';
 import 'package:Anifrag/store/offline/offline_movie.dart';
-import 'package:Anifrag/ui/screen/detail.dart';
-import 'package:Anifrag/ui/widget/loading_route.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:inject/inject.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -24,7 +19,10 @@ const int _maxNumEachPage = 20;
 
 @provide
 class BlocHome with DisposeBag {
-  final LiveStore _liveStore;
+  // final LiveStore _liveStore;
+  List<ResponseThumbnailMovie> homePageData;
+  List<String> categories;
+  Map<String, List<ResponseThumbnailMovie>> tvShowData;
   final API _api;
   final OfflineMovie _offMovie;
   final OfflineCast _offCast;
@@ -36,28 +34,44 @@ class BlocHome with DisposeBag {
   final subjectMoveDetailState = PublishSubject<
       Either<Null, Tuple4<ResponseMovie, List<ResponseCast>, bool, String>>>();
 
-  BlocHome(this._liveStore, this._api, this._offMovie, this._offCast,
-      this._appDb, this._blocMainTabbar, @baseUrlImg this.baseUrlImage) {
+  static BlocHome init(
+      BlocHome blocModule,
+      List<ResponseThumbnailMovie> homePageData,
+      List<String> categories,
+      Map<String, List<ResponseThumbnailMovie>> tvShowData) {
+    blocModule
+      ..homePageData = homePageData
+      ..categories = categories
+      ..tvShowData = tvShowData;
+    return blocModule;
+  }
+
+  BlocHome(
+      // this._liveStore,
+      this._api,
+      this._offMovie,
+      this._offCast,
+      this._appDb,
+      this._blocMainTabbar,
+      @baseUrlImg this.baseUrlImage) {
     dropStream(subjectMoveDetailState);
   }
 
-  List<ResponseThumbnailMovie> listCarousel() {
+  List<ResponseThumbnailMovie> getListCarousel() {
     // First 20 records is belong to carousel/
-    return _liveStore.getHomePageData
-        .sublist(_indexForListCarousel, _maxNumEachPage);
+    return homePageData.sublist(_indexForListCarousel, _maxNumEachPage);
   }
 
-  Map<String, List<ResponseThumbnailMovie>> listRestMovies() {
+  Map<String, List<ResponseThumbnailMovie>> getListRestMovies() {
     final result = Map<String, List<ResponseThumbnailMovie>>();
     int pivot = _indexForListCarousel + 1;
     int lastEnd = _maxNumEachPage;
 
-    while (pivot < _liveStore.getCategories.length) {
+    while (pivot < categories.length) {
       final start = lastEnd;
       final end = start + _maxNumEachPage;
       lastEnd = end;
-      result[_liveStore.getCategories[pivot]] =
-          _liveStore.getHomePageData.sublist(start, end);
+      result[categories[pivot]] = homePageData.sublist(start, end);
       pivot++;
     }
     return result;
@@ -124,5 +138,5 @@ class BlocHome with DisposeBag {
     }
   }
 
-  String get getMainCategory => _liveStore.getCategories[0];
+  String get getMainCategory => categories[0];
 }

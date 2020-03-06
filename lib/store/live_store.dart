@@ -3,8 +3,6 @@ import 'dart:collection';
 import 'package:Anifrag/model/responses/response_configuration.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
 
 @provide

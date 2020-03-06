@@ -1,9 +1,5 @@
-import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
-import 'package:Anifrag/store/app_db.dart';
 import 'package:Anifrag/store/database_config.dart';
-import 'package:inject/inject.dart';
-import 'package:sqflite/sqflite.dart';
 
 abstract class OfflineMovie {
   String queryDeleteOneMovie(int idMovie);

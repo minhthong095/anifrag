@@ -2,7 +2,6 @@ import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/ui/widget/skuru_panel.dart';
 import 'package:Anifrag/ui/widget/text_more.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ContentSearchDetail extends StatelessWidget {

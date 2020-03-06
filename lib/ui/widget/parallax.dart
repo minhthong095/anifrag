@@ -1,11 +1,7 @@
-import 'package:Anifrag/config/app_color.dart';
-import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/config/utils.dart';
-import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lottie/flutter_lottie.dart';
 
 class Parallax extends StatefulWidget {
   final String originalTitle;

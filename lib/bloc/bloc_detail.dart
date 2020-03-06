@@ -1,18 +1,10 @@
-import 'dart:ffi';
-
 import 'package:Anifrag/bloc/dispose_bag.dart';
-import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
-import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
-import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/live_store.dart';
-import 'package:Anifrag/store/offline/offline_movie.dart';
-import 'package:Anifrag/ui/screen/detail.dart';
-import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
@@ -24,25 +16,10 @@ class BlocDetail with DisposeBag {
   final LiveStore _liveStore;
   final API _api;
   bool _isRunFirstTime = true;
-
-  BlocDetail(this._liveStore, this._api, @baseUrlImg this.baseUrlImage) {
-    dropStream(_subjectCallFinishTransition);
-  }
-
-  static BlocDetail initWithData(
-          {@required BlocDetail blocDetailModule,
-          DetailScreenArgument argument}) =>
-      blocDetailModule
-        ..setMovie = argument.movie
-        .._tagPrefix = argument.tagPrefix
-        ..setCasts = argument.casts;
-
   ResponseMovie _movie;
   ResponseMovie get getMovie => _movie;
-  set setMovie(ResponseMovie movie) => _movie = movie;
   List<ResponseCast> _casts;
   List<ResponseCast> get getCasts => _casts;
-  set setCasts(List<ResponseCast> value) => _casts = value;
   String _tagPrefix;
 
   String get tagImg {
@@ -51,6 +28,17 @@ class BlocDetail with DisposeBag {
 
   String get pathImg {
     return _liveStore.baseUrlImage + _movie.posterPath;
+  }
+
+  static BlocDetail initWithData(BlocDetail blocDetailModule,
+          ResponseMovie movie, String tagPrefix, List<ResponseCast> cast) =>
+      blocDetailModule
+        .._movie = movie
+        .._tagPrefix = tagPrefix
+        .._casts = cast;
+
+  BlocDetail(this._liveStore, this._api, @baseUrlImg this.baseUrlImage) {
+    dropStream(_subjectCallFinishTransition);
   }
 
   // ignore: close_sinks

@@ -1,25 +1,11 @@
 import 'package:Anifrag/bloc/bloc_search_detail.dart';
 import 'package:Anifrag/bloc/bloc_search_view.dart';
 import 'package:Anifrag/config/app_color.dart';
-import 'package:Anifrag/config/mock_data.dart';
-import 'package:Anifrag/config/path.dart';
-import 'package:Anifrag/config/utils.dart';
-import 'package:Anifrag/di/component.dart';
-import 'package:Anifrag/model/responses/response_search.dart';
-import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/screen/search_detail.dart';
-import 'package:Anifrag/ui/widget/indicator.dart';
-import 'package:Anifrag/ui/widget/search_item.dart';
 import 'package:Anifrag/ui/widget/serach_view.dart';
-import 'package:dartz/dartz.dart' as prefix;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:inject/inject.dart';
-import 'package:provider/provider.dart';
 
-@provide
 class SearchScreen extends StatefulWidget {
   final BlocSearchDetail blocSearchDetail;
   final BlocSearchView blocSearchView;

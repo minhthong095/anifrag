@@ -1,28 +1,21 @@
 import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
-import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/config/utils.dart';
-import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/ui/widget/button_circle.dart';
-import 'package:Anifrag/ui/widget/detail_tabbar.dart';
-
 import 'package:Anifrag/ui/widget/comment.dart';
+import 'package:Anifrag/ui/widget/detail_tabbar.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
-import 'package:Anifrag/ui/widget/loading_route.dart';
 import 'package:Anifrag/ui/widget/text_percent.dart';
 import 'package:Anifrag/ui/widget/text_star.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:inject/inject.dart';
 import 'package:provider/provider.dart';
 
-@provide
 class DetailScreen extends StatelessWidget {
-  DetailScreenArgument _argument;
   static const String nameRoute = '/detail';
   static const Duration durationTransition = const Duration(milliseconds: 450);
 
@@ -31,20 +24,13 @@ class DetailScreen extends StatelessWidget {
 
   DetailScreen(this.blocHome, this.blocDetail);
 
-  static DetailScreen argument(
-      {@required DetailScreen detailScreenModule,
-      @required DetailScreenArgument argument}) {
-    return detailScreenModule.._argument = argument;
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         Provider<BlocHome>.value(value: blocHome),
         Provider<BlocDetail>(
-          create: (ctx) => BlocDetail.initWithData(
-              blocDetailModule: blocDetail, argument: _argument),
+          create: (ctx) => blocDetail,
           dispose: (_, bloc) {
             bloc.dispose();
           },

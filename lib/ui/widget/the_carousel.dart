@@ -1,20 +1,12 @@
-import 'dart:math';
-
 import 'package:Anifrag/bloc/bloc_home.dart';
-import 'package:Anifrag/config/mock_data.dart';
-import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/config/utils.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/store/live_store.dart';
-import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/home.dart';
-import 'package:Anifrag/ui/screen/main_tab_bar.dart';
 import 'package:Anifrag/ui/widget/hero_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'loading_route.dart';
 
 class TheCarousel extends StatefulWidget {
   @override
@@ -57,9 +49,9 @@ class _TheCarousel extends State<TheCarousel> {
         onPageChanged: (index) {},
         physics: ClampingScrollPhysics(),
         controller: _pageController,
-        itemCount: _blocHome.listCarousel().length,
+        itemCount: _blocHome.getListCarousel().length,
         itemBuilder: (context, index) {
-          final movie = _blocHome.listCarousel().elementAt(index);
+          final movie = _blocHome.getListCarousel().elementAt(index);
           //     final movie = _blocHome.baseUrlImage() +
           // _blocHome.listCarousel().elementAt(index).posterPath;
           return AnimatedBuilder(

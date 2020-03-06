@@ -1,11 +1,7 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/config/utils.dart';
-import 'package:Anifrag/store/live_store.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
-import 'default_image_shimmer.dart';
 
 class SearchItemScreenTest extends StatelessWidget {
   @override

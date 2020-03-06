@@ -1,13 +1,11 @@
 import 'dart:collection';
 
 import 'package:Anifrag/bloc/dispose_bag.dart';
-import 'package:Anifrag/bloc/mixin/prefix_url_mixin.dart';
 import 'package:Anifrag/di/module/module_store.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
 import 'package:rxdart/rxdart.dart';
@@ -19,28 +17,26 @@ class BlocSearchView with DisposeBag {
   final API _api;
   final LiveStore _liveStore;
   final String baseUrlImage;
-  final observable = PublishSubject<String>();
-  final ValueNotifier<bool> valueNotifyIsLoading = ValueNotifier(false);
-
-  final subjectSearchState =
+  final _observable = PublishSubject<String>();
+  final ValueNotifier<bool> stateLoading = ValueNotifier(false);
+  final stateSearch =
       PublishSubject<Tuple2<SearchState, List<ResponseSearch>>>();
-
   String latestKeyword = '';
 
   BlocSearchView(this._api, this._liveStore, @baseUrlImg this.baseUrlImage) {
-    dropSubscription(observable
+    dropSubscription(_observable
         .doOnData((keyword) {
           if (keyword == '')
-            subjectSearchState.sink.add(Tuple2(SearchState.kickoff, null));
+            stateSearch.sink.add(Tuple2(SearchState.kickoff, null));
         })
         .where((String keyword) => keyword != '')
         .map((String keywrod) => keywrod.trim().replaceAll(RegExp(' +'), ' '))
         .doOnData((String keyword) {
           latestKeyword = keyword;
-          valueNotifyIsLoading.value = true;
+          stateLoading.value = true;
           final searchHistory = _liveStore.getSearchHistory[keyword];
           if (searchHistory != null) {
-            subjectSearchState.sink.add(Tuple2(
+            stateSearch.sink.add(Tuple2(
                 searchHistory.length > 0
                     ? SearchState.fulfill
                     : SearchState.empty,
@@ -57,21 +53,21 @@ class BlocSearchView with DisposeBag {
           if (latestKeyword == response.keys.first) {
             if (response.values.first == null ||
                 response.values.first.length == 0)
-              subjectSearchState.sink.add(Tuple2(SearchState.empty, null));
+              stateSearch.sink.add(Tuple2(SearchState.empty, null));
             else
-              subjectSearchState.sink.add(Tuple2(SearchState.fulfill,
+              stateSearch.sink.add(Tuple2(SearchState.fulfill,
                   _liveStore.getSearchHistory[latestKeyword]));
           }
         }));
 
-    dropSubscription(subjectSearchState.listen((searchState) {
-      valueNotifyIsLoading.value = false;
+    dropSubscription(stateSearch.listen((searchState) {
+      stateLoading.value = false;
     }));
 
-    dropNotifier(valueNotifyIsLoading);
+    dropNotifier(stateLoading);
   }
 
   void searchMovies(String keyword) async {
-    observable.add(keyword);
+    _observable.add(keyword);
   }
 }

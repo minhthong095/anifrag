@@ -2,11 +2,9 @@ import 'package:Anifrag/bloc/bloc_search_detail.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
-import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/ui/widget/content_search_detail.dart';
 import 'package:Anifrag/ui/widget/parallax.dart';
 import 'package:Anifrag/ui/widget/serach_view.dart';
-import 'package:Anifrag/ui/widget/skuru_panel.dart';
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +38,7 @@ class _SearchDetailViewState extends State<SearchDetailView> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
-      valueListenable: widget.blocSearchDetail.notifyIsLoading,
+      valueListenable: widget.blocSearchDetail.stateLoading,
       builder: (_, isLoading, ___) {
         return AnimatedCrossFade(
           crossFadeState:
@@ -51,7 +49,7 @@ class _SearchDetailViewState extends State<SearchDetailView> {
           firstChild: Container(
             child: ValueListenableBuilder<
                 dartz.Tuple3<SearchDetailState, ResponseMovie, ImageProvider>>(
-              valueListenable: widget.blocSearchDetail.notifyDetailState,
+              valueListenable: widget.blocSearchDetail.stateNotifyDetail,
               builder: (_, detailStateData, ___) {
                 switch (detailStateData.value1) {
                   case SearchDetailState.error:

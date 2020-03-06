@@ -4,7 +4,6 @@ import 'package:Anifrag/bloc/bloc_search_view.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/config/utils.dart';
-import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:Anifrag/ui/widget/search_item.dart';
@@ -104,7 +103,7 @@ class _SearchViewState extends State<_SearchView> {
                     Padding(
                       padding: EdgeInsets.only(right: 10),
                       child: ValueListenableBuilder<bool>(
-                        valueListenable: _blocSearchView.valueNotifyIsLoading,
+                        valueListenable: _blocSearchView.stateLoading,
                         builder: (_, isLoading, ___) {
                           if (isLoading) {
                             return Platform.isAndroid
@@ -130,7 +129,7 @@ class _SearchViewState extends State<_SearchView> {
                 child: StreamBuilder<
                     dartz.Tuple2<SearchState, List<ResponseSearch>>>(
                   initialData: dartz.Tuple2(SearchState.kickoff, []),
-                  stream: _blocSearchView.subjectSearchState,
+                  stream: _blocSearchView.stateSearch,
                   builder: (_, snapshot) {
                     switch (snapshot.data.value1) {
                       case SearchState.kickoff:

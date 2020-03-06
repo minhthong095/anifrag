@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:Anifrag/config/app_color.dart';
 import 'package:flutter/cupertino.dart';

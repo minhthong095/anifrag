@@ -1,22 +1,13 @@
+import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
-import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
-import 'package:Anifrag/bloc/bloc_search_detail.dart';
-import 'package:Anifrag/bloc/bloc_search_view.dart';
 import 'package:Anifrag/di/component.dart';
-import 'package:Anifrag/model/responses/response_search.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
 import 'package:Anifrag/ui/screen/initial_splash.dart';
-import 'package:Anifrag/ui/screen/login.dart';
 import 'package:Anifrag/ui/screen/main_tab_bar.dart';
-import 'package:Anifrag/ui/screen/test_dropdown.dart';
-import 'package:Anifrag/ui/widget/custom_shadow_wrap.dart';
-import 'package:Anifrag/ui/widget/loading_route.dart';
-import 'package:Anifrag/ui/widget/small_arrow_dropdown.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
-import 'package:inject/inject.dart';
 
+// TODO: Get rid of all Provider. Avoid using them, instead use constructor to send BLoC arguments for easy track.
 class MyApp extends StatelessWidget {
   // final MainTabBarScreen mainTabBarScreen;
   // final DetailScreen detailScreen;
@@ -31,41 +22,37 @@ class MyApp extends StatelessWidget {
   // All routes must be declare in onGeneratRoute also.
   @override
   Widget build(BuildContext context) {
-    // final responseSearch = ResponseSearch(
-    //   id: 1,
-    //   originalTitle: 'Angel has fallen',
-    //   popularity: 12,
-    //   posterPath:
-    //       'https://image.tmdb.org/t/p/w500/fapXd3v9qTcNBTm39ZC4KUVQDNf.jpg',
-    //   releaseDate: DateTime.now(),
-    //   runtime: 123,
-    // );
-
     return MaterialApp(
-      home: componentInjector.initialSplashScreen,
-      // home: TestDropDown(),
-      // home: TestScrollWheelDropdown(),
-      // home: TestDropDown(),
-      // home: TestCustomShadowWrap(),
-      // home: SearchDetail(
-      //   onTap: () {},
-      // ),
+      home: InitialSplashScreen(componentInjector.blocInitialSplashComponent),
       onGenerateRoute: (settings) {
         switch (settings.name) {
 
           ///
           case MainTabBarScreen.nameRoute:
+            final maintabArg = settings.arguments as MainTabBarScreenArgs;
             return CupertinoPageRoute(
-                builder: (context) => componentInjector.mainTabBarScreen);
+                builder: (context) => MainTabBarScreen(
+                    BlocHome.init(
+                        componentInjector.blocHomeComponent,
+                        maintabArg.homePageData,
+                        maintabArg.categories,
+                        maintabArg.tvShowData),
+                    componentInjector.blocMainTabbarComponent,
+                    componentInjector.blocSearchDetailComponent,
+                    componentInjector.blocSearchViewComponent));
 
           ///
           case DetailScreen.nameRoute:
+            final _argument = settings.arguments as DetailScreenArgument;
+            final blocDetail = BlocDetail.initWithData(
+                componentInjector.blocDetailComponent,
+                _argument.movie,
+                _argument.tagPrefix,
+                _argument.casts);
             return PageRouteBuilder(
                 transitionDuration: DetailScreen.durationTransition,
-                pageBuilder: (_, __, ___) => DetailScreen.argument(
-                      detailScreenModule: componentInjector.detailScreen,
-                      argument: settings.arguments,
-                    ));
+                pageBuilder: (_, __, ___) => DetailScreen(
+                    componentInjector.blocHomeComponent, blocDetail));
         }
 
         return MaterialPageRoute(

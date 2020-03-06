@@ -1,24 +1,17 @@
 import 'dart:io';
 
 import 'package:Anifrag/bloc/bloc_home.dart';
-import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/config/app_color.dart';
-import 'package:Anifrag/config/mock_data.dart';
-import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
-import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/ui/mixin/mixin_move_detail.dart';
-import 'package:Anifrag/ui/widget/loading_route.dart';
-import 'package:Anifrag/ui/widget/the_carousel.dart';
 import 'package:Anifrag/ui/widget/list_image_home.dart';
-import 'package:dartz/dartz.dart' as prefix;
+import 'package:Anifrag/ui/widget/the_carousel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'detail.dart';
-
+// TODO: Remove provider
 class Home extends StatefulWidget {
   @override
   $Home createState() => $Home();
@@ -50,7 +43,7 @@ class $Home extends State<Home>
   }
 
   void _initRestMovies() {
-    _rest = _blocHome.listRestMovies();
+    _rest = _blocHome.getListRestMovies();
   }
 
   void _initBlocHome() {
