@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/app_color.dart';
-import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/ui/mixin/mixin_move_detail.dart';
 import 'package:Anifrag/ui/widget/list_image_home.dart';
 import 'package:Anifrag/ui/widget/the_carousel.dart';
@@ -11,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-// TODO: Remove provider
+// TODO: Consider remove provider
 class Home extends StatefulWidget {
   @override
   $Home createState() => $Home();
@@ -25,12 +24,10 @@ class $Home extends State<Home>
 
   BlocHome _blocHome;
   OnItemTap _onItemTap;
-  Map<String, List<ResponseThumbnailMovie>> _rest;
 
   @override
   void didChangeDependencies() {
     _initBlocHome();
-    _initRestMovies();
     _initOnItemTap();
     initListenerMoveToDetailState(context, _blocHome);
     super.didChangeDependencies();
@@ -40,10 +37,6 @@ class $Home extends State<Home>
     _onItemTap = (int idMovie, String prefix) {
       _blocHome.moveDetailProcess(idMovie, prefix);
     };
-  }
-
-  void _initRestMovies() {
-    _rest = _blocHome.getListRestMovies();
   }
 
   void _initBlocHome() {
@@ -94,7 +87,7 @@ class $Home extends State<Home>
               create: (context) => _onItemTap,
               child: TheCarousel(),
             ),
-            for (String categoryTitle in _rest.keys)
+            for (String categoryTitle in _blocHome.getListRestMovies.keys)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -108,7 +101,8 @@ class $Home extends State<Home>
                       baseUrlImg: _blocHome.baseUrlImage,
                       heroTagPrefix: categoryTitle,
                       padding: EdgeInsets.only(left: paddingInHome),
-                      listHomePageMovie: _rest[categoryTitle],
+                      listHomePageMovie:
+                          _blocHome.getListRestMovies[categoryTitle],
                     ),
                   )
                 ],

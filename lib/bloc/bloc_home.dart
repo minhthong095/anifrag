@@ -51,18 +51,18 @@ class BlocHome with DisposeBag {
     dropStream(subjectMoveDetailState);
   }
 
-  List<ResponseThumbnailMovie> getListCarousel() {
+  List<ResponseThumbnailMovie> get getListCarousel {
     // First 20 records is belong to carousel/
     return homePageData[homePageData.keys.first];
   }
 
-  Map<String, List<ResponseThumbnailMovie>> getListRestMovies() {
+  Map<String, List<ResponseThumbnailMovie>> get getListRestMovies {
     final clone = homePageData;
     clone.remove(homePageData.keys.first);
     return clone;
   }
 
-  void moveDetailProcess(int idMovie, String prefix) async {
+  moveDetailProcess(int idMovie, String prefix) async {
     bool isCallFailed = false;
     ResponseMovie movieDetail;
     List<ResponseCast> movieCasts;
