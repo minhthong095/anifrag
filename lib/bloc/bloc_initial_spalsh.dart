@@ -32,6 +32,7 @@ class BlocInitialSplash {
     // await deleteDatabase(path);
     print("PATH DATABASE " + path);
 
+    final homePageData = Map<String, List<ResponseThumbnailMovie>>();
     final watch = Stopwatch()..start();
 
     await _appDb.createDb();
@@ -46,26 +47,25 @@ class BlocInitialSplash {
       } catch (e) {} finally {
         await _appDb.closeDb();
       }
+
+      final categories = resultResponse[1] as List<String>;
+      final movieCinemas = resultResponse[2] as List<ResponseThumbnailMovie>;
+      final tvShows = resultResponse[3] as List<List<ResponseThumbnailMovie>>;
+
+      final range = 20;
+      int startIndex = 0;
+      int endIndex = 0 + range;
+      int tvShowIndex = 0;
+      categories.forEach((category) {
+        if (category[0] == 'T' && category[1] == 'V') {
+          homePageData[category] = tvShows[tvShowIndex++];
+        } else {
+          homePageData[category] = movieCinemas.sublist(startIndex, endIndex);
+          startIndex += range;
+          endIndex += range;
+        }
+      });
     }
-
-    final categories = resultResponse[1] as List<String>;
-    final movieCinemas = resultResponse[2] as List<ResponseThumbnailMovie>;
-    final tvShows = resultResponse[3] as List<List<ResponseThumbnailMovie>>;
-
-    final homePageData = Map<String, List<ResponseThumbnailMovie>>();
-    final range = 20;
-    int startIndex = 0;
-    int endIndex = 0 + range;
-    int tvShowIndex = 0;
-    categories.forEach((category) {
-      if (category[0] == 'T' && category[1] == 'V') {
-        homePageData[category] = tvShows[tvShowIndex++];
-      } else {
-        homePageData[category] = movieCinemas.sublist(startIndex, endIndex);
-        startIndex += range;
-        endIndex += range;
-      }
-    });
 
     finish(resultResponse.length > 0, homePageData);
 

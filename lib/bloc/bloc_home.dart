@@ -23,6 +23,7 @@ const int _maxNumEachPage = 20;
 class BlocHome with DisposeBag {
   // final LiveStore _liveStore;
   LinkedHashMap<String, List<ResponseThumbnailMovie>> homePageData;
+  Map<String, List<ResponseThumbnailMovie>> _listRestMovies;
   final API _api;
   final OfflineMovie _offMovie;
   final OfflineCast _offCast;
@@ -57,9 +58,13 @@ class BlocHome with DisposeBag {
   }
 
   Map<String, List<ResponseThumbnailMovie>> get getListRestMovies {
-    final clone = homePageData;
-    clone.remove(homePageData.keys.first);
-    return clone;
+    if (_listRestMovies == null) {
+      final clone = LinkedHashMap<String, List<ResponseThumbnailMovie>>();
+      clone.addAll(homePageData);
+      clone.remove(homePageData.keys.first);
+      _listRestMovies = clone;
+    }
+    return _listRestMovies;
   }
 
   moveDetailProcess(int idMovie, String prefix) async {
