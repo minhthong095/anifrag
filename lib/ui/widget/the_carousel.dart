@@ -49,9 +49,9 @@ class _TheCarousel extends State<TheCarousel> {
         onPageChanged: (index) {},
         physics: ClampingScrollPhysics(),
         controller: _pageController,
-        itemCount: _blocHome.getListCarousel().length,
+        itemCount: _blocHome.getListCarousel.length,
         itemBuilder: (context, index) {
-          final movie = _blocHome.getListCarousel().elementAt(index);
+          final movie = _blocHome.getListCarousel.elementAt(index);
           //     final movie = _blocHome.baseUrlImage() +
           // _blocHome.listCarousel().elementAt(index).posterPath;
           return AnimatedBuilder(
