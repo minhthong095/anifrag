@@ -11,6 +11,7 @@ ResponseThumbnailMovie _$ResponseThumbnailMovieFromJson(
   return ResponseThumbnailMovie(
     id: json['id'] as int,
     posterPath: json['poster_path'] as String,
+    lcIsTv: json['lcIsTv'] as bool ?? false,
   );
 }
 
@@ -19,4 +20,5 @@ Map<String, dynamic> _$ResponseThumbnailMovieToJson(
     <String, dynamic>{
       'id': instance.id,
       'poster_path': instance.posterPath,
+      'lcIsTv': instance.lcIsTv,
     };

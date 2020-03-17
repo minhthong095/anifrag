@@ -3,9 +3,9 @@ import 'dart:collection';
 import 'package:Anifrag/bloc/bloc_maintab_bar.dart';
 import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/di/module/module_store.dart';
+import 'package:Anifrag/model/business/business_movie.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
-import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/app_db.dart';
 import 'package:Anifrag/store/offline/offline_cast.dart';
@@ -15,9 +15,6 @@ import 'package:inject/inject.dart';
 import 'package:rxdart/subjects.dart';
 
 enum MoveDetailState { loading, finish }
-
-const int _indexForListCarousel = 0;
-const int _maxNumEachPage = 20;
 
 @provide
 class BlocHome with DisposeBag {
@@ -33,7 +30,7 @@ class BlocHome with DisposeBag {
   BlocMainTabbar get blocMainTabbar => _blocMainTabbar;
 
   final subjectMoveDetailState = PublishSubject<
-      Either<Null, Tuple4<ResponseMovie, List<ResponseCast>, bool, String>>>();
+      Either<Null, Tuple4<BusinessMovie, List<ResponseCast>, bool, String>>>();
 
   static BlocHome init(BlocHome blocModule,
       Map<String, List<ResponseThumbnailMovie>> homePageData) {
@@ -67,16 +64,21 @@ class BlocHome with DisposeBag {
     return _listRestMovies;
   }
 
-  moveDetailProcess(int idMovie, String prefix) async {
+  moveDetailProcess(int idMovie, String prefix, bool isTv) async {
     bool isCallFailed = false;
-    ResponseMovie movieDetail;
+    BusinessMovie movieDetail;
     List<ResponseCast> movieCasts;
 
     subjectMoveDetailState.add(Left(null));
 
     try {
-      movieDetail = await _api.getMovieDetail(idMovie);
-      movieCasts = await _api.getCasts(idMovie);
+      if (isTv) {
+        movieDetail = BusinessMovie.tv(await _api.getTvDetail(idMovie));
+        movieCasts = [];
+      } else {
+        movieDetail = BusinessMovie.movie(await _api.getMovieDetail(idMovie));
+        movieCasts = await _api.getCasts(idMovie);
+      }
     } catch (er) {
       isCallFailed = true;
       _blocMainTabbar.triggerPopupLong();
@@ -112,15 +114,13 @@ class BlocHome with DisposeBag {
             txn.rawQuery(_offCast.querySelectCasts(idMovie))
           ]);
 
-          final responseMovie = ResponseMovie.fromJson(queries[0][0]);
+          final responseMovie = BusinessMovie.fromJson(queries[0][0]);
           final responseCast = (queries[1] as List<Map>)
               .map<ResponseCast>((f) => ResponseCast.fromJson(f))
               .toList();
-          // _moveToDetail(context, responseMovie, responseCast, true, prefix);
           subjectMoveDetailState
               .add(Right(Tuple4(responseMovie, responseCast, true, prefix)));
         } catch (er) {
-          // _moveToDetail(context, null, null, false, prefix);
           subjectMoveDetailState.add(Right(Tuple4(null, null, false, prefix)));
         }
       });

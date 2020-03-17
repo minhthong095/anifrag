@@ -7,6 +7,7 @@ import 'package:Anifrag/model/responses/response_configuration.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/model/responses/response_search.dart';
+import 'package:Anifrag/model/responses/response_tv.dart';
 import 'package:Anifrag/network/requesting.dart';
 import 'package:Anifrag/network/url.dart';
 import 'package:dio/dio.dart';
@@ -21,6 +22,8 @@ abstract class API {
   Future<List<dynamic>> getBothConfigureAndCategory();
   Future<HashMap<String, List<ResponseSearch>>> searchMovies(String keyword);
   Future<List<List<ResponseThumbnailMovie>>> getPopularTvShows(int lengthData);
+
+  Future<ResponseTv> getTvDetail(int idMovie);
 }
 
 class Api extends API {
@@ -43,9 +46,10 @@ class Api extends API {
 
     return result
         .map<List<ResponseThumbnailMovie>>((tvshowResponse) =>
-            (tvshowResponse.data['results'] as List)
-                .map((data) => ResponseThumbnailMovie.fromJson(data))
-                .toList())
+            (tvshowResponse.data['results'] as List).map((data) {
+              (data as Map)['lcIsTv'] = true;
+              return ResponseThumbnailMovie.fromJson(data);
+            }).toList())
         .toList();
   }
 
@@ -122,6 +126,7 @@ class Api extends API {
 
   Future<ResponseMovie> getMovieDetail(int idMovie) async {
     final result = await _requesting.sendGETv3(_url.movieDetail(idMovie));
+    result.data['lc_is_tv'] = false;
     return ResponseMovie.fromJson(result.data);
   }
 
@@ -130,5 +135,11 @@ class Api extends API {
     final result = await _requestingAbiary.sendGET(_url.categories);
     final data = result.data as Map<String, dynamic>;
     return data['categories'].cast<String>();
+  }
+
+  Future<ResponseTv> getTvDetail(int idMovie) async {
+    final result = await _requesting.sendGETv3(_url.tvDetail(idMovie));
+    result.data['lc_is_tv'] = true;
+    return ResponseTv.fromJson(result.data);
   }
 }

@@ -1,9 +1,9 @@
-import 'package:Anifrag/model/responses/response_movie.dart';
+import 'package:Anifrag/model/business/business_movie.dart';
 import 'package:Anifrag/store/database_config.dart';
 
 abstract class OfflineMovie {
   String queryDeleteOneMovie(int idMovie);
-  String queryInsertOneMovie(ResponseMovie movie);
+  String queryInsertOneMovie(BusinessMovie movie);
   String querySelectMovie(int idMovie);
 }
 
@@ -17,52 +17,39 @@ class ImplOfflineMovie extends OfflineMovie {
         idMovie.toString();
   }
 
-  String queryInsertOneMovie(ResponseMovie movie) {
+  String queryInsertOneMovie(BusinessMovie movie) {
     final String releaseTimeStr = movie.releaseDate.year.toString() +
         '-' +
         movie.releaseDate.month.toString().padLeft(2, '0') +
         '-' +
         movie.releaseDate.day.toString().padLeft(2, '0') +
         ' 00:00:00';
-    return 'INSERT INTO ' +
-        TableMovie.tableName +
-        '(' +
-        TableMovie.columnIdMovie +
-        ', ' +
-        TableMovie.columnOverview +
-        ', ' +
-        TableMovie.columnRuntime +
-        ', ' +
-        TableMovie.columnPopularity +
-        ', ' +
-        TableMovie.columnTitle +
-        ', ' +
-        TableMovie.columnReleaseDate +
-        ', ' +
-        TableMovie.columnVoteAverage +
-        ', ' +
-        TableMovie.columnPosterPath +
-        ', ' +
-        TableMovie.columnVoteCount +
-        ') VALUES(' +
-        movie.id.toString() +
-        ',"' +
-        movie.overview.replaceAll('"', '""""') +
-        '",' +
-        movie.runtime.toString() +
-        ',' +
-        movie.popularity.toString() +
-        ',"' +
-        movie.title.replaceAll('"', '""') +
-        '","' +
-        releaseTimeStr +
-        '",' +
-        movie.voteAverage.toString() +
-        ',"' +
-        movie.posterPath.toString() +
-        '",' +
-        movie.voteCount.toString() +
-        ')';
+
+    return '''INSERT INTO ${TableMovie.tableName} (
+      ${TableMovie.columnIdMovie},
+      ${TableMovie.columnOverview},
+      ${TableMovie.columnRuntime},
+      ${TableMovie.columnPopularity},
+      ${TableMovie.columnTitle},
+      ${TableMovie.columnReleaseDate},
+      ${TableMovie.columnVoteAverage},
+      ${TableMovie.columnPosterPath},
+      ${TableMovie.columnVoteCount},
+      ${TableMovie.columnNumberOfSeasons},
+      ${TableMovie.columnNumberOfEpisodes})
+      VALUES 
+      (${movie.id},
+      "${movie.overview.replaceAll('"', '""""')}",
+      ${movie.runtime},
+      ${movie.popularity},
+      "${movie.title.replaceAll('"', '""')}",
+      "$releaseTimeStr",
+      ${movie.voteAverage},
+      "${movie.posterPath}",
+      ${movie.voteCount},
+      ${movie.numberOfSeasons},
+      ${movie.numberOfEpisodes})
+      ''';
   }
 
   String querySelectMovie(int idMovie) {

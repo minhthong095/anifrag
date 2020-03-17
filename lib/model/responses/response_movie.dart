@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'response_movie.g.dart';
 
+/// Combine both Movie and TV
 @JsonSerializable()
 class ResponseMovie {
   final int id;
@@ -10,16 +11,12 @@ class ResponseMovie {
   final int runtime;
   final double popularity;
   final String title;
-
   @JsonKey(name: 'poster_path')
   final String posterPath;
-
   @JsonKey(name: 'release_date')
   final DateTime releaseDate;
-
   @JsonKey(name: 'vote_average')
   final double voteAverage;
-
   @JsonKey(name: 'vote_count')
   final int voteCount;
 

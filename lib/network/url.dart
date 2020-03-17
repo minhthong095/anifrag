@@ -11,6 +11,7 @@ abstract class Url {
   String movieCast(int idMovie);
   String moreLikeThis(int idMovie);
   String popularTvShow;
+  String tvDetail(int idMovie);
 }
 
 class ImplUrl extends Url {
@@ -27,10 +28,10 @@ class ImplUrl extends Url {
   String get trending => "/trending/movie/day";
 
   @override
-  String movieDetail(int idMovie) => "/movie/" + idMovie.toString();
+  String movieDetail(int idMovie) => "/movie/$idMovie";
 
   @override
-  String movieCast(int idMovie) => "/movie/" + idMovie.toString() + "/credits";
+  String movieCast(int idMovie) => "/movie/$idMovie/credits";
 
   @override
   String moreLikeThis(int idMovie) =>
@@ -38,4 +39,9 @@ class ImplUrl extends Url {
 
   @override
   String get popularTvShow => "/tv/popular";
+
+  @override
+  String tvDetail(int idMovie) {
+    return '/tv/$idMovie';
+  }
 }

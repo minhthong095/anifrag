@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
   $Home createState() => $Home();
 }
 
-typedef OnItemTap = void Function(int idMovie, String prefix);
+typedef OnItemTap = void Function(int idMovie, String prefix, bool isTv);
 
 class $Home extends State<Home>
     with AutomaticKeepAliveClientMixin<Home>, MoveDetailMixin {
@@ -34,8 +34,8 @@ class $Home extends State<Home>
   }
 
   void _initOnItemTap() {
-    _onItemTap = (int idMovie, String prefix) {
-      _blocHome.moveDetailProcess(idMovie, prefix);
+    _onItemTap = (int idMovie, String prefix, bool isTv) {
+      _blocHome.moveDetailProcess(idMovie, prefix, isTv);
     };
   }
 

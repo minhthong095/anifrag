@@ -10,7 +10,12 @@ class ResponseThumbnailMovie {
   @JsonKey(name: 'poster_path')
   final String posterPath;
 
-  ResponseThumbnailMovie({@required this.id, @required this.posterPath});
+  /// Not come from API ( lc = local )
+  @JsonKey(defaultValue: false)
+  final bool lcIsTv;
+
+  ResponseThumbnailMovie(
+      {@required this.id, @required this.posterPath, @required this.lcIsTv});
 
   factory ResponseThumbnailMovie.fromJson(Map<String, dynamic> json) =>
       _$ResponseThumbnailMovieFromJson(json);

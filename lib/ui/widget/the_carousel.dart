@@ -104,7 +104,7 @@ class __ItemState extends State<_Item> {
       scale: widget.scale,
       child: GestureDetector(
           onTap: () {
-            _onItemTap(widget.movie.id, 'Carousel');
+            _onItemTap(widget.movie.id, 'Carousel', widget.movie.lcIsTv);
           },
           child: HeroImage(
             emptyMode: false,

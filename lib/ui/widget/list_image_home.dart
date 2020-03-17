@@ -49,7 +49,9 @@ class _ListImageHomeState extends State<ListImageHome> {
             child: GestureDetector(
                 onTap: () {
                   widget.onItemTap(
-                      widget.listHomePageMovie[index].id, widget.heroTagPrefix);
+                      widget.listHomePageMovie[index].id,
+                      widget.heroTagPrefix,
+                      widget.listHomePageMovie[index].lcIsTv);
                 },
                 child: HeroImage(
                   emptyMode: false,

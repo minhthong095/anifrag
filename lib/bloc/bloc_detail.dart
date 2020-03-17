@@ -1,8 +1,8 @@
 import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/di/module/module_store.dart';
+import 'package:Anifrag/model/business/business_movie.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
-import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:inject/inject.dart';
@@ -16,8 +16,8 @@ class BlocDetail with DisposeBag {
   final LiveStore _liveStore;
   final API _api;
   bool _isRunFirstTime = true;
-  ResponseMovie _movie;
-  ResponseMovie get getMovie => _movie;
+  BusinessMovie _movie;
+  BusinessMovie get getMovie => _movie;
   List<ResponseCast> _casts;
   List<ResponseCast> get getCasts => _casts;
   String _tagPrefix;
@@ -31,7 +31,7 @@ class BlocDetail with DisposeBag {
   }
 
   static BlocDetail initWithData(BlocDetail blocDetailModule,
-          ResponseMovie movie, String tagPrefix, List<ResponseCast> cast) =>
+          BusinessMovie movie, String tagPrefix, List<ResponseCast> cast) =>
       blocDetailModule
         .._movie = movie
         .._tagPrefix = tagPrefix
@@ -56,7 +56,8 @@ class BlocDetail with DisposeBag {
       _movie.posterPath;
 
   void callMoreLikeThis() {
-    if (_isRunFirstTime)
+    if (_isRunFirstTime &&
+        _movie.numberOfSeasons == -1) // equal -1 mean it is not tv series
       dropSubscription(Stream.fromFuture(_api.getMoreLikeThis(_movie.id))
           .where((data) {
         return (_isRunFirstTime &&

@@ -7,13 +7,10 @@
 //                See also: http://cl/219513934
 
 import 'dart:async';
+
 import 'package:analyzer/dart/analysis/results.dart';
-
-// <TRANSITIONAL_API>
-import 'package:analyzer/src/dart/analysis/results.dart';
-// </TRANSITIONAL_API>
-
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/src/dart/analysis/results.dart';
 import 'package:build/build.dart';
 import 'package:build/build.dart' as build show log;
 import 'package:logging/logging.dart';
@@ -46,7 +43,7 @@ BuilderContext get builderContext {
   if (context == null) {
     throw new StateError(
       'No current $BuilderContext is active. Start your build function using '
-          '"runInContext" to be able to use "builderContext"',
+      '"runInContext" to be able to use "builderContext"',
     );
   }
   return context;
@@ -123,6 +120,6 @@ class BuilderLogger {
       source = ':\n\n$code';
     }
 
-    return '${_inputId} ${sourceLocation} ${message}${source}';
+    return '$_inputId $sourceLocation $message$source';
   }
 }

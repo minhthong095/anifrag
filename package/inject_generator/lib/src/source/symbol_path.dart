@@ -121,7 +121,7 @@ class SymbolPath implements Comparable<SymbolPath> {
   /// Relative URI are rejected with an exception.
   static Uri toAssetUri(Uri libUri) {
     if (libUri.scheme == null || libUri.scheme.isEmpty) {
-      throw 'Relative library URI not supported: ${libUri}';
+      throw 'Relative library URI not supported: $libUri';
     }
 
     if (libUri.scheme != 'package') {
@@ -222,7 +222,7 @@ class SymbolPath implements Comparable<SymbolPath> {
 
     if (pathSegments.first != 'lib') {
       throw new StateError(
-          'Cannot construct absolute import URI from ${relativeTo} '
+          'Cannot construct absolute import URI from $relativeTo '
           'to a non-lib Dart file: ${toAbsoluteUri()}');
     }
 
@@ -233,7 +233,7 @@ class SymbolPath implements Comparable<SymbolPath> {
   }
 
   /// Absolute path to this symbol for use in log messages.
-  String toHumanReadableString() => '${toDartUri()}#${symbol}';
+  String toHumanReadableString() => '${toDartUri()}#$symbol';
 
   @override
   String toString() => '$SymbolPath {${toAbsoluteUri()}}';

@@ -99,6 +99,10 @@ class SqfDb extends AppDb {
         TableMovie.columnPosterPath +
         ' TEXT, ' +
         TableMovie.columnVoteCount +
+        ' INTEGER, ' +
+        TableMovie.columnNumberOfSeasons +
+        ' INTEGER, ' +
+        TableMovie.columnNumberOfEpisodes +
         ' INTEGER)',
     'CREATE TABLE ' +
         TableCast.tableName +

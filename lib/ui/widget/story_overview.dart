@@ -42,10 +42,12 @@ class _Cast extends StatelessWidget {
   String _stringCasts = '';
 
   _Cast({@required this.casts}) {
-    casts.forEach((cast) {
-      _stringCasts += cast.name + ', ';
-    });
-    _stringCasts = _stringCasts.substring(0, _stringCasts.length - 2);
+    if (casts.length > 0) {
+      casts.forEach((cast) {
+        _stringCasts += cast.name + ', ';
+      });
+      _stringCasts = _stringCasts.substring(0, _stringCasts.length - 2);
+    }
   }
 
   @override

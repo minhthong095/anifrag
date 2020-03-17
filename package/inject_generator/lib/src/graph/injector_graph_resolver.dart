@@ -213,7 +213,7 @@ class InjectorGraphResolver {
                 .map((s) => '  (${s.toPrettyString()} from ${s.root.path})')
                 .join('\n');
             builderContext.rawLogger
-                .severe('Detected dependency cycle:\n${formattedCycle}');
+                .severe('Detected dependency cycle:\n$formattedCycle');
           }
         } else {
           Iterable<LookupKey> children = mergedDependencies[parent]

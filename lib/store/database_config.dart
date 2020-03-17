@@ -23,6 +23,7 @@ class TableCategory {
   static const String columnName = 'name';
 }
 
+/// Combine movie detail and tv show attributtes
 class TableMovie {
   static const String tableName = "MOVIE";
 
@@ -35,6 +36,8 @@ class TableMovie {
   static const String columnVoteAverage = 'vote_average';
   static const String columnVoteCount = 'vote_count';
   static const String columnPosterPath = 'poster_path';
+  static const String columnNumberOfSeasons = 'number_of_seasons';
+  static const String columnNumberOfEpisodes = 'number_of_episodes';
 }
 
 class TableCast {

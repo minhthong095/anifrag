@@ -28,8 +28,8 @@ class _MoreLikeThisState extends State<MoreLikeThis> with MoveDetailMixin {
   void didChangeDependencies() {
     _initBlocDetail();
     _blocHome = Provider.of<BlocHome>(context, listen: false);
-    _onItemTap = (int idMovie, String prefix) {
-      _blocHome.moveDetailProcess(idMovie, prefix);
+    _onItemTap = (int idMovie, String prefix, bool isTv) {
+      _blocHome.moveDetailProcess(idMovie, prefix, isTv);
     };
     _widthImg = Utils.widthInRatio(_preferHeightImg, LiveStore.ratioImgApi);
     initListenerMoveToDetailState(context, _blocHome);
@@ -74,7 +74,8 @@ class _MoreLikeThisState extends State<MoreLikeThis> with MoveDetailMixin {
       return _gridFrame(List.generate(_moreLikeThis.length, (index) {
         return GestureDetector(
           onTap: () {
-            _onItemTap(_moreLikeThis[index].id, 'MLT');
+            _onItemTap(
+                _moreLikeThis[index].id, 'MLT', _moreLikeThis[index].lcIsTv);
           },
           child: HeroImage(
             width: _widthImg,

@@ -3,8 +3,8 @@ import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
 import 'package:Anifrag/config/utils.dart';
+import 'package:Anifrag/model/business/business_movie.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
-import 'package:Anifrag/model/responses/response_movie.dart';
 import 'package:Anifrag/ui/widget/button_circle.dart';
 import 'package:Anifrag/ui/widget/comment.dart';
 import 'package:Anifrag/ui/widget/detail_tabbar.dart';
@@ -230,7 +230,7 @@ class _DetailScreenState extends State<_DetailScreen>
 }
 
 class _Content extends StatelessWidget {
-  final ResponseMovie movie;
+  final BusinessMovie movie;
   const _Content({@required this.movie});
 
   String _getRunTime() => movie.runtime != null
@@ -323,7 +323,7 @@ class _Content extends StatelessWidget {
 
 class DetailScreenArgument {
   final String tagPrefix;
-  final ResponseMovie movie;
+  final BusinessMovie movie;
   final List<ResponseCast> casts;
   const DetailScreenArgument(this.tagPrefix, this.movie, this.casts);
 }
