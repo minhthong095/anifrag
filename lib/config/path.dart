@@ -26,6 +26,7 @@ class PathIcon {
   static const String fresh = _baseUrl + 'fresh.png';
   static const String back = _baseUrl + 'back.png';
   static const String share = _baseUrl + 'share.png';
+  static const String tv = _baseUrl + 'tv.png';
 }
 
 class PathSvg {

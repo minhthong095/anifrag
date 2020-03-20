@@ -312,7 +312,7 @@ class _Content extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: _DetailScreenState.paddingContent),
-                  child: DetailTabbar(),
+                  child: DetailTabbar(movie),
                 ),
               )
             ],

@@ -27,10 +27,11 @@ class BlocHome with DisposeBag {
   final AppDb _appDb;
   final String baseUrlImage;
   final BlocMainTabbar _blocMainTabbar;
-  BlocMainTabbar get blocMainTabbar => _blocMainTabbar;
+  final PublishSubject<
+          Either<Null, Tuple4<BusinessMovie, List<ResponseCast>, bool, String>>>
+      stateMovieDetail = PublishSubject();
 
-  final subjectMoveDetailState = PublishSubject<
-      Either<Null, Tuple4<BusinessMovie, List<ResponseCast>, bool, String>>>();
+  BlocMainTabbar get blocMainTabbar => _blocMainTabbar;
 
   static BlocHome init(BlocHome blocModule,
       Map<String, List<ResponseThumbnailMovie>> homePageData) {
@@ -46,7 +47,7 @@ class BlocHome with DisposeBag {
       this._appDb,
       this._blocMainTabbar,
       @baseUrlImg this.baseUrlImage) {
-    dropStream(subjectMoveDetailState);
+    dropStream(stateMovieDetail);
   }
 
   List<ResponseThumbnailMovie> get getListCarousel {
@@ -69,7 +70,7 @@ class BlocHome with DisposeBag {
     BusinessMovie movieDetail;
     List<ResponseCast> movieCasts;
 
-    subjectMoveDetailState.add(Left(null));
+    stateMovieDetail.add(Left(null));
 
     try {
       if (isTv) {
@@ -85,7 +86,7 @@ class BlocHome with DisposeBag {
     }
 
     if (!isCallFailed) {
-      subjectMoveDetailState
+      stateMovieDetail
           .add(Right(Tuple4(movieDetail, movieCasts, true, prefix)));
       final db = await _appDb.db;
       db.transaction((txn) async {
@@ -118,10 +119,10 @@ class BlocHome with DisposeBag {
           final responseCast = (queries[1] as List<Map>)
               .map<ResponseCast>((f) => ResponseCast.fromJson(f))
               .toList();
-          subjectMoveDetailState
+          stateMovieDetail
               .add(Right(Tuple4(responseMovie, responseCast, true, prefix)));
         } catch (er) {
-          subjectMoveDetailState.add(Right(Tuple4(null, null, false, prefix)));
+          stateMovieDetail.add(Right(Tuple4(null, null, false, prefix)));
         }
       });
       await _appDb.closeDb();

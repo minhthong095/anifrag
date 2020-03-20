@@ -12,9 +12,13 @@ abstract class Url {
   String moreLikeThis(int idMovie);
   String popularTvShow;
   String tvDetail(int idMovie);
+  String tvEpisodes(int idMovie, int season);
 }
 
 class ImplUrl extends Url {
+  @override
+  String tvEpisodes(int idMovie, int season) => '/tv/$idMovie/season/$season';
+
   @override
   String get searchMovies => "/search/movie";
 

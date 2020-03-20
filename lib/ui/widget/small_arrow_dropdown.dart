@@ -5,21 +5,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class TestScreenSADD extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // return Day7();
-
-    return Scaffold(
-      body: Center(
-        child: SmallArrowDropDown(
-          smallArrowType: SmallArrowType.down,
-        ),
-      ),
-    );
-  }
-}
-
 enum SmallArrowType { up, down }
 
 const double CLOCK_RADIUS = 150;

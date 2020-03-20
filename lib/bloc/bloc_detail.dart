@@ -4,6 +4,7 @@ import 'package:Anifrag/model/business/business_movie.dart';
 import 'package:Anifrag/model/responses/response_cast.dart';
 import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/network/apis.dart';
+import 'package:Anifrag/state/state_detail_episode.dart';
 import 'package:Anifrag/store/live_store.dart';
 import 'package:inject/inject.dart';
 import 'package:rxdart/rxdart.dart';
@@ -12,23 +13,32 @@ import 'package:rxdart/subjects.dart';
 @provide
 class BlocDetail with DisposeBag {
   final String baseUrlImage;
-  // final OfflineMovie _offlineMovie;
   final LiveStore _liveStore;
   final API _api;
+  // ignore: close_sinks
+  final BehaviorSubject stateEpisode =
+      BehaviorSubject.seeded(StateDetailEpisode.empty());
   bool _isRunFirstTime = true;
   BusinessMovie _movie;
   BusinessMovie get getMovie => _movie;
   List<ResponseCast> _casts;
   List<ResponseCast> get getCasts => _casts;
   String _tagPrefix;
+  String get tagImg => _tagPrefix + _movie.posterPath;
+  String get pathImg => _liveStore.baseUrlImage + _movie.posterPath;
 
-  String get tagImg {
-    return _tagPrefix + _movie.posterPath;
+  Function(List<ResponseThumbnailMovie>) _callbackDoneMoreLikeThis;
+  // ignore: close_sinks
+  BehaviorSubject<bool> _subjectCallFinishTransition =
+      BehaviorSubject.seeded(false);
+  set setCallbackDoneMoreLikeThis(
+      void Function(List<ResponseThumbnailMovie> moreLikeThis) callback) {
+    _callbackDoneMoreLikeThis = callback;
   }
 
-  String get pathImg {
-    return _liveStore.baseUrlImage + _movie.posterPath;
-  }
+  String get currentPosterPath =>
+      _liveStore.getResponseConfiguration.images.secureBaseUrl +
+      _movie.posterPath;
 
   static BlocDetail initWithData(BlocDetail blocDetailModule,
           BusinessMovie movie, String tagPrefix, List<ResponseCast> cast) =>
@@ -39,21 +49,10 @@ class BlocDetail with DisposeBag {
 
   BlocDetail(this._liveStore, this._api, @baseUrlImg this.baseUrlImage) {
     dropStream(_subjectCallFinishTransition);
+    dropStream(stateEpisode);
   }
 
-  // ignore: close_sinks
-  BehaviorSubject<bool> _subjectCallFinishTransition =
-      BehaviorSubject.seeded(false);
-
-  void Function(List<ResponseThumbnailMovie>) _callbackDoneMoreLikeThis;
-  set setCallbackDoneMoreLikeThis(
-      void Function(List<ResponseThumbnailMovie> moreLikeThis) callback) {
-    _callbackDoneMoreLikeThis = callback;
-  }
-
-  String get currentPosterPath =>
-      _liveStore.getResponseConfiguration.images.secureBaseUrl +
-      _movie.posterPath;
+  void callEpisodes() {}
 
   void callMoreLikeThis() {
     if (_isRunFirstTime &&

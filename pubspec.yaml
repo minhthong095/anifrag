@@ -37,7 +37,8 @@ dependencies:
   equatable:
   inject:
     path: package/inject
-
+  sealed_unions:
+  intl:
 
 dev_dependencies:
   json_serializable:

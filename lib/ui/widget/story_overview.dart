@@ -39,15 +39,18 @@ class _StoryOverviewState extends State<StoryOverview> {
 
 class _Cast extends StatelessWidget {
   final List<ResponseCast> casts;
-  String _stringCasts = '';
 
-  _Cast({@required this.casts}) {
+  _Cast({@required this.casts});
+
+  String get stringCast {
+    String _stringCasts = '';
     if (casts.length > 0) {
       casts.forEach((cast) {
         _stringCasts += cast.name + ', ';
       });
       _stringCasts = _stringCasts.substring(0, _stringCasts.length - 2);
     }
+    return _stringCasts;
   }
 
   @override
@@ -58,7 +61,7 @@ class _Cast extends StatelessWidget {
             text: 'Cast',
           ),
           Text(
-            _stringCasts,
+            stringCast,
             style: TextStyle(color: Colors.white),
           ),
         ],

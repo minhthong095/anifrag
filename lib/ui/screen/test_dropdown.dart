@@ -48,8 +48,8 @@ class TestDropDown extends StatelessWidget {
                   : minSeason +
                       math.Random().nextInt(maxDefaultSeason - minSeason);
 
-              print("defaultSeason: $defaultSeason");
-              print("seasonCount: $seasonCount");
+              // print("defaultSeason: $defaultSeason");
+              // print("seasonCount: $seasonCount");
 
               return Padding(
                 padding: EdgeInsets.only(left: 20),
@@ -70,22 +70,7 @@ class TestDropDown extends StatelessWidget {
   }
 }
 
-class VirgilAaronDropDown extends StatefulWidget {
-  final int seasonCount;
-  final int defaultSeason;
-  final double width;
-  final double height;
-
-  VirgilAaronDropDown(
-      {this.seasonCount = 1,
-      this.width = 140,
-      this.height = 50,
-      this.defaultSeason = 1});
-  @override
-  _VirgilAaronDropDownState createState() => _VirgilAaronDropDownState();
-}
-
-Widget _item(double width, double height, String showSeason) {
+Widget _item(double width, double height, int showSeason) {
   return Container(
     width: width,
     height: height,
@@ -93,16 +78,33 @@ Widget _item(double width, double height, String showSeason) {
     // decoration: BoxDecoration( // test
     //     border: Border.all(color: Colors.red.withOpacity(0.5), width: 2)),
     child: Padding(
-      padding: EdgeInsets.only(left: 20),
+      padding: EdgeInsets.only(left: 10),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          'Season ' + showSeason,
+          'Season $showSeason',
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
     ),
   );
+}
+
+class VirgilAaronDropDown extends StatefulWidget {
+  final int seasonCount;
+  final int defaultSeason;
+  final double width;
+  final double height;
+  final void Function(int) onTap;
+
+  VirgilAaronDropDown(
+      {this.seasonCount = 1,
+      this.width = 130,
+      this.height = 45,
+      this.defaultSeason = 1,
+      this.onTap});
+  @override
+  _VirgilAaronDropDownState createState() => _VirgilAaronDropDownState();
 }
 
 class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
@@ -146,23 +148,28 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
         Size(widget.width, widget.height);
   }
 
+  void _updateShowSeason(int onValue) {
+    widget.onTap(onValue);
+    if (onValue != null) {
+      setState(() {
+        _showSeason = onValue;
+      });
+    }
+  }
+
   void _onClick() {
     _animationController.reset();
     _animationController.forward().then((f) {
       Navigator.push(
               context,
-              RouteVirgilAaronDropDown(
+              _RouteVirgilAaronDropDown(
                   defaultSeason: _showSeason,
                   width: widget.width,
                   height: widget.height,
                   coordinateRect: _findRenderBox,
                   seasonCout: widget.seasonCount))
           .then<int>((onValue) {
-        if (onValue != null) {
-          setState(() {
-            _showSeason = onValue;
-          });
-        }
+        _updateShowSeason(onValue);
         return onValue;
       });
     });
@@ -182,13 +189,25 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
         onTap: _onClick,
         child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            child: _item(widget.width, widget.height, _showSeason.toString())),
+            child: Stack(children: [
+              _item(widget.width, widget.height, _showSeason),
+              Positioned(
+                right: 10,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: SmallArrowDropDown(
+                    smallArrowType: SmallArrowType.down,
+                  ),
+                ),
+              )
+            ])),
       ),
     );
   }
 }
 
-class RouteVirgilAaronDropDown extends PopupRoute {
+class _RouteVirgilAaronDropDown extends PopupRoute {
   final Rect coordinateRect;
   final int seasonCout;
   final double width;
@@ -199,7 +218,7 @@ class RouteVirgilAaronDropDown extends PopupRoute {
   StreamController<ScrollDirection> _streamScrollNotification =
       StreamController();
 
-  RouteVirgilAaronDropDown({
+  _RouteVirgilAaronDropDown({
     @required this.coordinateRect,
     this.seasonCout,
     this.width,
@@ -224,11 +243,11 @@ class RouteVirgilAaronDropDown extends PopupRoute {
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(borderRadius),
             topRight: Radius.circular(borderRadius)),
-        child: _item(width, height, "1"));
+        child: _item(width, height, 1));
 
     if (seasonCout - 2 > 0)
       for (int c = 1; c < seasonCout - 1; c++) {
-        yield _item(width, height, (c + 1).toString());
+        yield _item(width, height, (c + 1));
       }
 
     if (seasonCout > 1)
@@ -236,7 +255,7 @@ class RouteVirgilAaronDropDown extends PopupRoute {
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(borderRadius),
             bottomRight: Radius.circular(borderRadius)),
-        child: _item(width, height, seasonCout.toString()),
+        child: _item(width, height, seasonCout),
       );
   }
 
@@ -251,7 +270,7 @@ class RouteVirgilAaronDropDown extends PopupRoute {
   }
 
   bool _scrollNotification(UserScrollNotification notification) {
-    _streamScrollNotification.sink.add(notification.direction);
+    _streamScrollNotification.add(notification.direction);
     return false;
   }
 
@@ -267,7 +286,9 @@ class RouteVirgilAaronDropDown extends PopupRoute {
     final topCoordinateRect = coordinateRect.top;
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pop(defaultSeason);
+        Navigator.of(context).pop(_scrollController.selectedItem != null
+            ? _scrollController.selectedItem + 1
+            : defaultSeason);
       },
       child: Scaffold(
           backgroundColor: Colors.transparent,

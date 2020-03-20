@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 
 mixin MoveDetailMixin {
   void initListenerMoveToDetailState(BuildContext context, BlocHome blocHome) {
-    blocHome.subjectMoveDetailState.listen((dartz.Either<MoveDetailState,
+    blocHome.stateMovieDetail.listen((dartz.Either<Null,
             dartz.Tuple4<BusinessMovie, List<ResponseCast>, bool, String>>
         moveDetailState) {
       moveDetailState.fold((ifLeft) {
