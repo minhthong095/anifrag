@@ -63,6 +63,8 @@ class BusinessMovie {
         this.numberOfSeasons = tv.numberOfSeasons,
         this.numberOfEpisodes = tv.numberOfEpisodes;
 
+  bool get isTvShow => this.numberOfSeasons > 0;
+
   factory BusinessMovie.fromJson(Map<String, dynamic> json) {
     return _$BusinessMovieFromJson(json);
   }

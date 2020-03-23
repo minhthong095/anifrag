@@ -1,4 +1,3 @@
-import 'package:Anifrag/config/path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -6,9 +5,13 @@ class TextPercent extends StatelessWidget {
   final num value;
   final String iconPath;
   final double fontSize;
+  final double iconSize;
 
   const TextPercent(
-      {@required this.value, @required this.fontSize, @required this.iconPath});
+      {@required this.value,
+      @required this.fontSize,
+      @required this.iconPath,
+      this.iconSize});
 
   @override
   Widget build(BuildContext context) => Row(
@@ -18,7 +21,7 @@ class TextPercent extends StatelessWidget {
             iconPath,
             filterQuality: FilterQuality.none,
             fit: BoxFit.fill,
-            height: this.fontSize - 5,
+            height: this.iconSize,
           ),
           Padding(
             padding: EdgeInsets.only(left: 3),

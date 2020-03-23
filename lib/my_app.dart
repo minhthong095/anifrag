@@ -2,8 +2,8 @@ import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/bloc_home.dart';
 import 'package:Anifrag/di/component.dart';
 import 'package:Anifrag/ui/screen/detail.dart';
+import 'package:Anifrag/ui/screen/initial_splash.dart';
 import 'package:Anifrag/ui/screen/main_tab_bar.dart';
-import 'package:Anifrag/ui/widget/detail_episode.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: InitialSplashScreen(componentInjector.blocInitialSplashComponent),
-      home: TestDetailEpisodeScreen(),
+      home: InitialSplashScreen(componentInjector.blocInitialSplashComponent),
+      // home: TestDetailEpisodeScreen(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
 

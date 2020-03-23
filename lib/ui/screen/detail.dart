@@ -286,6 +286,7 @@ class _Content extends StatelessWidget {
                         top: TextPercent(
                             iconPath: PathIcon.smallChart,
                             fontSize: 25,
+                            iconSize: 23,
                             value: double.parse(
                                 movie.voteAverage.toStringAsFixed(1))),
                         comment: 'In your taste',
@@ -296,6 +297,7 @@ class _Content extends StatelessWidget {
                         top: TextPercent(
                             iconPath: PathIcon.fresh,
                             fontSize: 25,
+                            iconSize: 18,
                             value: double.parse(
                                 movie.popularity.toStringAsFixed(1))),
                         comment: 'Fresh',

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Anifrag/bloc/bloc_detail.dart';
 import 'package:Anifrag/bloc/dispose_bag.dart';
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/config/path.dart';
@@ -13,6 +14,7 @@ import 'package:Anifrag/ui/screen/test_dropdown.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class BlocDetail2 with DisposeBag {
   static final Dio dio = Dio()
@@ -52,24 +54,23 @@ class TestDetailEpisodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DetailEpisode(BlocDetail2()),
+      body: DetailEpisode(),
     );
   }
 }
 
 class DetailEpisode extends StatefulWidget {
-  final BlocDetail2 blocDetail;
-
-  DetailEpisode(this.blocDetail);
-
   @override
   _DetailEpisodeState createState() => _DetailEpisodeState();
 }
 
 class _DetailEpisodeState extends State<DetailEpisode> {
+  BlocDetail _blocDetail;
+
   @override
   void initState() {
-    widget.blocDetail.callEpisodes();
+    _blocDetail = Provider.of<BlocDetail>(context, listen: false);
+    _blocDetail.callEpisodes();
     super.initState();
   }
 
@@ -84,20 +85,24 @@ class _DetailEpisodeState extends State<DetailEpisode> {
           Row(
             children: <Widget>[
               VirgilAaronDropDown(
-                seasonCount: widget.blocDetail.getNumberOfSeason,
+                seasonCount: _blocDetail.getNumberOfSeason,
                 onTap: (index) {
-                  widget.blocDetail.callEpisodes(season: index);
+                  _blocDetail.callEpisodes(season: index);
                 },
               ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    ValueListenableBuilder(
-                        valueListenable: widget.blocDetail.stateNumEpisodes,
-                        builder: (_, data, __) {
-                          return _Info(data);
-                        })
+                    Padding(
+                        padding: EdgeInsets.only(
+                          right: 20,
+                        ),
+                        child: ValueListenableBuilder(
+                            valueListenable: _blocDetail.stateNumEpisodes,
+                            builder: (_, data, __) {
+                              return _Info(data);
+                            })),
                   ],
                 ),
               )
@@ -105,18 +110,42 @@ class _DetailEpisodeState extends State<DetailEpisode> {
           ),
           Expanded(
             child: ValueListenableBuilder(
-              valueListenable: widget.blocDetail.stateEpisodes,
+              valueListenable: _blocDetail.stateEpisodes,
               builder: (BuildContext context, StateDetailEpisode snapshot,
                   Widget child) {
                 return snapshot.join<Widget>(
                     (initial) => Empty(),
                     (empty) => EmptyTitle(),
-                    (loaded) => ListView.builder(
-                        itemCount: loaded.data.length,
-                        itemBuilder: (_, index) => _ItemEpisode(
-                            loaded.data[index].name,
-                            loaded.data[index].airDate,
-                            index + 1)));
+                    (loaded) => Container(
+                          alignment: Alignment.topCenter,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              border:
+                                  Border.all(width: 20, color: Colors.yellow)),
+                          // child: Container(
+                          //   width: 200,
+                          //   height: 200,
+                          //   color: Colors.blue,
+                          // ),
+                          // child: ListView.separated(
+                          //     padding: EdgeInsets.all(0),
+                          //     separatorBuilder: (_, __) => SizedBox.fromSize(
+                          //           size: Size(0, 0),
+                          //         ),
+                          //     itemCount: loaded.data.length,
+                          //     itemBuilder: (_, index) => _ItemEpisode(
+                          //         loaded.data[index].name,
+                          //         loaded.data[index].airDate,
+                          //         index + 1)),
+                          child: Column(
+                            children: loaded.data
+                                .asMap()
+                                .entries
+                                .map((entry) => _ItemEpisode(entry.value.name,
+                                    entry.value.airDate, entry.key + 1))
+                                .toList(),
+                          ),
+                        ));
               },
             ),
           )
@@ -142,7 +171,7 @@ class _ItemEpisode extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+            padding: EdgeInsets.symmetric(horizontal: 25),
             child: Text(
               episode.toString(),
               style: TextStyle(

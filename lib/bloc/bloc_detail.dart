@@ -6,6 +6,7 @@ import 'package:Anifrag/model/responses/response_home_page_movie.dart';
 import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/state/state_detail_episode.dart';
 import 'package:Anifrag/store/live_store.dart';
+import 'package:flutter/widgets.dart';
 import 'package:inject/inject.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
@@ -40,6 +41,11 @@ class BlocDetail with DisposeBag {
       _liveStore.getResponseConfiguration.images.secureBaseUrl +
       _movie.posterPath;
 
+  final ValueNotifier<int> stateNumEpisodes = ValueNotifier(0);
+  final ValueNotifier<StateDetailEpisode> stateEpisodes =
+      ValueNotifier(StateDetailEpisode.initial());
+  int get getNumberOfSeason => _movie.numberOfSeasons;
+
   static BlocDetail initWithData(BlocDetail blocDetailModule,
           BusinessMovie movie, String tagPrefix, List<ResponseCast> cast) =>
       blocDetailModule
@@ -51,8 +57,19 @@ class BlocDetail with DisposeBag {
     dropStream(_subjectCallFinishTransition);
     dropStream(stateEpisode);
   }
-
-  void callEpisodes() {}
+  void callEpisodes({int season = 1}) {
+    _api.getTvEpisodes(_movie.id, season).then((onValue) {
+      if (onValue == null || onValue.length == 0) {
+        stateEpisodes.value = StateDetailEpisode.empty();
+        stateNumEpisodes.value = 0;
+      } else {
+        stateEpisodes.value = StateDetailEpisode.loaded(onValue);
+        stateNumEpisodes.value = onValue.length;
+      }
+    }).catchError((onError) {
+      stateEpisodes.value = StateDetailEpisode.empty();
+    });
+  }
 
   void callMoreLikeThis() {
     if (_isRunFirstTime &&

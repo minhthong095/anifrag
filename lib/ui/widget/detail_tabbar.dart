@@ -31,10 +31,10 @@ class _DetailTabbar extends State<DetailTabbar>
       text: 'EPISODES',
     ),
     Tab(
-      text: "MORE LIKE THIS",
+      text: "OVERVIEW",
     ),
     Tab(
-      text: "OVERVIEW",
+      text: "MORE LIKE THIS",
     ),
   ];
 
@@ -44,9 +44,7 @@ class _DetailTabbar extends State<DetailTabbar>
   void initState() {
     _tabController = TabController(
         vsync: this,
-        length: widget.movie.numberOfSeasons == -1
-            ? tabsForMovie.length
-            : tabsForTv.length);
+        length: widget.movie.isTvShow ? tabsForTv.length : tabsForMovie.length);
     super.initState();
   }
 
@@ -80,7 +78,7 @@ class _DetailTabbar extends State<DetailTabbar>
                   labelColor: AppColor.yellow,
                   unselectedLabelColor: Colors.white,
                   controller: _tabController,
-                  tabs: tabsForMovie,
+                  tabs: widget.movie.isTvShow ? tabsForTv : tabsForMovie,
                 ),
               )
             ],
@@ -88,7 +86,7 @@ class _DetailTabbar extends State<DetailTabbar>
           SizedBox.fromSize(
             size: Size(0, 20),
           ),
-          widget.movie.numberOfSeasons == -1
+          widget.movie.isTvShow
               ? AnimatedBuilder(
                   animation: _tabController,
                   builder: (context, widget) {
@@ -97,11 +95,16 @@ class _DetailTabbar extends State<DetailTabbar>
                         Visibility(
                           visible: _tabController.index == 0,
                           maintainState: true,
+                          child: StoryOverview(),
+                        ),
+                        Visibility(
+                          visible: _tabController.index == 1,
+                          maintainState: true,
                           child: MoreLikeThis(),
                         ),
                         Visibility(
                           // If choose Opacity widget, the gridview in MoreLikeThis will hard to scroll.
-                          visible: _tabController.index == 1,
+                          visible: _tabController.index == 2,
                           child: StoryOverview(),
                         )
                       ],
@@ -119,13 +122,8 @@ class _DetailTabbar extends State<DetailTabbar>
                           child: MoreLikeThis(),
                         ),
                         Visibility(
-                          visible: _tabController.index == 1,
-                          maintainState: true,
-                          child: MoreLikeThis(),
-                        ),
-                        Visibility(
                           // If choose Opacity widget, the gridview in MoreLikeThis will hard to scroll.
-                          visible: _tabController.index == 2,
+                          visible: _tabController.index == 1,
                           child: StoryOverview(),
                         )
                       ],
