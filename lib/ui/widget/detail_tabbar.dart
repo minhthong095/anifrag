@@ -1,5 +1,6 @@
 import 'package:Anifrag/config/app_color.dart';
 import 'package:Anifrag/model/business/business_movie.dart';
+import 'package:Anifrag/ui/widget/detail_episode.dart';
 import 'package:Anifrag/ui/widget/more_like_this.dart';
 import 'package:Anifrag/ui/widget/story_overview.dart';
 import 'package:Anifrag/ui/widget/tab_bar_remove_center.dart' as custom;
@@ -94,18 +95,16 @@ class _DetailTabbar extends State<DetailTabbar>
                       children: <Widget>[
                         Visibility(
                           visible: _tabController.index == 0,
-                          maintainState: true,
-                          child: StoryOverview(),
+                          child: DetailEpisode(),
                         ),
                         Visibility(
                           visible: _tabController.index == 1,
                           maintainState: true,
-                          child: MoreLikeThis(),
+                          child: StoryOverview(),
                         ),
                         Visibility(
-                          // If choose Opacity widget, the gridview in MoreLikeThis will hard to scroll.
                           visible: _tabController.index == 2,
-                          child: StoryOverview(),
+                          child: MoreLikeThis(),
                         )
                       ],
                     );

@@ -83,7 +83,7 @@ Widget _item(double width, double height, int showSeason) {
         alignment: Alignment.centerLeft,
         child: Text(
           'Season $showSeason',
-          style: TextStyle(fontSize: 20, color: Colors.white),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
       ),
     ),
@@ -120,7 +120,7 @@ class _VirgilAaronDropDownState extends State<VirgilAaronDropDown>
     _initShowSeason();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 100),
     );
     _animation = TweenSequence<double>([
       TweenSequenceItem(

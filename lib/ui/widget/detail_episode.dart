@@ -10,7 +10,7 @@ import 'package:Anifrag/network/apis.dart';
 import 'package:Anifrag/network/requesting.dart';
 import 'package:Anifrag/network/url.dart';
 import 'package:Anifrag/state/state_detail_episode.dart';
-import 'package:Anifrag/ui/screen/test_dropdown.dart';
+import 'package:Anifrag/ui/screen/virgil_aaron_dropdown.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -76,10 +76,7 @@ class _DetailEpisodeState extends State<DetailEpisode> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColor.backgroundColor,
-      padding: EdgeInsets.only(top: 20),
-      child: Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
@@ -105,53 +102,33 @@ class _DetailEpisodeState extends State<DetailEpisode> {
                             })),
                   ],
                 ),
-              )
+              ),
             ],
           ),
-          Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: _blocDetail.stateEpisodes,
-              builder: (BuildContext context, StateDetailEpisode snapshot,
-                  Widget child) {
-                return snapshot.join<Widget>(
-                    (initial) => Empty(),
-                    (empty) => EmptyTitle(),
-                    (loaded) => Container(
-                          alignment: Alignment.topCenter,
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              border:
-                                  Border.all(width: 20, color: Colors.yellow)),
-                          // child: Container(
-                          //   width: 200,
-                          //   height: 200,
-                          //   color: Colors.blue,
-                          // ),
-                          // child: ListView.separated(
-                          //     padding: EdgeInsets.all(0),
-                          //     separatorBuilder: (_, __) => SizedBox.fromSize(
-                          //           size: Size(0, 0),
-                          //         ),
-                          //     itemCount: loaded.data.length,
-                          //     itemBuilder: (_, index) => _ItemEpisode(
-                          //         loaded.data[index].name,
-                          //         loaded.data[index].airDate,
-                          //         index + 1)),
-                          child: Column(
-                            children: loaded.data
-                                .asMap()
-                                .entries
-                                .map((entry) => _ItemEpisode(entry.value.name,
-                                    entry.value.airDate, entry.key + 1))
-                                .toList(),
-                          ),
-                        ));
-              },
-            ),
+          SizedBox.fromSize(
+            size: Size(0, 15),
+          ),
+          ValueListenableBuilder(
+            valueListenable: _blocDetail.stateEpisodes,
+            builder: (BuildContext context, StateDetailEpisode snapshot,
+                Widget child) {
+              return snapshot.join<Widget>(
+                  (initial) => Empty(),
+                  (empty) => EmptyTitle(),
+                  (loaded) => Container(
+                        alignment: Alignment.topCenter,
+                        child: Column(
+                          children: loaded.data
+                              .asMap()
+                              .entries
+                              .map((entry) => _ItemEpisode(entry.value.name,
+                                  entry.value.airDate, entry.key + 1))
+                              .toList(),
+                        ),
+                      ));
+            },
           )
-        ],
-      ),
-    );
+        ]);
   }
 }
 
@@ -164,20 +141,21 @@ class _ItemEpisode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
+      padding: EdgeInsets.only(bottom: 20),
       // decoration: BoxDecoration(
       //     border:
       //         Border.all(color: Color.fromRGBO(216, 216, 216, 1), width: 2)),
       child: Row(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
+            padding: EdgeInsets.only(left: 8, right: 18),
             child: Text(
               episode.toString(),
               style: TextStyle(
-                  color: Color.fromRGBO(216, 216, 216, 1),
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold),
+                color: Color.fromRGBO(216, 216, 216, 1),
+                fontSize: 30,
+              ),
             ),
           ),
           Column(
@@ -185,10 +163,7 @@ class _ItemEpisode extends StatelessWidget {
             children: <Widget>[
               Text(
                 name,
-                style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                style: TextStyle(fontSize: 18, color: Colors.white),
               ),
               Text(
                 DateFormat('dd MMMM yyyy').format(airDate),
@@ -205,8 +180,8 @@ class _ItemEpisode extends StatelessWidget {
 
 class _Info extends StatelessWidget {
   static const fontSize = 22.0;
-  final TextStyle textStyle = TextStyle(
-      fontWeight: FontWeight.bold, fontSize: fontSize, color: Colors.white);
+  final TextStyle textStyle =
+      TextStyle(fontSize: fontSize, color: Colors.white);
   final int episode;
 
   _Info(this.episode);
@@ -222,12 +197,12 @@ class _Info extends StatelessWidget {
                 style: textStyle,
               ),
         SizedBox.fromSize(
-          size: Size(20, 0),
+          size: Size(18, 0),
         ),
         Image.asset(
           PathIcon.tv,
           filterQuality: FilterQuality.none,
-          height: 28,
+          height: 26,
         )
       ],
     );
