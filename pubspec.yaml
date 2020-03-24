@@ -30,14 +30,14 @@ dependencies:
   provider:
   dartz:
   shimmer:
-  palette_generator:
+  palette_generator:      
   dio:
   sqflite:
   json_annotation:
   equatable:
   inject:
     path: package/inject
-  sealed_unions:
+  sealed_unions:  
   intl:
 
 dev_dependencies:

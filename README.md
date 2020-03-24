@@ -1,16 +1,46 @@
-# anifrag
+# Anifrag
 
-A new Flutter project.
+Flutter app with Movie API.
 
-## Getting Started
+![](gif_demo/detail_movie.gif)
+![](gif_demo/detail_serach.gif)
+![](gif_demo/detail_tv.gif)
+![](gif_demo/homepage.gif)
+![](gif_demo/init.gif)
+![](gif_demo/searching.gif)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Running generated compile DI
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Using [compile time injection](https://github.com/google/inject.dart) similar with Dagger. Please run below code in terminal
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+./gen.sh
+```
+
+## Key libraries
+
+* [Compile-time Injection](https://https://github.com/google/inject.dart) - Compile-time dependency injection for Dart and Flutter.
+* [Dio](http://https://github.com/flutterchina/dio) - Powerful Http client for Dart, which supports Interceptors, FormData, Request Cancellation, File Downloading, Timeout etc.
+* [Rx](https://maven.apache.org/) - The [Reactive](http://reactivex.io) Extensions for Dart.
+* [Dartz](https://https://github.com/spebbe/dartz) - Functionally programming for Dart.
+* [Sealed Union](https://https://github.com/fluttercommunity/dart_sealed_unions) - Sealed Unions for Dart.
+* [Sqflite](https://https://pub.dev/packages/sqflite) - SQLite plugin for Flutter. Supports iOS, Android and MacOS.
+* [Flutter Lottie](https://) - Lottie in Flutter. Supports both iOS and Android using [lottie-ios](https://https://github.com/airbnb/lottie-ios) and [lottie-android](https://https://github.com/airbnb/lottie-ios)
+* [Provider](https://https://github.com/rrousselGit/provider) - Nothing to say here.
+
+## Acknowledgments
+
+* SOLID
+* BLoC
+* Robust state management
+* Database performance
+* Complex animation, UI
+
+## Inspired Designer
+
+* [Filmweb](https://https://www.behance.net/gallery/80430137/Filmweb-Movies-TV-Series-app) by Radek Skrzypczak
+
+* [Dropdown menu interaction](https://https://dribbble.com/shots/7018412-Dropdown-menu-interaction) by Aaron Iker
+* [DirectSelect Dropdown ux](https://https://dribbble.com/shots/3876250-DirectSelect-Dropdown-ux) by Virgil Pana
+* [TV Show Detail Page](https://https://dribbble.com/shots/6817011-TV-Show-Detail-Page) by Sukru Yildizel

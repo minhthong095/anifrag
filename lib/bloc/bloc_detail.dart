@@ -71,6 +71,7 @@ class BlocDetail with DisposeBag {
     });
   }
 
+  /// TODO: Still get flick.
   void callMoreLikeThis() {
     if (_isRunFirstTime &&
         _movie.numberOfSeasons == -1) // equal -1 mean it is not tv series

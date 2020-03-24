@@ -47,7 +47,7 @@ class _DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<_DetailScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   static final double _paddingTopImage = 20;
   final double _mergeGap = 30;
   final double _heightImage = 320 + _paddingTopImage;
@@ -58,23 +58,27 @@ class _DetailScreenState extends State<_DetailScreen>
   Animation<double> _animationPaddingCircle;
   Animation<double> _animationOpacityCircle;
   AnimationController _controller;
+  AnimationController _controller2;
   BlocDetail _bloc;
 
   @override
   void initState() {
     _controller = AnimationController(
         vsync: this, duration: DetailScreen.durationTransition);
+    _controller2 = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1200));
     _animationBotToTop = Tween<Offset>(begin: Offset(0, 1), end: Offset.zero)
         .chain(CurveTween(curve: Curves.easeOutCubic))
         .animate(_controller);
     _animationCircle = Tween<double>(begin: 0, end: 2.5).animate(_controller);
     _animationPaddingCircle =
-        Tween<double>(begin: 0, end: 15).animate(_controller);
+        Tween<double>(begin: 0, end: 15).animate(_controller2);
     _animationOpacityCircle = Tween<double>(begin: 0, end: 1)
         .chain(CurveTween(curve: Curves.easeInQuint))
         .animate(_controller);
     _controller.addStatusListener(_controllerListener);
     _controller.forward();
+    _controller2.forward();
 
     super.initState();
   }
@@ -162,7 +166,7 @@ class _DetailScreenState extends State<_DetailScreen>
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: AnimatedBuilder(
-                              animation: _controller,
+                              animation: _controller2,
                               child: ButtonCircle(
                                 onTap: () {
                                   Navigator.of(context).pop();
@@ -198,7 +202,7 @@ class _DetailScreenState extends State<_DetailScreen>
                           child: Align(
                             alignment: Alignment.topRight,
                             child: AnimatedBuilder(
-                              animation: _controller,
+                              animation: _controller2,
                               child: ButtonCircle(
                                 onTap: () {},
                                 padding: 11,
@@ -240,7 +244,7 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         decoration: BoxDecoration(
-            color: AppColor.backgroundColor,
+            color: Color(0xff313238),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15), topRight: Radius.circular(15))),
         child: Padding(

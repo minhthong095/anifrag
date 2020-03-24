@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: InitialSplashScreen(componentInjector.blocInitialSplashComponent),
       // home: TestDetailEpisodeScreen(),
       onGenerateRoute: (settings) {
