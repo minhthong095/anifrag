@@ -2,7 +2,7 @@
 
 Flutter app with Movie API.
 
-![](gif_demo/detail_movie.gif)![](gif_demo/detail_serach.gif)![](gif_demo/detail_tv.gif)![](gif_demo/homepage.gif)![](gif_demo/init.gif)![](gif_demo/searching.gif)
+![](gif_demo/detail_movie.gif)![](gif_demo/detail_search.gif)![](gif_demo/detail_tv.gif)![](gif_demo/homepage.gif)![](gif_demo/init.gif)![](gif_demo/searching.gif)
 
 
 ## Running generated compile DI
